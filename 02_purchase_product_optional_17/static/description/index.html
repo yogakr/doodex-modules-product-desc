@@ -1,0 +1,4124 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>
+         Purchase Product Optional &mdash; product configurator for Odoo 17
+         purchase orders | Doodex
+      </title>
+      <meta
+         name="description"
+         content="Free Odoo 17 module. Puts Odoo's product configurator and optional products on purchase order lines, priced with your vendor's own supplier rates and converted to the order currency. LGPL-3, source included, by Doodex."
+      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+         rel="stylesheet"
+      />
+      <style>
+         html,
+         body {
+            margin: 0;
+            padding: 0;
+         }
+      </style>
+   </head>
+   <body>
+      <!-- =========================================================================
+  Purchase Product Optional — Odoo App Store listing description
+  Odoo 17.0 · module version 17.0.1.0.0 · Free · LGPL-3 · Doodex
+
+  PASTE TARGET: the "Description" / index.html field of the Odoo Apps Store
+  upload for purchase_product_optional 17.0.1.0.0.
+
+  LAYOUT: odoo-store-layouts Archetype D — Comparison / Switcher.
+  Variant combo: hero H-3 (violet panel) × rhythm R-3+R-4 (violet interludes
+  + warm tint on conversion zones) × features F-2 (text+image zigzag) + F-4
+  (comparison tables) × accent A-3 (assertive).
+  Deliberately unlike the previous listing shipped (Flow Survey Builder =
+  long-form scroll, numbered 01/06 kickers, icon-row features, violet QR
+  blocks top and bottom). Here: comparison-driven, rule+label section bands,
+  zigzag features, light QR block high / violet QR block at the end.
+
+  RULES BAKED IN
+   • Zero JS tags of our own. The store sanitizer strips them and this page
+     needs none: one continuous scroll, the nav is a plain jump menu, the FAQ
+     is native <details>/<summary>.
+   • LINKS ARE CONSTRAINED BY THE VENDOR GUIDELINES. Only static/description
+     resources, canonical YouTube links, Microsoft Teams links, mailto: and
+     skype: survive; every other external link is invalidated. So the contact
+     buttons use mailto:, and the booking, WhatsApp and cross-sell buttons
+     carry NO href at all — their destination is printed beside them as
+     visible text and encoded in the QR image, neither of which the sanitizer
+     has a reason to touch. The hero carries no CTA of its own on purpose: the
+     three-channel QR block sits two sections below it and was duplicating it. Do not paste an http(s) URL back into an href.
+   • The nav bar is NOT sticky and nothing targets html or :root. A pinned bar
+     is a widget over the store's own header; styling the document root is
+     styling an element this fragment does not own.
+   • Dashed "slot" figures mark missing assets. Replace each figure.ppslot
+     with &lt;img src="./assets/NAME.gif" alt="..."&gt; using the filename printed in
+     the caption. 13 slots: 1 hero GIF, 2 before/after PNGs, 6 feature GIFs,
+     4 use-case GIFs.
+   • No inline SVG. Every icon, chevron and QR code is a PNG in
+     ./assets/icons, drawn at three times its display size so it stays sharp
+     on retina screens. Because each PNG's intrinsic size is therefore wrong
+     on purpose, icons are sized by a CSS class (.ppico-13 … .ppico-26),
+     never by width/height attributes — those are presentational hints and
+     lose to any stylesheet rule, including the store's own.
+   • Layout: static/description/ holds index.html, icon.png, banner.png and a
+     single flat assets/ folder. Every PNG and GIF the page loads lives directly
+     in assets/ with no sub-folders, so every reference is ./assets/<file>.
+     Nothing on this page loads an image from anywhere else.
+   • EVERY factual claim on this page is sourced from the module itself:
+     __manifest__.py, models/, controllers/main.py, static/src/js/,
+     views/purchase_order_views.xml, i18n/ (42 .po files), tests/ (5 Python
+     test modules) and static/tests/ (2 QUnit files + 1 tour). Nothing is
+     estimated. If you add a support guarantee or a live demo URL, add it
+     here too — the page deliberately promises neither, because neither is
+     verifiable yet. Search for TODO in this file.
+========================================================================== -->
+      <div class="ppo">
+         <style>
+            .ppo {
+               --violet: #270140;
+               --violet-2: #3a1a5a;
+               --coral: #fa7268;
+               --coral-dk: #e85c52;
+               --ink: #0a0a0a;
+               --ink-2: #171717;
+               --ink-3: #525252;
+               --ink-4: #737373;
+               --bg: #ffffff;
+               --surface: #faf7fc;
+               --surface-2: #f4eef8;
+               --line: #ece4f3;
+               --warm: #fff5f2;
+               --success: #16a34a;
+               --danger: #dc2626;
+               --r-sm: 6px;
+               --r-md: 10px;
+               --r-lg: 14px;
+               --r-xl: 20px;
+               --r-full: 9999px;
+               --xs: 0 0 0 1px rgba(39, 1, 64, 0.06);
+               --sm:
+                  0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 1, 64, 0.08);
+               --md:
+                  0 4px 14px rgba(39, 1, 64, 0.08),
+                  0 0 0 1px rgba(39, 1, 64, 0.06);
+               --cta: 0 8px 22px rgba(250, 114, 104, 0.32);
+            }
+            .ppo * {
+               box-sizing: border-box;
+            }
+            .ppo {
+               background: var(--bg);
+               color: var(--ink-3);
+               font-family:
+                  "Inter",
+                  -apple-system,
+                  BlinkMacSystemFont,
+                  "Segoe UI",
+                  Roboto,
+                  sans-serif;
+               font-size: 16px;
+               line-height: 1.65;
+               font-feature-settings: "cv11", "ss01";
+               -webkit-font-smoothing: antialiased;
+            }
+            .ppo h1,
+            .ppo h2,
+            .ppo h3,
+            .ppo h4 {
+               color: var(--violet);
+               letter-spacing: -0.015em;
+               margin: 0;
+            }
+            .ppo p {
+               margin: 0 0 14px;
+            }
+            .ppo a {
+               color: var(--coral-dk);
+               overflow-wrap: anywhere;
+            }
+            /* naked URLs are printed as visible text everywhere as a sanitizer fallback,
+   so long paths must be allowed to break rather than push the page wide. */
+            .ppo,
+            .ppo p,
+            .ppo td,
+            .ppo th,
+            .ppo li {
+               overflow-wrap: break-word;
+            }
+            .ppmuted {
+               color: var(--ink-4);
+            }
+            .ppcenter {
+               text-align: center;
+            }
+            .ppo .wrap {
+               max-width: 1080px;
+               margin: 0 auto;
+               padding: 0 24px;
+            }
+            .ppo .narrow {
+               max-width: 820px;
+               margin: 0 auto;
+            }
+            .ppo .sec {
+               padding: 56px 0;
+            }
+            .ppo .sec-tight {
+               padding: 32px 0;
+            }
+            .ppo .sec-alt {
+               background: var(--surface);
+            }
+            .ppo .sec-warm {
+               background: var(--warm);
+            }
+            .pphr {
+               height: 1px;
+               background: var(--line);
+               border: 0;
+               margin: 0;
+            }
+            .ppeyebrow {
+               display: inline-block;
+               font-size: 12px;
+               font-weight: 700;
+               letter-spacing: 0.08em;
+               text-transform: uppercase;
+               color: var(--coral-dk);
+               margin: 0 0 14px;
+            }
+            .pph1 {
+               font-size: 46px;
+               font-weight: 800;
+               line-height: 1.08;
+            }
+            .pph2 {
+               font-size: 27px;
+               font-weight: 800;
+               line-height: 1.2;
+            }
+            .pph3 {
+               font-size: 19px;
+               font-weight: 700;
+            }
+            .pplead {
+               font-size: 18.5px;
+               line-height: 1.6;
+               color: var(--ink-3);
+            }
+            .ppsm {
+               font-size: 13.5px;
+            }
+            .ppxs {
+               font-size: 12.5px;
+            }
+
+            /* Buttons. Some carry no href on purpose (see the header note), so they are
+   styled on the class alone and never depend on :link matching. */
+            .ppbtn {
+               display: inline-flex;
+               align-items: center;
+               gap: 8px;
+               font-weight: 700;
+               font-size: 15px;
+               text-decoration: none;
+               padding: 13px 24px;
+               border-radius: var(--r-md);
+            }
+            .ppbtn-1 {
+               background: var(--coral);
+               color: #fff !important;
+               box-shadow: var(--cta);
+            }
+            .ppbtn-2 {
+               background: #fff;
+               color: var(--violet) !important;
+               box-shadow: 0 0 0 1.5px var(--violet);
+            }
+            .ppchip {
+               display: inline-flex;
+               align-items: center;
+               gap: 7px;
+               font-size: 13px;
+               font-weight: 600;
+               color: var(--violet);
+               background: var(--surface-2);
+               padding: 7px 14px;
+               border-radius: var(--r-full);
+            }
+            .ppchip-dark {
+               color: #fff;
+               background: rgba(255, 255, 255, 0.1);
+            }
+            .ppchiprow {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 8px;
+            }
+            .ppcard {
+               background: #fff;
+               border-radius: var(--r-lg);
+               padding: 22px;
+               box-shadow: var(--sm);
+            }
+
+            /* icons: PNG drawn at 3x, sized by class only */
+            .ppo .ppico-13 {
+               width: 13px;
+               height: 13px;
+            }
+            .ppo .ppico-15 {
+               width: 15px;
+               height: 15px;
+            }
+            .ppo .ppico-17 {
+               width: 17px;
+               height: 17px;
+            }
+            .ppo .ppico-19 {
+               width: 19px;
+               height: 19px;
+            }
+            .ppo .ppico-26 {
+               width: 26px;
+               height: 26px;
+            }
+            .ppico-13,
+            .ppico-15,
+            .ppico-17,
+            .ppico-19,
+            .ppico-26 {
+               flex: none;
+               display: inline-block;
+               vertical-align: middle;
+            }
+
+            /* nav — in normal flow on purpose, not sticky */
+            .ppnav {
+               background: #fff;
+               border-bottom: 1px solid var(--line);
+            }
+            .ppnav-in {
+               max-width: 1080px;
+               margin: 0 auto;
+               padding: 12px 24px;
+               display: grid;
+               grid-template-columns: auto 1fr auto;
+               align-items: center;
+               gap: 14px;
+            }
+            /* The nav brand is the MODULE, not the publisher: the module icon next to the
+   module name. Doodex stays credited in the publisher section and the footer.
+   The icon carries its own background and rounded corners as pixels, so it does
+   not depend on any property the store sanitiser might drop. */
+            .ppo .ppnav-brand {
+               display: inline-flex;
+               align-items: center;
+               gap: 9px;
+               text-decoration: none;
+            }
+            /* The logo is a circular mark on transparency, so it needs no corner rounding
+   of its own. 32px is about the smallest size at which its detail still reads. */
+            .ppnav-icon {
+               display: block;
+               width: 32px;
+               height: 32px;
+            }
+            .ppo .ppnav-name {
+               font-weight: 800;
+               color: var(--violet);
+               font-size: 15px;
+               letter-spacing: -0.01em;
+            }
+            .pptabs {
+               justify-self: center;
+               display: inline-flex;
+               flex-wrap: wrap;
+               gap: 2px;
+            }
+            .ppo .pptabs a {
+               text-decoration: none;
+               color: var(--ink-2);
+               font-size: 13.5px;
+               font-weight: 600;
+               padding: 7px 12px;
+               border-radius: var(--r-full);
+            }
+            .ppo .pptabs a:hover {
+               background: var(--surface);
+               color: var(--violet);
+            }
+            .ppnav-cta {
+               justify-self: end;
+            }
+            .ppnav-cta .ppbtn {
+               font-size: 13px;
+               padding: 9px 16px;
+            }
+            @media (max-width: 940px) {
+               .ppnav-in {
+                  grid-template-columns: 1fr;
+                  justify-items: center;
+               }
+               .ppnav-cta {
+                  justify-self: center;
+               }
+               .pptabs {
+                  justify-content: center;
+               }
+            }
+
+            /* section band — a coral rule + label, deliberately not the numbered kicker
+   treatment used on the previous listing */
+            .ppband {
+               border-top: 1px solid var(--line);
+               background: var(--bg);
+            }
+            /* When the band sits above a sec-alt section, its background must follow the
+   section or a hard white seam appears between them. */
+            .ppband-alt {
+               background: var(--surface);
+            }
+            .ppband-in {
+               max-width: 1080px;
+               margin: 0 auto;
+               padding: 22px 24px 0;
+               display: flex;
+               align-items: center;
+               gap: 12px;
+               scroll-margin-top: 16px;
+            }
+            .ppband-bar {
+               width: 34px;
+               height: 4px;
+               border-radius: 2px;
+               background: var(--coral);
+               flex: none;
+            }
+            .ppband-l {
+               font-size: 12.5px;
+               font-weight: 800;
+               letter-spacing: 0.16em;
+               text-transform: uppercase;
+               color: var(--violet);
+            }
+            .ppband-c {
+               font-size: 12.5px;
+               font-weight: 600;
+               color: var(--ink-4);
+               letter-spacing: 0.02em;
+            }
+            @media (max-width: 560px) {
+               .ppband-c {
+                  display: none;
+               }
+            }
+
+            /* Hero — H-3 violet panel, media first. The product visual leads and the
+   headline sits under it: the GIF is argument #1, the copy is the caption. */
+            .pphero {
+               background: var(--violet);
+               color: #fff;
+               padding: 34px 0 56px;
+            }
+            .ppo .pphero h1 {
+               color: #fff;
+            }
+            .pphero .mark {
+               color: var(--coral);
+            }
+            .pphero .ppeyebrow {
+               color: var(--coral);
+            }
+            .pphero .pplead {
+               color: rgba(255, 255, 255, 0.8);
+               font-size: 18.5px;
+            }
+            .pphero .ppsm {
+               color: rgba(255, 255, 255, 0.62);
+            }
+            .pphero-top {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               gap: 10px;
+               flex-wrap: wrap;
+               margin: 0 0 22px;
+            }
+            .pphero-top .ppeyebrow {
+               margin: 0;
+            }
+            .pphero-pill {
+               display: inline-flex;
+               align-items: center;
+               gap: 6px;
+               font-size: 11px;
+               font-weight: 800;
+               letter-spacing: 0.09em;
+               text-transform: uppercase;
+               color: #fff;
+               background: rgba(250, 114, 104, 0.2);
+               border: 1px solid rgba(250, 114, 104, 0.48);
+               border-radius: var(--r-full);
+               padding: 5px 12px;
+            }
+            /* The hero copy is split around the visual: headline + the problem sentence
+   above it, the promise + the CTAs below. The GIF is the pivot between the two,
+   so a reader meets the pain, sees the fix, then gets the button. */
+            .pphero-intro {
+               max-width: 900px;
+               margin: 0 auto 34px;
+               text-align: center;
+            }
+            .pphero-payoff {
+               max-width: 900px;
+               margin: 34px auto 0;
+               text-align: center;
+            }
+            .ppo .pphero-intro h1 {
+               max-width: 620px;
+               margin-left: auto;
+               margin-right: auto;
+            }
+            @media (max-width: 700px) {
+               .ppo .pphero-intro h1 {
+                  max-width: none;
+               }
+            }
+            /* wide enough for the two-sentence hook to set in two even lines instead of
+   leaving a three-word orphan; text-wrap:balance evens them where supported */
+            .pphero-intro .pplead {
+               max-width: 880px;
+               margin: 18px auto 0;
+               text-wrap: balance;
+            }
+            .pphero-payoff .pplead {
+               max-width: 760px;
+               margin: 0 auto;
+               font-weight: 500;
+               color: rgba(255, 255, 255, 0.92);
+               text-wrap: balance;
+            }
+            .pphero .ppchiprow {
+               justify-content: center;
+            }
+            .pphero .ppchip {
+               font-size: 12.5px;
+               padding: 6px 13px;
+            }
+            @media (max-width: 900px) {
+               .pph1 {
+                  font-size: 34px;
+               }
+               .pphero {
+                  padding: 26px 0 44px;
+               }
+               .pphero-intro {
+                  margin-bottom: 26px;
+               }
+               .pphero-payoff {
+                  margin-top: 26px;
+               }
+            }
+
+            /* Device frame. Permanent chrome around a product visual, so the page looks the
+   same before and after the real GIFs land: the frame stays, only what is inside
+   it changes. Dark shadow on the violet hero, token shadow on light sections. */
+            .ppframe {
+               background: #fff;
+               border-radius: var(--r-xl);
+               overflow: hidden;
+               box-shadow:
+                  0 26px 64px rgba(0, 0, 0, 0.4),
+                  0 0 0 1px rgba(250, 114, 104, 0.24);
+            }
+            .ppframe-light {
+               box-shadow: var(--md);
+            }
+            .ppframe-bar {
+               display: flex;
+               align-items: center;
+               gap: 11px;
+               padding: 10px 14px;
+               background: var(--surface);
+               border-bottom: 1px solid var(--line);
+            }
+            .ppframe-dots {
+               display: inline-flex;
+               gap: 5px;
+               flex: none;
+            }
+            .ppframe-dots i {
+               display: block;
+               width: 9px;
+               height: 9px;
+               border-radius: 50%;
+               background: #ddcde9;
+            }
+            .ppframe-dots i:first-child {
+               background: var(--coral);
+            }
+            .ppframe-l {
+               font-size: 11.5px;
+               font-weight: 700;
+               color: var(--ink-4);
+               letter-spacing: 0.01em;
+               font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+               overflow: hidden;
+               white-space: nowrap;
+               text-overflow: ellipsis;
+            }
+            .ppframe-body img {
+               display: block;
+               width: 100%;
+               height: auto;
+            }
+            .ppframe .ppslot {
+               border: 0;
+               border-radius: 0;
+               box-shadow: none;
+            }
+            .ppframe .ppslot::before {
+               inset: 14px;
+            }
+
+            /* "What changes on the order line" — the four-tile strip that replaced the
+   cramped list in the old hero's right column. */
+            .ppchg {
+               display: grid;
+               grid-template-columns: repeat(4, 1fr);
+               gap: 14px;
+            }
+            .ppchg-t {
+               background: #fff;
+               border-radius: var(--r-lg);
+               box-shadow: var(--sm);
+               padding: 20px;
+               display: flex;
+               flex-direction: column;
+               gap: 12px;
+            }
+            .ppchg-t img {
+               flex: none;
+            }
+            .ppchg-h {
+               font-size: 14.5px;
+               font-weight: 700;
+               color: var(--violet);
+               line-height: 1.35;
+            }
+            .ppchg-pair {
+               display: grid;
+               gap: 7px;
+               margin-top: auto;
+            }
+            .ppchg-b,
+            .ppchg-a {
+               display: flex;
+               align-items: flex-start;
+               gap: 7px;
+               font-size: 12px;
+               line-height: 1.45;
+            }
+            .ppchg-b {
+               color: var(--ink-4);
+            }
+            .ppchg-a {
+               color: var(--violet);
+               font-weight: 600;
+            }
+            .ppchg-b img,
+            .ppchg-a img {
+               margin-top: 2px;
+            }
+            @media (max-width: 900px) {
+               .ppchg {
+                  grid-template-columns: 1fr 1fr;
+               }
+            }
+            @media (max-width: 520px) {
+               .ppchg {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* Asset slot. #d9c9e6 is a darker tint of --line, used only on these dashed
+   placeholders; every one of them disappears when the real GIF is dropped in. */
+            /* asset slot */
+            .ppslot {
+               position: relative;
+               margin: 0;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               gap: 11px;
+               background: #fff;
+               border: 1px solid var(--line);
+               border-radius: var(--r-lg);
+               box-shadow: var(--sm);
+               color: var(--ink-4);
+               padding: 28px 24px;
+               text-align: center;
+               min-height: 190px;
+            }
+            /* the dashed drop-zone lives inside the card, so a slot reads as a deliberate
+   placeholder rather than a broken image */
+            .ppslot::before {
+               content: "";
+               position: absolute;
+               inset: 9px;
+               border: 1.5px dashed #e3d4ee;
+               border-radius: 10px;
+               pointer-events: none;
+            }
+            /* Children are positioned so they sit above the dashed drop-zone, and capped at
+   the card width so a long monospace filename cannot push the caption past the
+   frame that clips it. */
+            .ppslot > * {
+               position: relative;
+               max-width: 100%;
+            }
+            .ppslot figcaption b {
+               overflow-wrap: anywhere;
+            }
+            /* .ppslot-lg is retained for any future full-width slot; the hero now holds a
+   real recording, which carries its own aspect ratio */
+            .ppslot-lg {
+               aspect-ratio: 16/9;
+               min-height: 230px;
+            }
+            @media (max-width: 760px) {
+               .ppslot-lg {
+                  aspect-ratio: auto;
+                  min-height: 0;
+               }
+               .ppslot {
+                  padding: 22px 18px;
+               }
+               .ppslot figcaption {
+                  font-size: 11.5px;
+               }
+            }
+            .ppslot img {
+               flex: none;
+               opacity: 0.5;
+            }
+            .ppslot figcaption {
+               font-size: 12px;
+               line-height: 1.55;
+               max-width: 470px;
+               width: 100%;
+            }
+            .ppslot figcaption b {
+               display: block;
+               color: var(--violet);
+               font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+               font-size: 11.5px;
+               margin-bottom: 4px;
+            }
+            .ppslot-tag {
+               display: inline-flex;
+               align-items: center;
+               gap: 6px;
+               font-size: 10px;
+               font-weight: 800;
+               letter-spacing: 0.09em;
+               text-transform: uppercase;
+               color: var(--coral-dk);
+               background: var(--warm);
+               border: 1px solid rgba(250, 114, 104, 0.3);
+               border-radius: var(--r-full);
+               padding: 4px 11px;
+            }
+
+            /* before / after */
+            .ppba {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               border: 1px solid var(--line);
+               border-radius: var(--r-lg);
+               overflow: hidden;
+               box-shadow: var(--sm);
+            }
+            .ppba-col {
+               padding: 24px 26px;
+            }
+            .ppba-before {
+               background: var(--surface);
+            }
+            .ppba-after {
+               background: var(--warm);
+               border-left: 1px solid var(--line);
+            }
+            .ppba-h {
+               font-size: 11.5px;
+               font-weight: 800;
+               letter-spacing: 0.09em;
+               text-transform: uppercase;
+               margin: 0 0 4px;
+            }
+            .ppba-before .ppba-h {
+               color: var(--danger);
+            }
+            .ppba-after .ppba-h {
+               color: var(--success);
+            }
+            .ppba-sub {
+               font-size: 12.5px;
+               color: var(--ink-4);
+               margin: 0 0 16px;
+            }
+            .ppba-item {
+               display: flex;
+               gap: 10px;
+               font-size: 14px;
+               margin: 11px 0;
+               align-items: flex-start;
+            }
+            .ppba-before .ppba-item {
+               color: var(--ink-4);
+            }
+            .ppba-after .ppba-item {
+               color: var(--violet);
+               font-weight: 500;
+            }
+            .ppba-item img {
+               margin-top: 4px;
+            }
+            @media (max-width: 820px) {
+               .ppba {
+                  grid-template-columns: 1fr;
+               }
+               .ppba-after {
+                  border-left: 0;
+                  border-top: 1px solid var(--line);
+               }
+            }
+
+            /* comparison table */
+            .pptblwrap {
+               overflow-x: auto;
+               border-radius: var(--r-lg);
+               box-shadow: var(--sm);
+            }
+            .pptbl {
+               width: 100%;
+               border-collapse: collapse;
+               background: #fff;
+               font-size: 14px;
+               min-width: 640px;
+            }
+            .pptbl th,
+            .pptbl td {
+               padding: 13px 16px;
+               text-align: left;
+               vertical-align: top;
+               border-bottom: 1px solid var(--line);
+            }
+            .pptbl thead th {
+               background: var(--violet);
+               color: #fff;
+               font-size: 12px;
+               font-weight: 700;
+               letter-spacing: 0.05em;
+               text-transform: uppercase;
+               border-bottom: 0;
+            }
+            .pptbl tbody tr:nth-child(even) td {
+               background: var(--surface);
+            }
+            .pptbl td:first-child {
+               font-weight: 600;
+               color: var(--ink-2);
+            }
+            .pptbl td.plaincol {
+               color: var(--ink-3);
+               font-weight: 400;
+            }
+            .pptbl td.plaincol b {
+               color: var(--violet);
+            }
+            .pptbl tbody tr:last-child td {
+               border-bottom: 0;
+            }
+            /* Narrow screens: the comparison table must never hide the column that matters.
+   Instead of relying on the visitor discovering a sideways scroll, the table
+   drops its min-width, tightens up and keeps all three columns on screen. */
+            @media (max-width: 700px) {
+               .pptbl {
+                  min-width: 0;
+                  font-size: 12.5px;
+               }
+               .pptbl th,
+               .pptbl td {
+                  padding: 9px 9px;
+               }
+               .pptbl thead th {
+                  font-size: 10.5px;
+                  letter-spacing: 0.03em;
+               }
+               .pptbl td:first-child,
+               .pptbl th:first-child {
+                  width: 38%;
+               }
+            }
+            @media (max-width: 420px) {
+               .pptbl {
+                  font-size: 11.5px;
+               }
+               .pptbl th,
+               .pptbl td {
+                  padding: 8px 7px;
+               }
+            }
+
+            /* Flow rail — the four-step mechanism. A numbered node plus a hairline that
+   runs to the next step; the last node's line is transparent so the rail stops.
+   No absolute positioning, so it collapses cleanly to 2 columns then 1. */
+            .ppflow {
+               display: grid;
+               grid-template-columns: repeat(4, 1fr);
+               gap: 24px;
+               margin: 32px 0 0;
+            }
+            .ppflow-top {
+               display: flex;
+               align-items: center;
+               gap: 12px;
+               margin-bottom: 18px;
+            }
+            .ppflow-n {
+               flex: none;
+               width: 34px;
+               height: 34px;
+               border-radius: 50%;
+               background: var(--surface-2);
+               box-shadow: 0 0 0 1.5px var(--coral);
+               color: var(--violet);
+               font-weight: 800;
+               font-size: 14px;
+               display: inline-flex;
+               align-items: center;
+               justify-content: center;
+            }
+            .ppflow-line {
+               flex: 1;
+               height: 2px;
+               background: var(--line);
+               border-radius: 1px;
+            }
+            .ppflow-s:last-child .ppflow-line {
+               background: transparent;
+            }
+            .ppflow-b img {
+               display: block;
+               margin-bottom: 12px;
+            }
+            .ppo .ppflow-h {
+               display: block;
+               font-size: 15.5px;
+               font-weight: 700;
+               color: var(--violet);
+               margin-bottom: 6px;
+            }
+            .ppflow-p {
+               font-size: 13px;
+               line-height: 1.55;
+               color: var(--ink-4);
+               margin: 0;
+            }
+            @media (max-width: 880px) {
+               .ppflow {
+                  grid-template-columns: 1fr 1fr;
+                  gap: 28px 24px;
+               }
+               .ppflow-s:nth-child(2) .ppflow-line {
+                  background: transparent;
+               }
+            }
+            @media (max-width: 560px) {
+               .ppflow {
+                  grid-template-columns: 1fr;
+               }
+               .ppflow-line {
+                  display: none;
+               }
+               .ppflow-top {
+                  margin-bottom: 12px;
+               }
+            }
+
+            /* Capability rows — coral diamond markers on hairline-separated rows. Deliberately
+   not cards: this section states what the module puts on the line, nothing else. */
+            .ppcap {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 0 44px;
+               margin-top: 10px;
+            }
+            .ppcap-i {
+               position: relative;
+               padding: 15px 0 15px 26px;
+               border-top: 1px solid var(--line);
+            }
+            .ppcap-i::before {
+               content: "";
+               position: absolute;
+               left: 2px;
+               top: 22px;
+               width: 9px;
+               height: 9px;
+               background: var(--coral);
+               transform: rotate(45deg);
+               border-radius: 2px;
+            }
+            .ppo .ppcap-i b {
+               display: block;
+               font-size: 14.5px;
+               color: var(--violet);
+               margin-bottom: 3px;
+            }
+            .ppcap-i p {
+               margin: 0;
+               font-size: 12.5px;
+               color: var(--ink-4);
+               line-height: 1.55;
+            }
+            @media (max-width: 820px) {
+               .ppcap {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* Numbered features. The recordings are 1192px of real Odoo interface; in a
+   half-container column that UI text would render around 7px, so the copy sits
+   in a readable measure above and the recording takes the full column width.
+   The 01-06 badges carry the rhythm the old two-column zigzag used to. */
+            .ppzz {
+               padding: 40px 0;
+               border-top: 1px solid var(--line);
+            }
+            .ppzz:first-of-type {
+               border-top: 0;
+               padding-top: 8px;
+            }
+            .ppzz-n {
+               display: inline-flex;
+               align-items: center;
+               justify-content: center;
+               width: 30px;
+               height: 30px;
+               border-radius: 9px;
+               background: var(--surface-2);
+               color: var(--violet);
+               font-size: 13px;
+               font-weight: 800;
+               margin-bottom: 12px;
+            }
+            .ppzz-txt {
+               max-width: 720px;
+               margin-bottom: 24px;
+            }
+            .ppzz-txt h3 {
+               margin-bottom: 8px;
+            }
+            .ppzz-txt p {
+               font-size: 14.5px;
+               margin-bottom: 0;
+            }
+            .ppzz-meta {
+               display: block;
+               margin-top: 12px;
+               font-size: 12px;
+               color: var(--ink-4);
+               font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            }
+            /* a real recording: the browser-chrome frame the hero already uses, plus a
+   caption underneath rather than inside a dashed drop-zone */
+            .ppzz-fig {
+               margin: 0;
+            }
+            .ppzz-fig figcaption {
+               margin-top: 10px;
+               font-size: 12.5px;
+               line-height: 1.6;
+               color: var(--ink-3);
+               max-width: 760px;
+            }
+            /* Annotated stills. Each PNG is cropped at capture resolution and shown at that
+   size so Odoo's UI text stays crisp; a shot narrower than the frame is centred on
+   a light mat rather than stretched, which would soften every glyph. The mat plus
+   the PNG's own hairline are the only edges: no shadow here, or it stacks a third
+   ring inside the frame's. */
+            .ppframe-body.ppshot-bed {
+               padding: 16px;
+               background: var(--surface-2);
+               display: flex;
+               justify-content: center;
+            }
+            .ppframe-body.ppshot-bed img {
+               display: block;
+               width: auto;
+               max-width: 100%;
+               height: auto;
+               border-radius: 6px;
+            }
+            @media (max-width: 860px) {
+               .ppframe-body.ppshot-bed {
+                  padding: 9px;
+               }
+            }
+            /* a still-empty slot at the same footprint as the recordings it will replace */
+            .ppslot-wide {
+               aspect-ratio: 1192/520;
+               min-height: 210px;
+            }
+            @media (max-width: 860px) {
+               .ppzz {
+                  padding: 32px 0;
+               }
+               .ppzz-txt {
+                  margin-bottom: 18px;
+               }
+               .ppslot-wide {
+                  aspect-ratio: auto;
+                  min-height: 0;
+               }
+            }
+
+            /* who this is for — copy-forward blocks, no cards; the icons carry the rhythm the
+   old use-case cards used to. Two by two on desktop, single column on mobile. */
+            .ppwho {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 38px 48px;
+            }
+            .ppwho-i {
+               padding: 0;
+            }
+            .ppwho-ico {
+               width: 48px;
+               height: 48px;
+               display: block;
+               margin-bottom: 15px;
+            }
+            .ppwho-i h3 {
+               font-size: 17.5px;
+               line-height: 1.3;
+               color: var(--violet);
+               margin: 0 0 9px;
+            }
+            .ppwho-i p {
+               font-size: 14px;
+               margin: 0;
+               color: var(--ink-3);
+               line-height: 1.65;
+            }
+            @media (max-width: 760px) {
+               .ppwho {
+                  grid-template-columns: 1fr;
+                  gap: 28px;
+               }
+               .ppwho-ico {
+                  width: 44px;
+                  height: 44px;
+               }
+            }
+
+            /* spec / requirements grid */
+            .ppreq {
+               display: grid;
+               grid-template-columns: repeat(3, 1fr);
+               gap: 14px;
+            }
+            .ppreq-card {
+               background: #fff;
+               border-radius: var(--r-lg);
+               box-shadow: var(--sm);
+               padding: 18px 20px;
+               display: flex;
+               gap: 13px;
+               align-items: flex-start;
+            }
+            .ppreq-card img {
+               margin-top: 2px;
+            }
+            .ppreq-l {
+               display: block;
+               font-size: 13.5px;
+               color: var(--violet);
+               font-weight: 700;
+               margin-bottom: 3px;
+            }
+            .ppreq-p {
+               font-size: 12.5px;
+               color: var(--ink-4);
+               margin: 0;
+               line-height: 1.55;
+            }
+            @media (max-width: 900px) {
+               .ppreq {
+                  grid-template-columns: 1fr 1fr;
+               }
+            }
+            @media (max-width: 560px) {
+               .ppreq {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* violet interlude */
+            .ppint {
+               background: var(--violet);
+               border-radius: var(--r-xl);
+               padding: 44px 40px;
+               text-align: center;
+            }
+            .ppo .ppint h2 {
+               color: #fff;
+            }
+            .ppint .ppsub {
+               color: rgba(255, 255, 255, 0.78);
+               margin: 10px auto 0;
+               max-width: 660px;
+            }
+            .ppint-stats {
+               display: grid;
+               grid-template-columns: repeat(4, 1fr);
+               gap: 0;
+               margin-top: 30px;
+            }
+            .ppint-st {
+               padding: 6px 12px;
+               border-left: 1px solid rgba(255, 255, 255, 0.14);
+            }
+            .ppint-st:first-child {
+               border-left: 0;
+            }
+            .ppint-n {
+               font-size: 32px;
+               font-weight: 800;
+               color: #fff;
+               letter-spacing: -0.02em;
+               line-height: 1.1;
+            }
+            .ppint-n i {
+               font-style: normal;
+               color: var(--coral);
+            }
+            .ppint-l {
+               font-size: 12px;
+               color: rgba(255, 255, 255, 0.6);
+               line-height: 1.45;
+            }
+            @media (max-width: 700px) {
+               .ppint-stats {
+                  grid-template-columns: 1fr 1fr;
+                  gap: 20px 0;
+               }
+               .ppint-st:nth-child(3) {
+                  border-left: 0;
+               }
+               .ppint {
+                  padding: 36px 22px;
+               }
+            }
+
+            /* pricing / licence card */
+            .ppprice {
+               display: grid;
+               grid-template-columns: 320px 1fr;
+               border-radius: var(--r-xl);
+               overflow: hidden;
+               box-shadow: var(--md);
+            }
+            .ppprice-l {
+               background: var(--violet);
+               color: #fff;
+               padding: 34px 30px;
+            }
+            .ppprice-tag {
+               display: inline-block;
+               font-size: 11px;
+               font-weight: 700;
+               letter-spacing: 0.09em;
+               text-transform: uppercase;
+               color: var(--coral);
+               border: 1px solid rgba(250, 114, 104, 0.55);
+               border-radius: var(--r-full);
+               padding: 4px 12px;
+            }
+            .ppprice-amt {
+               font-size: 58px;
+               font-weight: 800;
+               line-height: 1;
+               margin: 18px 0 2px;
+               color: #fff;
+            }
+            .ppprice-note {
+               font-size: 13px;
+               color: rgba(255, 255, 255, 0.72);
+               margin: 0;
+            }
+            .ppprice-bul {
+               list-style: none;
+               padding: 0;
+               margin: 20px 0 0;
+            }
+            .ppprice-bul li {
+               position: relative;
+               padding-left: 20px;
+               font-size: 13.5px;
+               margin: 10px 0;
+               color: rgba(255, 255, 255, 0.9);
+            }
+            .ppprice-bul li:before {
+               content: "";
+               position: absolute;
+               left: 0;
+               top: 7px;
+               width: 7px;
+               height: 7px;
+               border-radius: 50%;
+               background: var(--coral);
+            }
+            .ppprice-r {
+               background: #fff;
+               padding: 32px 30px;
+            }
+            .ppprice-rl {
+               font-size: 11px;
+               font-weight: 700;
+               letter-spacing: 0.08em;
+               text-transform: uppercase;
+               color: var(--ink-4);
+               margin: 0 0 14px;
+            }
+            .ppprice-list {
+               display: grid;
+               gap: 11px;
+            }
+            .ppprice-list > div {
+               display: flex;
+               gap: 11px;
+               font-size: 14px;
+               color: var(--ink-2);
+               align-items: flex-start;
+            }
+            .ppprice-list img {
+               margin-top: 4px;
+            }
+            @media (max-width: 760px) {
+               .ppprice {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* QR contact block — light variant high on the page, violet variant at the end */
+            .ppqr {
+               border-radius: var(--r-xl);
+               padding: 30px 28px 26px;
+            }
+            .ppqr-light {
+               background: var(--surface-2);
+               border: 1px solid var(--line);
+            }
+            .ppqr-dark {
+               background: var(--violet);
+            }
+            .ppqr-head {
+               max-width: 660px;
+            }
+            .ppqr .ppqr-eyebrow {
+               font-size: 11px;
+               font-weight: 700;
+               letter-spacing: 0.08em;
+               text-transform: uppercase;
+               margin: 0 0 8px;
+            }
+            .ppqr-light .ppqr-eyebrow {
+               color: var(--coral-dk);
+            }
+            .ppqr-dark .ppqr-eyebrow {
+               color: var(--coral);
+            }
+            .ppo .ppqr h2.ppqr-title {
+               font-size: 24px;
+               font-weight: 800;
+               letter-spacing: -0.015em;
+               margin: 0 0 8px;
+            }
+            .ppqr-light h2.ppqr-title {
+               color: var(--violet);
+            }
+            .ppo .ppqr-dark h2.ppqr-title {
+               color: #fff;
+            }
+            .ppqr .ppqr-sub {
+               font-size: 14.5px;
+               line-height: 1.55;
+               margin: 0;
+            }
+            .ppqr-light .ppqr-sub {
+               color: var(--ink-3);
+            }
+            .ppqr-dark .ppqr-sub {
+               color: rgba(255, 255, 255, 0.74);
+            }
+            .ppqr-grid {
+               display: grid;
+               grid-template-columns: repeat(3, 1fr);
+               gap: 14px;
+               margin: 24px 0 0;
+            }
+            .ppqr-grid > * {
+               min-width: 0;
+            }
+            .ppqr-card {
+               background: #fff;
+               border-radius: var(--r-lg);
+               padding: 16px;
+               display: flex;
+               flex-direction: column;
+               gap: 10px;
+               box-shadow: var(--sm);
+            }
+            .ppqr-lead {
+               box-shadow: 0 0 0 2px var(--coral);
+            }
+            .ppqr-top {
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               gap: 10px;
+            }
+            .ppqr-ico {
+               width: 30px;
+               height: 30px;
+               border-radius: 9px;
+               background: var(--violet);
+               display: inline-flex;
+               align-items: center;
+               justify-content: center;
+               flex: none;
+            }
+            .ppqr-tag {
+               font-size: 10px;
+               font-weight: 800;
+               letter-spacing: 0.07em;
+               text-transform: uppercase;
+               color: var(--violet);
+               background: var(--surface-2);
+               border-radius: var(--r-full);
+               padding: 4px 9px;
+            }
+            .ppqr-tag-hot {
+               background: var(--coral);
+               color: #fff;
+            }
+            .ppo .ppqr .ppqr-h {
+               font-size: 15.5px;
+               color: var(--violet);
+               margin: 1px 0 0;
+            }
+            .ppo .ppqr .ppqr-p {
+               font-size: 12.5px;
+               line-height: 1.5;
+               color: var(--ink-4);
+               margin: 0;
+            }
+            .ppqr-code {
+               display: block;
+               background: var(--surface);
+               border-radius: var(--r-md);
+               padding: 10px;
+               margin-top: auto;
+            }
+            .ppqr-code img {
+               display: block;
+               width: 98px;
+               max-width: 100%;
+               height: auto;
+               margin: 0 auto;
+            }
+            .ppqr-btn {
+               width: 100%;
+               justify-content: center;
+               padding: 9px 10px;
+               font-size: 13px;
+            }
+            .ppqr .ppqr-foot {
+               font-size: 12px;
+               margin: 18px 0 0;
+            }
+            .ppqr-light .ppqr-foot {
+               color: var(--ink-4);
+            }
+            .ppqr-dark .ppqr-foot {
+               color: rgba(255, 255, 255, 0.52);
+            }
+            .ppqr-end {
+               padding: 38px 30px 30px;
+            }
+            .ppqr-end .ppqr-head {
+               margin-left: auto;
+               margin-right: auto;
+               text-align: center;
+            }
+            .ppo .ppqr-end h2.ppqr-title {
+               font-size: 28px;
+            }
+            .ppqr-end .ppqr-foot {
+               text-align: center;
+            }
+            @media (max-width: 820px) {
+               .ppqr-grid {
+                  grid-template-columns: 1fr;
+               }
+               .ppqr {
+                  padding: 26px 20px 22px;
+               }
+            }
+
+            /* FAQ — native details/summary, no JS */
+            .ppfaq-list {
+               display: grid;
+               gap: 10px;
+            }
+            .ppfaq {
+               background: var(--surface);
+               border-radius: var(--r-md);
+               box-shadow: var(--xs);
+               padding: 0;
+               overflow: hidden;
+            }
+            .ppfaq summary {
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               gap: 14px;
+               padding: 15px 18px;
+               cursor: pointer;
+               list-style: none;
+            }
+            .ppfaq summary::-webkit-details-marker {
+               display: none;
+            }
+            .ppfaq-q {
+               font-size: 15px;
+               font-weight: 700;
+               color: var(--violet);
+            }
+            .ppfaq-a {
+               padding: 0 18px 16px;
+            }
+            .ppfaq-a p {
+               font-size: 14px;
+               margin: 0 0 10px;
+            }
+            .ppfaq-a p:last-child {
+               margin-bottom: 0;
+            }
+            .ppfaq[open] {
+               background: #fff;
+               box-shadow: var(--sm);
+            }
+            .ppfaq[open] .ppfaq-chev {
+               transform: rotate(180deg);
+            }
+            .ppfaq-chev {
+               transition: transform 150ms ease;
+            }
+
+            /* releases */
+            .pprel {
+               display: grid;
+               gap: 0;
+            }
+            .pprel-row {
+               display: grid;
+               grid-template-columns: 170px 1fr;
+               gap: 24px;
+               padding: 22px 0;
+               border-top: 1px solid var(--line);
+            }
+            .pprel-row:last-child {
+               border-bottom: 1px solid var(--line);
+            }
+            .pprel-v {
+               font-size: 15px;
+               font-weight: 800;
+               color: var(--violet);
+            }
+            .pprel-d {
+               font-size: 12.5px;
+               color: var(--ink-4);
+            }
+            .pprel-list {
+               list-style: none;
+               padding: 0;
+               margin: 0;
+               display: grid;
+               gap: 9px;
+            }
+            .pprel-list li {
+               font-size: 14px;
+               display: flex;
+               gap: 10px;
+               align-items: flex-start;
+            }
+            .pprel-list li > span:not(.ppbadge) {
+               display: block;
+            }
+            .ppbadge {
+               font-size: 10px;
+               font-weight: 800;
+               letter-spacing: 0.06em;
+               border-radius: 4px;
+               padding: 3px 6px;
+               flex: none;
+               margin-top: 2px;
+            }
+            .ppbadge-new {
+               background: rgba(22, 163, 74, 0.12);
+               color: var(--success);
+            }
+            .ppbadge-imp {
+               background: rgba(250, 114, 104, 0.14);
+               color: var(--coral-dk);
+            }
+            @media (max-width: 700px) {
+               .pprel-row {
+                  grid-template-columns: 1fr;
+                  gap: 10px;
+               }
+            }
+
+            /* cross-sell */
+            /* "Works great with" cross-sell. The cards' own chrome is authored inline in
+   longhand so it survives the store's html_sanitize(), which may drop this whole
+   block; these rules only supply the grid and the centring. Bootstrap's
+   row/col-lg-4 do the same job on the store if this block is dropped, and with
+   BOTH gone the three cards simply stack, which still reads. */
+            .ppwg {
+               text-align: center;
+            }
+            .ppwg-grid {
+               display: grid;
+               grid-template-columns: repeat(3, 1fr);
+               gap: 18px;
+            }
+            .ppwg-col {
+               display: block;
+               width: auto;
+            }
+            @media (max-width: 860px) {
+               .ppwg-grid {
+                  grid-template-columns: 1fr;
+               }
+               /* stacked cards need no shared button baseline, so release the measured
+     min-height and drop the dead space under the two short blurbs. Overrides
+     the inline value, which stays as the fallback if this block is dropped. */
+               .ppwg-card p {
+                  min-height: 0 !important;
+               }
+            }
+
+            /* services */
+
+            /* footer */
+         </style>
+
+         <!-- ============================== NAV ============================== -->
+         <div class="ppnav">
+            <div class="ppnav-in">
+               <span class="ppnav-brand"
+                  ><img
+                     class="ppnav-icon"
+                     src="./assets/ppo-icon.png"
+                     alt="Purchase Product Optional"
+                     width="32"
+                     height="32"
+                  /><span class="ppnav-name"
+                     >Purchase Product Optional</span
+                  ></span
+               >
+               <nav class="pptabs">
+                  <a href="#ppo-gap">The gap</a
+                  ><a href="#ppo-how">How it works</a
+                  ><a href="#ppo-features">Features</a
+                  ><a href="#ppo-cases">Who this is for</a
+                  ><a href="#ppo-setup">Setup</a><a href="#ppo-faq">FAQ</a
+                  ><a href="#ppo-releases">Releases</a>
+               </nav>
+               <span class="ppnav-cta"
+                  ><a class="ppbtn ppbtn-1">Free &middot; install it</a></span
+               >
+            </div>
+         </div>
+
+         <!-- ============================== HERO ============================== -->
+         <!-- Copy order is deliberate: headline, then the one sentence that states the
+     problem, then the visual that answers it, then the promise and the CTAs. -->
+         <section class="pphero">
+            <div class="wrap">
+               <div class="pphero-top">
+                  <p class="ppeyebrow">
+                     Free module &middot; Odoo 17 &middot; Purchase
+                  </p>
+                  <span class="pphero-pill"
+                     >LGPL-3 &middot; no subscription</span
+                  >
+                  <span class="pphero-pill">Installs itself</span>
+               </div>
+
+               <div class="pphero-intro">
+                  <h1 class="pph1">
+                     Product configurator for
+                     <span class="mark">Odoo purchase orders</span>
+                  </h1>
+                  <p class="pplead">
+                     Why can your sales team configure a product on the order
+                     line, but your buyers can't? Pick a product, tick the
+                     accessories, see the supplier price &mdash; on a purchase
+                     order, not just a quotation.
+                  </p>
+               </div>
+
+               <div class="ppframe">
+                  <div class="ppframe-bar">
+                     <span class="ppframe-dots"><i></i><i></i><i></i></span
+                     ><span class="ppframe-l"
+                        >Purchase / Purchase Orders / P00042 &nbsp;&mdash;&nbsp;
+                        Odoo 17.0</span
+                     >
+                  </div>
+                  <div class="ppframe-body">
+                     <img
+                        src="./assets/hero-configurator-journey.gif"
+                        alt="Configuring a Conference Chair on an Odoo 17 purchase order: the product configurator opens on the order line showing the supplier price of 35.94 € and offering a matching floor protection accessory at 9.63 €"
+                        width="1280"
+                        height="498"
+                     />
+                  </div>
+               </div>
+
+               <div class="pphero-payoff">
+                  <p class="pplead">
+                     That&rsquo;s the whole module &mdash; free, open source,
+                     and running on the product data you already have in Odoo.
+                  </p>
+                  <div class="ppchiprow" style="margin-top: 24px">
+                     <span class="ppchip ppchip-dark"
+                        ><img
+                           class="ppico-13"
+                           src="./assets/ic-check-white.png"
+                           alt=""
+                        />Free &middot; LGPL-3 source</span
+                     >
+                     <span class="ppchip ppchip-dark"
+                        ><img
+                           class="ppico-13"
+                           src="./assets/ic-check-white.png"
+                           alt=""
+                        />Odoo 17.0 &middot; Community or Enterprise</span
+                     >
+                     <span class="ppchip ppchip-dark"
+                        ><img
+                           class="ppico-13"
+                           src="./assets/ic-check-white.png"
+                           alt=""
+                        />42 translation files</span
+                     >
+                     <span class="ppchip ppchip-dark"
+                        ><img
+                           class="ppico-13"
+                           src="./assets/ic-check-white.png"
+                           alt=""
+                        />Odoo official partner</span
+                     >
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== WHAT CHANGES STRIP ============================== -->
+         <section class="sec sec-tight sec-alt">
+            <div class="wrap">
+               <p class="ppeyebrow ppcenter" style="display: block">
+                  What changes on the order line
+               </p>
+               <div class="ppchg">
+                  <div class="ppchg-t">
+                     <img
+                        class="ppico-26"
+                        src="./assets/ic-config.png"
+                        alt=""
+                     />
+                     <span class="ppchg-h">Attribute configurator dialog</span>
+                     <div class="ppchg-pair">
+                        <span class="ppchg-b"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-cross-red.png"
+                              alt="Before"
+                           />Sales orders only</span
+                        >
+                        <span class="ppchg-a"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-check-green.png"
+                              alt="After"
+                           />Now on purchase orders</span
+                        >
+                     </div>
+                  </div>
+                  <div class="ppchg-t">
+                     <img
+                        class="ppico-26"
+                        src="./assets/ic-variants.png"
+                        alt=""
+                     />
+                     <span class="ppchg-h">Optional products suggested</span>
+                     <div class="ppchg-pair">
+                        <span class="ppchg-b"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-cross-red.png"
+                              alt="Before"
+                           />Sales orders only</span
+                        >
+                        <span class="ppchg-a"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-check-green.png"
+                              alt="After"
+                           />Listed, ready to tick</span
+                        >
+                     </div>
+                  </div>
+                  <div class="ppchg-t">
+                     <img
+                        class="ppico-26"
+                        src="./assets/ic-currency.png"
+                        alt=""
+                     />
+                     <span class="ppchg-h"
+                        >Priced from your supplier lines</span
+                     >
+                     <div class="ppchg-pair">
+                        <span class="ppchg-b"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-cross-red.png"
+                              alt="Before"
+                           />Product cost only</span
+                        >
+                        <span class="ppchg-a"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-check-green.png"
+                              alt="After"
+                           />Supplier price, order currency</span
+                        >
+                     </div>
+                  </div>
+                  <div class="ppchg-t">
+                     <img class="ppico-26" src="./assets/ic-cart.png" alt="" />
+                     <span class="ppchg-h">Variant grid entry</span>
+                     <div class="ppchg-pair">
+                        <span class="ppchg-b"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-check-green.png"
+                              alt="Before"
+                           />Already in Purchase</span
+                        >
+                        <span class="ppchg-a"
+                           ><img
+                              class="ppico-13"
+                              src="./assets/ic-check-green.png"
+                              alt="After"
+                           />Kept, untouched</span
+                        >
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== DEMO / QR BLOCK (high) ============================== -->
+         <section class="sec sec-tight">
+            <div class="wrap">
+               <div class="ppqr ppqr-light">
+                  <div class="ppqr-head">
+                     <p class="ppqr-eyebrow">Before you install anything</p>
+                     <h2 class="ppqr-title">See it running on your own Odoo</h2>
+                     <p class="ppqr-sub">
+                        Show us one purchase order you dread doing by hand and
+                        we will walk it through the configurator, on your data,
+                        on a call. Or just ask us whether your products are set
+                        up for it.
+                     </p>
+                  </div>
+                  <div class="ppqr-grid">
+                     <div class="ppqr-card ppqr-lead">
+                        <div class="ppqr-top">
+                           <span class="ppqr-ico"
+                              ><img
+                                 class="ppico-17"
+                                 src="./assets/ic-meeting.png"
+                                 alt="" /></span
+                           ><span class="ppqr-tag ppqr-tag-hot"
+                              >30 minutes</span
+                           >
+                        </div>
+                        <h3 class="ppqr-h">Book a demo</h3>
+                        <p class="ppqr-p">
+                           A live walkthrough on your own purchase orders.
+                        </p>
+                        <a class="ppqr-code" aria-label="Book a demo"
+                           ><img
+                              src="./assets/qr-meeting.png"
+                              alt="QR code for https://hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a class="ppbtn ppbtn-1 ppqr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</a
+                        >
+                     </div>
+                     <div class="ppqr-card">
+                        <div class="ppqr-top">
+                           <span class="ppqr-ico"
+                              ><img
+                                 class="ppico-17"
+                                 src="./assets/ic-mail.png"
+                                 alt="" /></span
+                           ><span class="ppqr-tag">Written reply</span>
+                        </div>
+                        <h3 class="ppqr-h">Send us a question</h3>
+                        <p class="ppqr-p">
+                           Ask in writing, we answer by e-mail.
+                        </p>
+                        <a
+                           class="ppqr-code"
+                           href="mailto:odoo@doodex.net"
+                           aria-label="Send us a question"
+                           ><img
+                              src="./assets/qr-contact.png"
+                              alt="QR code for https://doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a
+                           class="ppbtn ppbtn-2 ppqr-btn"
+                           href="mailto:odoo@doodex.net"
+                           >odoo@doodex.net</a
+                        >
+                     </div>
+                     <div class="ppqr-card">
+                        <div class="ppqr-top">
+                           <span class="ppqr-ico"
+                              ><img
+                                 class="ppico-17"
+                                 src="./assets/ic-chat.png"
+                                 alt="" /></span
+                           ><span class="ppqr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="ppqr-h">Message us on WhatsApp</h3>
+                        <p class="ppqr-p">
+                           Reach the team directly on +62 821-3120-5030.
+                        </p>
+                        <a class="ppqr-code" aria-label="Message us on WhatsApp"
+                           ><img
+                              src="./assets/qr-whatsapp.png"
+                              alt="QR code for https://hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a class="ppbtn ppbtn-2 ppqr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</a
+                        >
+                     </div>
+                  </div>
+                  <p class="ppqr-foot">
+                     Scan a code with your phone, or click it &mdash; both open
+                     the same page. The addresses are printed above in case the
+                     store strips the links.
+                  </p>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== 01 · THE GAP ============================== -->
+         <div class="ppband">
+            <div class="ppband-in" id="ppo-gap">
+               <span class="ppband-bar"></span
+               ><span class="ppband-l">The gap</span
+               ><span class="ppband-c"
+                  >What Odoo 17 does and does not give Purchase</span
+               >
+            </div>
+         </div>
+         <section class="sec">
+            <div class="wrap">
+               <div class="narrow" style="margin: 0 0 30px">
+                  <h2 class="pph2">
+                     Odoo already knows how to configure a product. It just
+                     never offers on a purchase order.
+                  </h2>
+                  <p class="pplead" style="margin-top: 14px">
+                     Everything the configurator needs is already in your
+                     database. Your products have attributes. Some of them have
+                     optional products attached. Odoo shows all of it on a
+                     quotation and none of it on a purchase order &mdash; so
+                     buyers retype what sales gets handed.
+                  </p>
+               </div>
+               <div class="ppba">
+                  <div class="ppba-col ppba-before">
+                     <p class="ppba-h">Ordering a configurable machine today</p>
+                     <p class="ppba-sub">Standard Odoo 17 purchase order</p>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-cross-red.png"
+                           alt="No"
+                        />Pick the exact variant from a dropdown &mdash; if the
+                        right one exists yet.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-cross-red.png"
+                           alt="No"
+                        />Nothing tells you the machine has three matching
+                        accessories.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-cross-red.png"
+                           alt="No"
+                        />Add each accessory as its own line, found by typing
+                        its name.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-cross-red.png"
+                           alt="No"
+                        />Attribute surcharges are invisible &mdash; nothing
+                        shows why one variant costs more.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-cross-red.png"
+                           alt="No"
+                        />No record on the line of the choices behind the
+                        variant.
+                     </div>
+                  </div>
+                  <div class="ppba-col ppba-after">
+                     <p class="ppba-h">Ordering it with this module</p>
+                     <p class="ppba-sub">Same Odoo, one free module added</p>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-check-green.png"
+                           alt="Yes"
+                        />Choose the product template; the configurator opens on
+                        its own.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-check-green.png"
+                           alt="Yes"
+                        />The accessories are listed for you, ready to tick.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-check-green.png"
+                           alt="Yes"
+                        />Confirm once and every chosen line lands on the order.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-check-green.png"
+                           alt="Yes"
+                        />Prices come from the product's supplier lines, in the
+                        order's currency.
+                     </div>
+                     <div class="ppba-item">
+                        <img
+                           class="ppico-15"
+                           src="./assets/ic-check-green.png"
+                           alt="Yes"
+                        />The attribute choices stay on the line, and you can
+                        reopen them.
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== 02 · HOW IT WORKS ============================== -->
+         <div class="ppband">
+            <div class="ppband-in" id="ppo-how">
+               <span class="ppband-bar"></span
+               ><span class="ppband-l">How it works</span
+               ><span class="ppband-c"
+                  >From product template to priced order line</span
+               >
+            </div>
+         </div>
+         <section class="sec">
+            <div class="wrap">
+               <div class="narrow" style="margin: 0 0 4px">
+                  <p class="ppeyebrow">The mechanism</p>
+                  <h2 class="pph2">Four steps, one dialog</h2>
+                  <p class="pplead" style="margin-top: 14px">
+                     Everything happens on the purchase order line you are
+                     already filling in. Pick a product, answer the questions
+                     the product itself defines, and the order lines write
+                     themselves.
+                  </p>
+               </div>
+
+               <div class="ppflow">
+                  <div class="ppflow-s">
+                     <div class="ppflow-top">
+                        <span class="ppflow-n">1</span
+                        ><span class="ppflow-line"></span>
+                     </div>
+                     <div class="ppflow-b">
+                        <img
+                           class="ppico-26"
+                           src="./assets/ic-cart.png"
+                           alt=""
+                        />
+                        <span class="ppflow-h">Pick the product template</span>
+                        <p class="ppflow-p">
+                           Type the product name on the line as usual. Templates
+                           with variant attributes or optional products are the
+                           ones with something to configure.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppflow-s">
+                     <div class="ppflow-top">
+                        <span class="ppflow-n">2</span
+                        ><span class="ppflow-line"></span>
+                     </div>
+                     <div class="ppflow-b">
+                        <img
+                           class="ppico-26"
+                           src="./assets/ic-config.png"
+                           alt=""
+                        />
+                        <span class="ppflow-h">Configure it</span>
+                        <p class="ppflow-p">
+                           Choose the attribute values, type any free-text spec,
+                           and tick the accessories the product carries.
+                           Surcharges show beside the values that add cost.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppflow-s">
+                     <div class="ppflow-top">
+                        <span class="ppflow-n">3</span
+                        ><span class="ppflow-line"></span>
+                     </div>
+                     <div class="ppflow-b">
+                        <img
+                           class="ppico-26"
+                           src="./assets/ic-money.png"
+                           alt=""
+                        />
+                        <span class="ppflow-h">See the supplier price</span>
+                        <p class="ppflow-p">
+                           Prices come from the supplier lines on the product,
+                           converted into the order&rsquo;s own currency.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppflow-s">
+                     <div class="ppflow-top">
+                        <span class="ppflow-n">4</span
+                        ><span class="ppflow-line"></span>
+                     </div>
+                     <div class="ppflow-b">
+                        <img
+                           class="ppico-26"
+                           src="./assets/ic-install.png"
+                           alt=""
+                        />
+                        <span class="ppflow-h"
+                           >Confirm, and the lines land</span
+                        >
+                        <p class="ppflow-p">
+                           Every product you selected becomes its own order
+                           line, priced and described. A combination with no
+                           variant yet gets one created at that moment.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+
+               <div style="margin-top: 52px">
+                  <h3 class="pph3" style="margin-bottom: 4px">
+                     What it puts on the purchase order line
+                  </h3>
+                  <p class="ppsm ppmuted" style="max-width: 660px">
+                     Eight things, all of them read from product data you
+                     already maintain. One dialog produces as many order lines
+                     as you tick.
+                  </p>
+                  <div class="ppcap">
+                     <div class="ppcap-i">
+                        <b>The configurator dialog</b>
+                        <p>
+                           Opens on the order line for any template that has
+                           variant attributes or optional products attached.
+                        </p>
+                     </div>
+                     <div class="ppcap-i">
+                        <b>Optional products</b>
+                        <p>
+                           The accessories on the template, listed with
+                           quantities, and attribute exclusion rules applied so
+                           an unbuildable combination is never offered.
+                        </p>
+                     </div>
+                     <div class="ppcap-i">
+                        <b>Supplier-line pricing</b>
+                        <p>
+                           Read from the supplier lines on the product, for the
+                           main product and every optional one alike.
+                        </p>
+                     </div>
+                     <div class="ppcap-i">
+                        <b>The order's currency</b>
+                        <p>
+                           Supplier prices are converted using the exchange
+                           rates already configured in your Odoo. No external
+                           rate service.
+                        </p>
+                     </div>
+                     <div class="ppcap-i">
+                        <b>Attribute surcharges</b>
+                        <p>
+                           Values that add cost display the surcharge next to
+                           them inside the dialog, so nobody has to work out why
+                           a total moved.
+                        </p>
+                     </div>
+                     <div class="ppcap-i">
+                        <b>Free-text attribute values</b>
+                        <p>
+                           Cut length, tolerance, finish &mdash; typed into the
+                           dialog and kept on the order line, so the supplier
+                           reads the words you agreed.
+                        </p>
+                     </div>
+                     <div class="ppcap-i">
+                        <b>Dynamic variants</b>
+                        <p>
+                           A combination that has no product variant yet gets
+                           one created when you confirm, instead of you
+                           pre-building records nobody has ordered.
+                        </p>
+                     </div>
+                     <div class="ppcap-i">
+                        <b>A reopenable configuration</b>
+                        <p>
+                           The attribute values, the free text and the
+                           no-variant extra prices stay on the line and come
+                           back exactly as you left them.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== 03 · FEATURES ============================== -->
+         <div class="ppband">
+            <div class="ppband-in" id="ppo-features">
+               <span class="ppband-bar"></span
+               ><span class="ppband-l">Features</span
+               ><span class="ppband-c"
+                  >Six things it does, and everything else it ships</span
+               >
+            </div>
+         </div>
+         <section class="sec">
+            <div class="wrap">
+               <div class="narrow" style="margin: 0 0 26px">
+                  <h2 class="pph2">
+                     Every attribute, accessory and supplier price on one order
+                     line
+                  </h2>
+                  <p class="pplead" style="margin-top: 12px">
+                     This is where the detail lives &mdash; exclusion rules that
+                     hide combinations nobody can build, free-text specs that
+                     reach your supplier word for word, currency conversion on
+                     every figure, and product variants created only when
+                     someone actually orders one. Six features, no filler.
+                  </p>
+               </div>
+
+               <div class="ppzz">
+                  <div class="ppzz-txt">
+                     <span class="ppzz-n">01</span>
+                     <h3 class="pph3">
+                        Configure on the order line, not in your head
+                     </h3>
+                     <p>
+                        Pick a product template on the purchase order and the
+                        configurator is one click away, every variant attribute
+                        ready to answer. Products with a single variant and
+                        nothing optional stay the fast, plain pick they always
+                        were.
+                     </p>
+                     <span class="ppzz-meta"
+                        >purchase.order.line &rarr; product_template_id</span
+                     >
+                  </div>
+                  <figure class="ppzz-fig">
+                     <div class="ppframe ppframe-light">
+                        <div class="ppframe-bar">
+                           <span class="ppframe-dots"
+                              ><i></i><i></i><i></i></span
+                           ><span class="ppframe-l"
+                              >Purchase / Requests for Quotation / New
+                              &nbsp;&mdash;&nbsp; Odoo 17.0</span
+                           >
+                        </div>
+                        <div class="ppframe-body ppshot-bed">
+                           <img
+                              src="./assets/feat-01-configurator-dialog.png"
+                              alt="The Odoo 17 product configurator open on a purchase order line for Conference Chair, with the Legs attribute offering Steel or Aluminium at plus 6.40 euros and the supplier price of 35.94 euros"
+                              width="799"
+                              height="240"
+                           />
+                        </div>
+                     </div>
+                     <figcaption>
+                        The configurator on a purchase order line. Every variant
+                        attribute is ready to answer &mdash; here <b>Legs</b>,
+                        with the Aluminium surcharge priced inline &mdash; and
+                        the supplier price of <b>35.94&nbsp;&euro;</b> already
+                        resolved and converted into the order&rsquo;s currency.
+                     </figcaption>
+                  </figure>
+               </div>
+
+               <div class="ppzz">
+                  <div class="ppzz-txt">
+                     <span class="ppzz-n">02</span>
+                     <h3 class="pph3">
+                        Every accessory offered, before you forget it
+                     </h3>
+                     <p>
+                        Optional products attached to the template are listed
+                        underneath, ready to tick into their own order lines.
+                        Exclusion rules hide combinations nobody can build, and
+                        dropping a parent drops the extras that only hung off
+                        it.
+                     </p>
+                     <span class="ppzz-meta"
+                        >product.template &rarr; optional_product_ids</span
+                     >
+                  </div>
+                  <figure class="ppzz-fig">
+                     <div class="ppframe ppframe-light">
+                        <div class="ppframe-bar">
+                           <span class="ppframe-dots"
+                              ><i></i><i></i><i></i></span
+                           ><span class="ppframe-l"
+                              >Configure your product &nbsp;&mdash;&nbsp; Add
+                              optional products</span
+                           >
+                        </div>
+                        <div class="ppframe-body ppshot-bed">
+                           <img
+                              src="./assets/feat-02-optional-products.png"
+                              alt="The Add optional products section of the configurator listing Chair floor protection at 9.63 euros with an Add button beside it"
+                              width="799"
+                              height="207"
+                           />
+                        </div>
+                     </div>
+                     <figcaption>
+                        Accessories attached to the template are listed under
+                        the product, each with its own price &mdash;
+                        <b>9.63&nbsp;&euro;</b> here &mdash; and an
+                        <b>+&nbsp;Add</b> control that drops it onto its own
+                        order line.
+                     </figcaption>
+                  </figure>
+               </div>
+
+               <div class="ppzz">
+                  <div class="ppzz-txt">
+                     <span class="ppzz-n">03</span>
+                     <h3 class="pph3">
+                        Priced from your supplier lines, not your sales
+                        catalogue
+                     </h3>
+                     <p>
+                        Every figure in the dialog &mdash; main product and
+                        accessories alike &mdash; is read from the supplier
+                        lines already on your products, then converted into the
+                        order&rsquo;s currency. Several supplier lines resolve
+                        to the first one on the product; none at all falls back
+                        to the product&rsquo;s cost.
+                     </p>
+                     <span class="ppzz-meta"
+                        >product.supplierinfo &rarr; price, fallback
+                        standard_price</span
+                     >
+                  </div>
+                  <figure class="ppzz-fig">
+                     <div class="ppframe ppframe-light">
+                        <div class="ppframe-bar">
+                           <span class="ppframe-dots"
+                              ><i></i><i></i><i></i></span
+                           ><span class="ppframe-l"
+                              >Product / Conference Chair / Purchase
+                              &nbsp;&mdash;&nbsp; Odoo 17.0</span
+                           >
+                        </div>
+                        <div class="ppframe-body ppshot-bed">
+                           <img
+                              src="./assets/feat-03-vendor-price.png"
+                              alt="The Purchase tab of the Conference Chair product showing two vendors, Wood Corner at 28.00 USD and Azure Interior at 24.90 USD"
+                              width="995"
+                              height="242"
+                           />
+                        </div>
+                     </div>
+                     <figcaption>
+                        The supplier lines the configurator reads: every vendor
+                        with their own price and currency on the product&rsquo;s
+                        <b>Purchase</b> tab.
+                     </figcaption>
+                  </figure>
+               </div>
+
+               <div class="ppzz">
+                  <div class="ppzz-txt">
+                     <span class="ppzz-n">04</span>
+                     <h3 class="pph3">Buy in euros from a dollar price list</h3>
+                     <p>
+                        Supplier prices convert into the purchase order's own
+                        currency using the exchange rates already configured in
+                        your Odoo. The figure you approve in the dialog is the
+                        figure that lands on the order.
+                     </p>
+                     <span class="ppzz-meta"
+                        >converted into purchase.order.currency_id</span
+                     >
+                  </div>
+                  <figure class="ppzz-fig">
+                     <div class="ppframe ppframe-light">
+                        <div class="ppframe-bar">
+                           <span class="ppframe-dots"
+                              ><i></i><i></i><i></i></span
+                           ><span class="ppframe-l"
+                              >Product / Conference Chair / Purchase
+                              &nbsp;&rarr;&nbsp; a EUR purchase order</span
+                           >
+                        </div>
+                        <div class="ppframe-body ppshot-bed">
+                           <img
+                              src="./assets/feat-04-currency-conversion.png"
+                              alt="Conference Chair priced at 28.00 USD on the product's Purchase tab, and the same product on a EUR purchase order where the configurator shows 35.94 euros"
+                              width="705"
+                              height="167"
+                           />
+                        </div>
+                     </div>
+                     <figcaption>
+                        The supplier line stays in <b>USD</b>. On a purchase
+                        order whose currency is EUR the configurator converts it
+                        and shows <b>35.94&nbsp;&euro;</b> &mdash; no second
+                        price list to maintain.
+                     </figcaption>
+                  </figure>
+               </div>
+
+               <div class="ppzz">
+                  <div class="ppzz-txt">
+                     <span class="ppzz-n">05</span>
+                     <h3 class="pph3">
+                        Variants born when someone actually orders them
+                     </h3>
+                     <p>
+                        Attributes set to create variants on demand stay
+                        uncreated until a buyer needs one. Confirm a
+                        never-ordered combination and the product variant
+                        appears on the line at that moment &mdash; no thousands
+                        of records built on spec.
+                     </p>
+                     <span class="ppzz-meta"
+                        >create_variant = &ldquo;dynamic&rdquo;, created on
+                        confirm</span
+                     >
+                  </div>
+                  <figure class="ppzz-fig">
+                     <div class="ppframe ppframe-light">
+                        <div class="ppframe-body ppshot-bed">
+                           <img
+                              src="./assets/feat-05-dynamic-variant.png"
+                              alt="Diagram: a product with four finishes, three frames and five widths has sixty possible combinations and zero product variants stored; when a buyer confirms one combination, one variant is created and the other fifty-nine still do not exist"
+                              width="802"
+                              height="277"
+                           />
+                        </div>
+                     </div>
+                     <figcaption>
+                        How <b>dynamic</b> variant creation behaves: the
+                        combinations stay arithmetic until somebody orders one,
+                        and only the ordered combination becomes a
+                        <b>product.product</b> record.
+                     </figcaption>
+                  </figure>
+               </div>
+
+               <div class="ppzz">
+                  <div class="ppzz-txt">
+                     <span class="ppzz-n">06</span>
+                     <h3 class="pph3">
+                        Reopen a saved configuration, exactly as you left it
+                     </h3>
+                     <p>
+                        Attribute values, free-text specs and no-variant
+                        surcharges all stay on the purchase order line. Reopen
+                        the configurator and nothing is empty; swap the product
+                        and values that no longer apply clear themselves out.
+                     </p>
+                     <span class="ppzz-meta"
+                        >product_custom_attribute_value_ids &middot;
+                        product_no_variant_attribute_value_ids</span
+                     >
+                  </div>
+                  <figure class="ppzz-fig">
+                     <div class="ppframe ppframe-light">
+                        <div class="ppframe-bar">
+                           <span class="ppframe-dots"
+                              ><i></i><i></i><i></i></span
+                           ><span class="ppframe-l"
+                              >Purchase / Requests for Quotation / P00014
+                              &nbsp;&mdash;&nbsp; Odoo 17.0</span
+                           >
+                        </div>
+                        <div class="ppframe-body ppshot-bed">
+                           <img
+                              src="./assets/feat-06-edit-configuration.png"
+                              alt="A saved purchase order line for Conference Chair Steel at 35.94 euros with a configure icon beside the product"
+                              width="777"
+                              height="147"
+                           />
+                        </div>
+                     </div>
+                     <figcaption>
+                        A saved line keeps the variant it was configured as
+                        &mdash;
+                        <b>[E&#8209;COM12] Conference Chair (Steel)</b> &mdash;
+                        with the configure control beside it to open the
+                        configuration again.
+                     </figcaption>
+                  </figure>
+               </div>
+
+               <hr class="pphr" style="margin: 44px 0 32px" />
+               <h3 class="pph3" style="margin-bottom: 16px">
+                  Also in the download
+               </h3>
+               <div class="pptblwrap">
+                  <table class="pptbl">
+                     <thead>
+                        <tr>
+                           <th>What</th>
+                           <th>Detail</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>Extra-price badges</td>
+                           <td class="plaincol">
+                              Attribute values that add cost show that cost
+                              inside the dialog, so nobody has to work out why
+                              the total moved.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Purchase warnings</td>
+                           <td class="plaincol">
+                              A vendor or product warning of type
+                              <i>warning</i> or <i>block</i> is surfaced before
+                              the configurator opens, exactly as Odoo intends.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Order line list tuned for configuration</td>
+                           <td class="plaincol">
+                              The Product Template column is always visible; the
+                              raw variant column is hidden by default and
+                              relabelled <i>Product Variant</i>, so buyers pick
+                              templates and see variants only when they want
+                              them.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Grid mode preserved</td>
+                           <td class="plaincol">
+                              Templates set to matrix entry still open the
+                              variant grid. The module chooses the right dialog
+                              per product instead of forcing one.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Installs itself</td>
+                           <td class="plaincol">
+                              Marked <b>auto_install</b>: once Purchase and the
+                              two dependency modules are present, it installs
+                              without you hunting for it in Apps.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Translations</td>
+                           <td class="plaincol">
+                              42 translation files ship in the module's
+                              <b>i18n</b> folder, plus the extraction template.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Tests</td>
+                           <td class="plaincol">
+                              5 Python test modules, 2 QUnit component test
+                              files and 1 browser tour, all inside the download
+                              &mdash; run them on your own instance before you
+                              trust it.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Source you can read</td>
+                           <td class="plaincol">
+                              LGPL-3. Around 1,500 lines of Python and
+                              JavaScript, no obfuscation, no licence server, no
+                              phone-home.
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== 04 · USE CASES ============================== -->
+         <div class="ppband ppband-alt">
+            <div class="ppband-in" id="ppo-cases">
+               <span class="ppband-bar"></span
+               ><span class="ppband-l">Who this is for</span
+               ><span class="ppband-c"
+                  >Four kinds of Odoo 17 team we built this around</span
+               >
+            </div>
+         </div>
+         <section class="sec sec-alt">
+            <div class="wrap">
+               <p class="ppeyebrow">Who this is for</p>
+               <h2 class="pph2">
+                  Odoo 17 teams whose buyers configure products, not just pick
+                  them
+               </h2>
+               <p class="pplead" style="margin-top: 12px; margin-bottom: 36px">
+                  If your purchase orders carry attribute choices, accessory
+                  lists or supplier prices that live somewhere else in your
+                  Odoo, this module was written for you.
+               </p>
+
+               <div class="ppwho">
+                  <div class="ppwho-i">
+                     <img
+                        class="ppwho-ico"
+                        src="./assets/ic-cart.png"
+                        alt=""
+                        width="52"
+                        height="52"
+                     />
+                     <h3>
+                        Purchasing teams working from configurable catalogues
+                     </h3>
+                     <p>
+                        You buy machines, IT hardware, furniture or made-to-spec
+                        parts where every RFQ carries three or four attribute
+                        decisions. Today those land as free text in the
+                        description or as separate lines nobody links back to
+                        the parent &mdash; this module puts them on the order
+                        line where they belong.
+                     </p>
+                  </div>
+
+                  <div class="ppwho-i">
+                     <img
+                        class="ppwho-ico"
+                        src="./assets/ic-config.png"
+                        alt=""
+                        width="52"
+                        height="52"
+                     />
+                     <h3>
+                        Operations leads tired of the accessory that was
+                        forgotten
+                     </h3>
+                     <p>
+                        The die set the press needs. The mounting kit the desk
+                        needs. The warranty the laptop needs. Attach them once
+                        as optional products on the template and the
+                        configurator lists them the moment a buyer picks the
+                        parent &mdash; no more memory drills at the counter.
+                     </p>
+                  </div>
+
+                  <div class="ppwho-i">
+                     <img
+                        class="ppwho-ico"
+                        src="./assets/ic-variants.png"
+                        alt=""
+                        width="52"
+                        height="52"
+                     />
+                     <h3>
+                        Odoo administrators keeping the product catalogue lean
+                     </h3>
+                     <p>
+                        Templates with dynamic-variant attributes stay uncreated
+                        until somebody actually orders one. Your
+                        <b>product.product</b> table stays as small as your
+                        business needs, not as large as every possible
+                        combination of every attribute you ship.
+                     </p>
+                  </div>
+
+                  <div class="ppwho-i">
+                     <img
+                        class="ppwho-ico"
+                        src="./assets/ic-depends.png"
+                        alt=""
+                        width="52"
+                        height="52"
+                     />
+                     <h3>
+                        Odoo shops whose sales side already uses the
+                        configurator
+                     </h3>
+                     <p>
+                        Your sales team configures products on the order line
+                        every day. Your buyers see a plain dropdown. This is the
+                        same interface on the other side of the transaction
+                        &mdash; attributes, optional products and supplier-line
+                        pricing, on the purchase order.
+                     </p>
+                  </div>
+               </div>
+
+               <p class="ppsm ppmuted" style="margin-top: 32px">
+                  Not sure whether it fits? Describe one purchase order on a
+                  call &mdash; <b>hub.doodex.net/r/meeting</b> &mdash; and we
+                  will tell you straight whether the module helps or whether you
+                  need something built.
+               </p>
+            </div>
+         </section>
+
+         <!-- ============================== PROOF INTERLUDE ============================== -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="ppint">
+                  <h2 class="pph2">Nothing on this page is an estimate</h2>
+                  <p class="ppsub">
+                     Every number here is countable inside the download. We have
+                     no purchase counter and no reviews to show yet, so we are
+                     showing you what we can prove instead.
+                  </p>
+                  <div class="ppint-stats">
+                     <div class="ppint-st">
+                        <div class="ppint-n">42</div>
+                        <div class="ppint-l">
+                           translation files in <i>i18n</i>
+                        </div>
+                     </div>
+                     <div class="ppint-st">
+                        <div class="ppint-n">8</div>
+                        <div class="ppint-l">
+                           test files: 5 Python, 2 QUnit, 1 tour
+                        </div>
+                     </div>
+                     <div class="ppint-st">
+                        <div class="ppint-n">3</div>
+                        <div class="ppint-l">
+                           dependencies, all standard Odoo
+                        </div>
+                     </div>
+                     <div class="ppint-st">
+                        <div class="ppint-n"><i>$0</i></div>
+                        <div class="ppint-l">LGPL-3, source included</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== 05 · SETUP ============================== -->
+         <div class="ppband">
+            <div class="ppband-in" id="ppo-setup">
+               <span class="ppband-bar"></span
+               ><span class="ppband-l">Setup</span
+               ><span class="ppband-c">What it needs, what it does not</span>
+            </div>
+         </div>
+         <section class="sec">
+            <div class="wrap">
+               <p class="ppeyebrow">Requirements</p>
+               <h2 class="pph2" style="margin-bottom: 24px">
+                  Fifteen answers before you install
+               </h2>
+               <div class="ppreq">
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-version.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Odoo version</b>
+                        <p class="ppreq-p">
+                           Odoo 17.0, Community or Enterprise. This listing is
+                           the 17.0 build; nothing here claims support for
+                           another version.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-depends.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Other apps needed</b>
+                        <p class="ppreq-p">
+                           Purchase, plus two standard Odoo modules:
+                           <b>purchase_product_matrix</b> and
+                           <b>sale_product_configurator</b>. Odoo installs both
+                           for you.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-install.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Installing</b>
+                        <p class="ppreq-p">
+                           Drop the folder in your addons path, update the apps
+                           list, and it installs itself &mdash; it is marked
+                           auto-install.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-hosting.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Where it runs</b>
+                        <p class="ppreq-p">
+                           Anywhere you are allowed to add a module: your own
+                           server, or Odoo.sh. Odoo Online does not accept
+                           custom modules on standard plans.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-config.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Setup after installing</b>
+                        <p class="ppreq-p">
+                           None in the module. What matters is your product
+                           data: a template needs attributes or optional
+                           products before a configurator has anything to
+                           configure.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-database.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Your existing data</b>
+                        <p class="ppreq-p">
+                           Untouched. It adds two fields to the purchase order
+                           line and one to the order. No existing purchase order
+                           is rewritten on install.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img class="ppico-19" src="./assets/ic-money.png" alt="" />
+                     <div>
+                        <b class="ppreq-l">Vendor prices</b>
+                        <p class="ppreq-p">
+                           Comes from the supplier lines already on your
+                           products. Fill those in and the configurator prices
+                           from them.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-currency.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Currencies</b>
+                        <p class="ppreq-p">
+                           Uses the exchange rates already configured in your
+                           Odoo. Nothing new to set up, no external rate
+                           service.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-variants.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Product variants</b>
+                        <p class="ppreq-p">
+                           Works with the variants you already have, and can
+                           create a dynamic variant at confirm time when the
+                           combination has none.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-privacy.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Your data</b>
+                        <p class="ppreq-p">
+                           Nothing leaves your database. Every route the module
+                           adds is a local one in your own Odoo. No telemetry,
+                           no licence check.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img class="ppico-19" src="./assets/ic-lang.png" alt="" />
+                     <div>
+                        <b class="ppreq-l">Languages</b>
+                        <p class="ppreq-p">
+                           42 translation files ship in the <b>i18n</b> folder,
+                           and the strings follow Odoo's own so they read
+                           naturally in whatever language your users have.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img class="ppico-19" src="./assets/ic-tests.png" alt="" />
+                     <div>
+                        <b class="ppreq-l">Tests</b>
+                        <p class="ppreq-p">
+                           Included, not hidden: 5 Python test modules, 2 QUnit
+                           files and a browser tour. Run them on a staging
+                           database first.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-license.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">Licence</b>
+                        <p class="ppreq-p">
+                           LGPL-3. Free to use, free to read, free to adapt. The
+                           full licence text is in the download.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-mobile.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">On phones</b>
+                        <p class="ppreq-p">
+                           The configurator is part of the Odoo back office, so
+                           it follows the web client. We build and test it on
+                           desktop, where purchase orders are made.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="ppreq-card">
+                     <img
+                        class="ppico-19"
+                        src="./assets/ic-support.png"
+                        alt=""
+                     />
+                     <div>
+                        <b class="ppreq-l">If you ever remove it</b>
+                        <p class="ppreq-p">
+                           Uninstall from Apps and purchase orders go back to
+                           standard behaviour. Because it is auto-install, take
+                           the folder out of your addons path so an apps-list
+                           update does not bring it back.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== PRICING / LICENCE ============================== -->
+         <section class="sec sec-warm">
+            <div class="wrap">
+               <p class="ppeyebrow">Pricing, stated plainly</p>
+               <h2 class="pph2" style="margin-bottom: 24px">
+                  Free means free. Here is where the money is, so you are not
+                  guessing.
+               </h2>
+               <div class="ppprice">
+                  <div class="ppprice-l">
+                     <span class="ppprice-tag">This module</span>
+                     <div class="ppprice-amt">Free</div>
+                     <p class="ppprice-note">
+                        LGPL-3 &middot; one download &middot; unlimited
+                        databases, users and purchase orders
+                     </p>
+                     <ul class="ppprice-bul">
+                        <li>No subscription and nothing to renew</li>
+                        <li>No per-user or per-order fee</li>
+                        <li>No licence key and no activation</li>
+                        <li>Full source code, yours to modify</li>
+                     </ul>
+                  </div>
+                  <div class="ppprice-r">
+                     <p class="ppprice-rl">What is included at no cost</p>
+                     <div class="ppprice-list">
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-green.png"
+                              alt=""
+                           />The complete module &mdash; every feature on this
+                           page, none held back for a paid edition
+                        </div>
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-green.png"
+                              alt=""
+                           />42 translation files
+                        </div>
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-green.png"
+                              alt=""
+                           />The full test suite, so you can verify it yourself
+                        </div>
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-green.png"
+                              alt=""
+                           />Answers to questions about the module, by e-mail
+                        </div>
+                     </div>
+                     <p class="ppprice-rl" style="margin: 26px 0 14px">
+                        What we charge for, and only if you ask
+                     </p>
+                     <div class="ppprice-list">
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-coral.png"
+                              alt=""
+                           />Installing and configuring it on your instance
+                        </div>
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-coral.png"
+                              alt=""
+                           />Setting up your product templates, attributes and
+                           optional products
+                        </div>
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-coral.png"
+                              alt=""
+                           />Changes to how it behaves, or a port to another
+                           Odoo version
+                        </div>
+                        <div>
+                           <img
+                              class="ppico-15"
+                              src="./assets/ic-check-coral.png"
+                              alt=""
+                           />Wider Odoo work: implementation, migration, custom
+                           development
+                        </div>
+                     </div>
+                     <p class="ppsm ppmuted" style="margin: 16px 0 0">
+                        Services are quoted per project after a call &mdash; we
+                        will not put an invented figure on this page. Ask and
+                        you get a number for your case.
+                     </p>
+                  </div>
+               </div>
+               <!-- TODO Doodex: if you want to publish a written support guarantee (for
+     example "bug fixes within 30 days") or a live demo URL, add it here and
+     to the FAQ. It is deliberately absent because neither is verifiable yet
+     and the vendor guidelines forbid misleading claims. -->
+            </div>
+         </section>
+
+         <!-- ============================== 06 · FAQ ============================== -->
+         <div class="ppband">
+            <div class="ppband-in" id="ppo-faq">
+               <span class="ppband-bar"></span><span class="ppband-l">FAQ</span
+               ><span class="ppband-c"
+                  >Thirteen questions buyers actually ask</span
+               >
+            </div>
+         </div>
+         <section class="sec">
+            <div class="wrap">
+               <div class="narrow">
+                  <h2 class="pph2" style="margin-bottom: 22px">
+                     Questions, answered without hedging
+                  </h2>
+                  <div class="ppfaq-list">
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >In one sentence, what does this module add?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              It puts Odoo&rsquo;s product configurator &mdash;
+                              attributes plus optional products &mdash; on
+                              purchase order lines, and prices what you
+                              configure from the supplier lines already on your
+                              products, in the order&rsquo;s own currency.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Do I need Odoo Enterprise?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              No. It depends on Purchase,
+                              <b>purchase_product_matrix</b> and
+                              <b>sale_product_configurator</b>, all of which
+                              come with standard Odoo. Community is enough.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Which Odoo versions does it support?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Odoo 17.0. That is what this build is and that is
+                              all we claim. A port to Odoo 18 is in development;
+                              when it is released it gets its own listing and
+                              its own version number, not a quiet edit to this
+                              page.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Is it really free, or free until version 2?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Free, under LGPL-3, with the source in the
+                              download. There is no paid edition of this module
+                              and no feature on this page is held back for one.
+                              We earn from Odoo services, and only if you ask
+                              for them.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Will it change my existing purchase orders?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              No. Installing adds two fields to the purchase
+                              order line and one to the order, and adjusts which
+                              columns the line list shows by default. Orders you
+                              already have keep their products, prices and
+                              totals. There is no data migration to run.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Nothing happened after I installed it. Is it
+                              broken?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Almost certainly not. The configurator only opens
+                              when the product template you chose has variant
+                              attributes or optional products. A template with a
+                              single variant and no options behaves exactly as
+                              before, on purpose &mdash; nobody wants a dialog
+                              to click through for a box of screws. Add one
+                              attribute line or one optional product to a
+                              template and try that template on a new line.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Which price does the configurator show?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              A price from the product&rsquo;s supplier lines,
+                              converted into the order&rsquo;s currency. Where a
+                              product carries more than one supplier line the
+                              configurator resolves to the first one on the
+                              product; where it carries none, it uses the
+                              product&rsquo;s cost. The order is always that:
+                              first supplier line, then cost.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >What happens if I change the vendor after
+                              configuring a line?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Lines already written keep the price they were
+                              created with, the same as any other purchase order
+                              line in Odoo. The configurator does not re-resolve
+                              a configured line against a different vendor, so
+                              where a vendor change should change your cost, set
+                              the line price yourself or rebuild the line.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Does it work with the variant grid we already
+                              use?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Yes, side by side. Templates you have set to
+                              matrix entry still open the grid. Everything else
+                              opens the configurator. The module chooses per
+                              product instead of forcing one behaviour on all of
+                              them.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Does anything leave my database?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              No. The routes the module adds are local calls
+                              inside your own Odoo, serving the dialog with your
+                              own product data. There is no external service, no
+                              licence server, no analytics and no telemetry. You
+                              can confirm that yourself: it is LGPL-3 and the
+                              controller file is 342 lines.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Can we adapt it to our process?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Yes, and LGPL-3 gives you the right to. Your own
+                              developer can extend it the normal Odoo way. If
+                              you would rather we made the change, or need it
+                              ported to another Odoo version, ask and we will
+                              quote it.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >How do I uninstall it, and does it come
+                              back?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Uninstall from Apps like any module; purchase
+                              orders return to standard behaviour. One thing to
+                              know: it is marked auto-install, which means Odoo
+                              installs it automatically whenever its
+                              dependencies are present &mdash; so an apps-list
+                              update can bring it back. To keep it off for good,
+                              remove the folder from your addons path as well.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="ppfaq">
+                        <summary>
+                           <span class="ppfaq-q"
+                              >Where do I report a problem, and who
+                              answers?</span
+                           ><img
+                              class="ppfaq-chev ppico-15"
+                              src="./assets/ic-chev.png"
+                              alt=""
+                           />
+                        </summary>
+                        <div class="ppfaq-a">
+                           <p>
+                              Write to
+                              <a href="mailto:odoo@doodex.net"
+                                 >odoo@doodex.net</a
+                              >
+                              and a person at Doodex answers &mdash; we are an
+                              Odoo official partner, not a mailbox. Tell us your
+                              Odoo version, what you did and what happened. A
+                              screenshot of the configurator saves a round trip.
+                              If it is faster for you, message us on WhatsApp at
+                              +62 821-3120-5030.
+                           </p>
+                        </div>
+                     </details>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== 07 · RELEASES ============================== -->
+         <div class="ppband">
+            <div class="ppband-in" id="ppo-releases">
+               <span class="ppband-bar"></span
+               ><span class="ppband-l">Releases</span
+               ><span class="ppband-c">Public history, and what is next</span>
+            </div>
+         </div>
+         <section class="sec">
+            <div class="wrap">
+               <div class="narrow">
+                  <h2 class="pph2" style="margin-bottom: 8px">
+                     Release history
+                  </h2>
+                  <p class="pplead" style="margin-bottom: 24px">
+                     Every published version is listed here with what it
+                     contains. If a version is not on this list, it does not
+                     exist.
+                  </p>
+                  <div class="pprel">
+                     <div class="pprel-row">
+                        <div>
+                           <div class="pprel-v">17.0.1.0.0</div>
+                           <div class="pprel-d">
+                              Current release &middot; Odoo 17.0 &middot; LGPL-3
+                           </div>
+                        </div>
+                        <ul class="pprel-list">
+                           <li>
+                              <span class="ppbadge ppbadge-new">NEW</span
+                              ><span
+                                 >Product configurator dialog on purchase order
+                                 lines, for templates with variant attributes or
+                                 optional products.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-new">NEW</span
+                              ><span
+                                 >Optional products listed and selectable inside
+                                 the dialog, with attribute exclusion rules and
+                                 cascade removal.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-new">NEW</span
+                              ><span
+                                 >Pricing from <b>product.supplierinfo</b>,
+                                 falling back to the first supplier line and
+                                 then to the product cost.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-new">NEW</span
+                              ><span
+                                 >Prices converted into the purchase order's
+                                 currency.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-new">NEW</span
+                              ><span
+                                 >Dynamic variants created on confirm when the
+                                 chosen combination has none.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-new">NEW</span
+                              ><span
+                                 >Custom attribute values and no-variant extra
+                                 prices stored on the order line, and
+                                 reopenable.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-imp">IMP</span
+                              ><span
+                                 >Purchase order line list: Product Template
+                                 column always visible, variant column hidden by
+                                 default and relabelled.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-imp">IMP</span
+                              ><span
+                                 >Test suite shipped with the module: 5 Python
+                                 test modules, 2 QUnit files, 1 browser
+                                 tour.</span
+                              >
+                           </li>
+                           <li>
+                              <span class="ppbadge ppbadge-imp">IMP</span
+                              ><span>42 translation files included.</span>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <p class="ppsm ppmuted" style="margin-top: 20px">
+                     Next up, honestly labelled: an Odoo 18 port is in
+                     development, and we are reviewing how the order's currency
+                     is passed to the price conversion so that two people
+                     editing two purchase orders at the same time can never
+                     influence each other's displayed prices. Both will appear
+                     here as versions when they ship, not as promises before.
+                  </p>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== CROSS-SELL ============================== -->
+         <section class="sec sec-alt">
+            <div class="wrap ppwg">
+               <p class="ppeyebrow" style="color: #fa7268">Works great with</p>
+               <h2
+                  class="pph2"
+                  style="
+                     max-width: 760px;
+                     margin-top: 0;
+                     margin-right: auto;
+                     margin-bottom: 14px;
+                     margin-left: auto;
+                  "
+               >
+                  Other Doodex modules, built the same way
+               </h2>
+               <p
+                  class="pplead"
+                  style="
+                     max-width: 700px;
+                     margin-top: 0;
+                     margin-right: auto;
+                     margin-bottom: 26px;
+                     margin-left: auto;
+                  "
+               >
+                  Different problems, same approach: narrow scope, a one-time
+                  price and the limits stated up front. Each one installs on its
+                  own.
+               </p>
+
+               <div style="margin-bottom: 34px">
+                  <span
+                     style="
+                        display: inline-block;
+                        background-color: #ffffff;
+                        color: #270140;
+                        font-size: 13px;
+                        font-weight: 700;
+                        border-radius: 9999px;
+                        border-width: 1px;
+                        border-style: solid;
+                        border-color: #ece4f3;
+                        padding-top: 8px;
+                        padding-right: 18px;
+                        padding-bottom: 8px;
+                        padding-left: 18px;
+                        margin-right: 5px;
+                        margin-left: 5px;
+                        margin-bottom: 9px;
+                     "
+                     >Narrow scope</span
+                  ><span
+                     style="
+                        display: inline-block;
+                        background-color: #ffffff;
+                        color: #270140;
+                        font-size: 13px;
+                        font-weight: 700;
+                        border-radius: 9999px;
+                        border-width: 1px;
+                        border-style: solid;
+                        border-color: #ece4f3;
+                        padding-top: 8px;
+                        padding-right: 18px;
+                        padding-bottom: 8px;
+                        padding-left: 18px;
+                        margin-right: 5px;
+                        margin-left: 5px;
+                        margin-bottom: 9px;
+                     "
+                     >One-time price</span
+                  ><span
+                     style="
+                        display: inline-block;
+                        background-color: #ffffff;
+                        color: #270140;
+                        font-size: 13px;
+                        font-weight: 700;
+                        border-radius: 9999px;
+                        border-width: 1px;
+                        border-style: solid;
+                        border-color: #ece4f3;
+                        padding-top: 8px;
+                        padding-right: 18px;
+                        padding-bottom: 8px;
+                        padding-left: 18px;
+                        margin-right: 5px;
+                        margin-left: 5px;
+                        margin-bottom: 9px;
+                     "
+                     >Limits stated up front</span
+                  >
+               </div>
+
+               <div class="ppwg-grid row g-4" style="text-align: left">
+                  <div class="col-lg-4 ppwg-col">
+                     <div
+                        class="ppwg-card"
+                        style="
+                           background-color: #270140;
+                           border-radius: 14px;
+                           padding-top: 25px;
+                           padding-right: 25px;
+                           padding-bottom: 25px;
+                           padding-left: 25px;
+                           height: 100%;
+                        "
+                     >
+                        <div
+                           style="
+                              display: table;
+                              width: 100%;
+                              margin-bottom: 16px;
+                           "
+                        >
+                           <div
+                              style="
+                                 display: table-cell;
+                                 vertical-align: middle;
+                                 width: 44px;
+                              "
+                           >
+                              <img
+                                 src="./assets/xs-growth-suite.png"
+                                 alt="Doodex Growth Suite"
+                                 width="44"
+                                 height="44"
+                                 style="
+                                    width: 44px;
+                                    height: 44px;
+                                    border-radius: 10px;
+                                    vertical-align: middle;
+                                 "
+                              />
+                           </div>
+                           <div
+                              style="
+                                 display: table-cell;
+                                 vertical-align: middle;
+                                 text-align: right;
+                              "
+                           >
+                              <span
+                                 style="
+                                    background-color: #3a1a5a;
+                                    color: #ffffff;
+                                    font-size: 10.5px;
+                                    font-weight: 800;
+                                    letter-spacing: 0.06em;
+                                    text-transform: uppercase;
+                                    border-radius: 9999px;
+                                    padding-top: 5px;
+                                    padding-right: 11px;
+                                    padding-bottom: 5px;
+                                    padding-left: 11px;
+                                 "
+                                 >$349 once</span
+                              >
+                           </div>
+                        </div>
+
+                        <h3
+                           style="
+                              font-size: 17px;
+                              font-weight: 700;
+                              color: #ffffff;
+                              margin-top: 0;
+                              margin-bottom: 8px;
+                              line-height: 1.3;
+                           "
+                        >
+                           Doodex Growth Suite
+                        </h3>
+
+                        <p
+                           style="
+                              font-size: 14px;
+                              line-height: 1.6;
+                              color: #c9b6d8;
+                              margin-top: 0;
+                              margin-bottom: 18px;
+                              min-height: 112px;
+                           "
+                        >
+                           Five CRM and marketing modules that <b>do</b> share
+                           one another&rsquo;s data: BizScan AI, Campaign
+                           Manager, Smart Dashboards, User Roles and
+                           Email&nbsp;Sync+. Sold as one suite.
+                        </p>
+
+                        <!-- ADD-HREF-HERE (growth-suite): put the ROOT-RELATIVE store path in the empty
+     href below, e.g. /apps/modules/17.0/<technical_name>. Never an http(s)://
+     URL - the store sanitiser invalidates those. Confirm the path resolves. -->
+                        <a
+                           href="https://apps.odoo.com/apps/modules/17.0/marketing_crm_automation_dashboard_campaign_doodex"
+                           target="_blank"
+                           rel="noopener"
+                           style="
+                              display: inline-block;
+                              background-color: #fa7268;
+                              color: #ffffff;
+                              border-width: 1px;
+                              border-style: solid;
+                              border-color: #e85c52;
+                              font-size: 13px;
+                              font-weight: 700;
+                              border-radius: 10px;
+                              padding-top: 10px;
+                              padding-right: 16px;
+                              padding-bottom: 10px;
+                              padding-left: 16px;
+                              text-decoration: none;
+                           "
+                           >Open on the Apps Store &rarr;</a
+                        >
+                     </div>
+                  </div>
+                  <div class="col-lg-4 ppwg-col">
+                     <div
+                        class="ppwg-card"
+                        style="
+                           background-color: #ffffff;
+                           border-width: 1px;
+                           border-style: solid;
+                           border-color: #ece4f3;
+                           border-radius: 14px;
+                           padding-top: 24px;
+                           padding-right: 24px;
+                           padding-bottom: 24px;
+                           padding-left: 24px;
+                           height: 100%;
+                        "
+                     >
+                        <div
+                           style="
+                              display: table;
+                              width: 100%;
+                              margin-bottom: 16px;
+                           "
+                        >
+                           <div
+                              style="
+                                 display: table-cell;
+                                 vertical-align: middle;
+                                 width: 44px;
+                              "
+                           >
+                              <img
+                                 src="./assets/xs-flow-survey-reader.png"
+                                 alt="Flow Survey Reader"
+                                 width="44"
+                                 height="44"
+                                 style="
+                                    width: 44px;
+                                    height: 44px;
+                                    border-radius: 10px;
+                                    vertical-align: middle;
+                                 "
+                              />
+                           </div>
+                           <div
+                              style="
+                                 display: table-cell;
+                                 vertical-align: middle;
+                                 text-align: right;
+                              "
+                           >
+                              <span
+                                 style="
+                                    background-color: #f4eef8;
+                                    color: #270140;
+                                    font-size: 10.5px;
+                                    font-weight: 800;
+                                    letter-spacing: 0.06em;
+                                    text-transform: uppercase;
+                                    border-radius: 9999px;
+                                    padding-top: 5px;
+                                    padding-right: 11px;
+                                    padding-bottom: 5px;
+                                    padding-left: 11px;
+                                 "
+                                 >Free</span
+                              >
+                           </div>
+                        </div>
+
+                        <h3
+                           style="
+                              font-size: 17px;
+                              font-weight: 700;
+                              color: #270140;
+                              margin-top: 0;
+                              margin-bottom: 8px;
+                              line-height: 1.3;
+                           "
+                        >
+                           Flow Survey Reader
+                        </h3>
+
+                        <p
+                           style="
+                              font-size: 14px;
+                              line-height: 1.6;
+                              color: #525252;
+                              margin-top: 0;
+                              margin-bottom: 18px;
+                              min-height: 112px;
+                           "
+                        >
+                           Publish conditional surveys and forms straight from
+                           Odoo and keep every answer in your own database.
+                        </p>
+
+                        <!-- ADD-HREF-HERE (flow-survey-reader): put the ROOT-RELATIVE store path in the empty
+     href below, e.g. /apps/modules/17.0/<technical_name>. Never an http(s)://
+     URL - the store sanitiser invalidates those. Confirm the path resolves. -->
+                        <a
+                           href="https://apps.odoo.com/apps/modules/17.0/flow_survey_reader"
+                           target="_blank"
+                           rel="noopener"
+                           style="
+                              display: inline-block;
+                              background-color: #ffffff;
+                              color: #270140;
+                              border-width: 1px;
+                              border-style: solid;
+                              border-color: #270140;
+                              font-size: 13px;
+                              font-weight: 700;
+                              border-radius: 10px;
+                              padding-top: 10px;
+                              padding-right: 16px;
+                              padding-bottom: 10px;
+                              padding-left: 16px;
+                              text-decoration: none;
+                           "
+                           >Open on the Apps Store &rarr;</a
+                        >
+                     </div>
+                  </div>
+                  <div class="col-lg-4 ppwg-col">
+                     <div
+                        class="ppwg-card"
+                        style="
+                           background-color: #ffffff;
+                           border-width: 1px;
+                           border-style: solid;
+                           border-color: #ece4f3;
+                           border-radius: 14px;
+                           padding-top: 24px;
+                           padding-right: 24px;
+                           padding-bottom: 24px;
+                           padding-left: 24px;
+                           height: 100%;
+                        "
+                     >
+                        <div
+                           style="
+                              display: table;
+                              width: 100%;
+                              margin-bottom: 16px;
+                           "
+                        >
+                           <div
+                              style="
+                                 display: table-cell;
+                                 vertical-align: middle;
+                                 width: 44px;
+                              "
+                           >
+                              <img
+                                 src="./assets/xs-flow-survey-builder.png"
+                                 alt="Flow Survey Builder"
+                                 width="44"
+                                 height="44"
+                                 style="
+                                    width: 44px;
+                                    height: 44px;
+                                    border-radius: 10px;
+                                    vertical-align: middle;
+                                 "
+                              />
+                           </div>
+                           <div
+                              style="
+                                 display: table-cell;
+                                 vertical-align: middle;
+                                 text-align: right;
+                              "
+                           >
+                              <span
+                                 style="
+                                    background-color: #f4eef8;
+                                    color: #270140;
+                                    font-size: 10.5px;
+                                    font-weight: 800;
+                                    letter-spacing: 0.06em;
+                                    text-transform: uppercase;
+                                    border-radius: 9999px;
+                                    padding-top: 5px;
+                                    padding-right: 11px;
+                                    padding-bottom: 5px;
+                                    padding-left: 11px;
+                                 "
+                                 >$199 once</span
+                              >
+                           </div>
+                        </div>
+
+                        <h3
+                           style="
+                              font-size: 17px;
+                              font-weight: 700;
+                              color: #270140;
+                              margin-top: 0;
+                              margin-bottom: 8px;
+                              line-height: 1.3;
+                           "
+                        >
+                           Flow Survey Builder
+                        </h3>
+
+                        <p
+                           style="
+                              font-size: 14px;
+                              line-height: 1.6;
+                              color: #525252;
+                              margin-top: 0;
+                              margin-bottom: 18px;
+                              min-height: 112px;
+                           "
+                        >
+                           The drag-and-drop editor for those surveys: 25
+                           question types, slide branching and full theming.
+                        </p>
+
+                        <!-- ADD-HREF-HERE (flow-survey-builder): put the ROOT-RELATIVE store path in the empty
+     href below, e.g. /apps/modules/17.0/<technical_name>. Never an http(s)://
+     URL - the store sanitiser invalidates those. Confirm the path resolves. -->
+                        <a
+                           href="https://apps.odoo.com/apps/modules/17.0/flow_survey"
+                           target="_blank"
+                           rel="noopener"
+                           style="
+                              display: inline-block;
+                              background-color: #ffffff;
+                              color: #270140;
+                              border-width: 1px;
+                              border-style: solid;
+                              border-color: #270140;
+                              font-size: 13px;
+                              font-weight: 700;
+                              border-radius: 10px;
+                              padding-top: 10px;
+                              padding-right: 16px;
+                              padding-bottom: 10px;
+                              padding-left: 16px;
+                              text-decoration: none;
+                           "
+                           >Open on the Apps Store &rarr;</a
+                        >
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== FINAL CTA ============================== -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="ppqr ppqr-dark ppqr-end">
+                  <div class="ppqr-head">
+                     <p class="ppqr-eyebrow">It costs nothing to find out</p>
+                     <h2 class="ppqr-title">
+                        Install it, or let us show you first
+                     </h2>
+                     <p class="ppqr-sub">
+                        The module is free, so the only thing worth spending is
+                        thirty minutes to see whether your product data is ready
+                        for it. Bring one purchase order you dread doing by
+                        hand.
+                     </p>
+                  </div>
+                  <div class="ppqr-grid">
+                     <div class="ppqr-card ppqr-lead">
+                        <div class="ppqr-top">
+                           <span class="ppqr-ico"
+                              ><img
+                                 class="ppico-17"
+                                 src="./assets/ic-meeting.png"
+                                 alt="" /></span
+                           ><span class="ppqr-tag ppqr-tag-hot"
+                              >30 minutes</span
+                           >
+                        </div>
+                        <h3 class="ppqr-h">Book a demo</h3>
+                        <p class="ppqr-p">
+                           On your own Odoo, with your own products.
+                        </p>
+                        <a class="ppqr-code" aria-label="Book a demo"
+                           ><img
+                              src="./assets/qr-meeting.png"
+                              alt="QR code for https://hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a class="ppbtn ppbtn-1 ppqr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</a
+                        >
+                     </div>
+                     <div class="ppqr-card">
+                        <div class="ppqr-top">
+                           <span class="ppqr-ico"
+                              ><img
+                                 class="ppico-17"
+                                 src="./assets/ic-mail.png"
+                                 alt="" /></span
+                           ><span class="ppqr-tag">Written reply</span>
+                        </div>
+                        <h3 class="ppqr-h">Send us a question</h3>
+                        <p class="ppqr-p">
+                           Ask in writing, we answer by e-mail.
+                        </p>
+                        <a
+                           class="ppqr-code"
+                           href="mailto:odoo@doodex.net"
+                           aria-label="Send us a question"
+                           ><img
+                              src="./assets/qr-contact.png"
+                              alt="QR code for https://doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a
+                           class="ppbtn ppbtn-2 ppqr-btn"
+                           href="mailto:odoo@doodex.net"
+                           >odoo@doodex.net</a
+                        >
+                     </div>
+                     <div class="ppqr-card">
+                        <div class="ppqr-top">
+                           <span class="ppqr-ico"
+                              ><img
+                                 class="ppico-17"
+                                 src="./assets/ic-chat.png"
+                                 alt="" /></span
+                           ><span class="ppqr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="ppqr-h">Message us on WhatsApp</h3>
+                        <p class="ppqr-p">
+                           Reach the team directly on +62 821-3120-5030.
+                        </p>
+                        <a class="ppqr-code" aria-label="Message us on WhatsApp"
+                           ><img
+                              src="./assets/qr-whatsapp.png"
+                              alt="QR code for https://hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a class="ppbtn ppbtn-2 ppqr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</a
+                        >
+                     </div>
+                  </div>
+                  <p class="ppqr-foot">
+                     Scan a code with your phone, or click it &mdash; both open
+                     the same page. Addresses are printed as text so they
+                     survive even if the links do not.
+                  </p>
+               </div>
+            </div>
+         </section>
+      </div>
+   </body>
+</html>

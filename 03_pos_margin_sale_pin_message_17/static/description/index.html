@@ -1,0 +1,3108 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>
+         Pin Message in Chatter for Odoo 17 — pin important log notes to the top
+         of any record
+      </title>
+      <meta
+         name="description"
+         content="Pin any log note in the Odoo chatter and it moves to a collapsible Pinned Messages panel
+at the top of the record, with a count badge and live updates. Works on every model.
+Odoo 17.0, by Doodex."
+      />
+   </head>
+   <body>
+      <!--
+  ==========================================================================
+  Pin Message in Chatter  ·  Odoo Apps Store listing  ·  Odoo 17.0
+  Doodex  ·  odoo@doodex.net
+
+  SOURCE OF TRUTH. Edit this file, then run:
+      python3 tools/build.py  pin-message-v17-product-description
+      python3 tools/verify.py pin-message-v17-product-description
+
+  NO PRICE ON THIS PAGE. The store shows the price itself, in the buyer's own
+  currency, right beside the Buy button — repeating a figure in the description
+  only creates a second number to keep in sync and a mismatch when it moves.
+  Do not reintroduce a price section, a hero price chip or a "Price" row in the
+  spec table. The one exception, deliberate, is the cross-sell cards at the
+  bottom: those name the sibling modules' prices because that page is not the
+  one the reader is standing on.
+
+  Archetype C (Product-led / Screenshot-first) · hero H-4 compact · rhythm
+  R-1 all white separated by hairlines · features F-1 icon rows · accent
+  A-1 restrained.
+  Deliberately unlike POS Margin Threshold (Archetype B, split hero, zigzag,
+  violet interludes) and Sale Margin Threshold (Archetype D, violet hero,
+  comparison tables). Here the screenshot showcase IS the argument and the
+  copy is caption.
+
+  THE SHOWCASE CARRIES NO SCRIPT AND DEPENDS ON NO SCRIPT. The six steps are
+  a native <details>/<summary> group with a shared name=, so the browser does
+  the switching. Nothing here needs the store page's Bootstrap to initialise,
+  and step 1 is marked `open` so a screenshot shows at first paint.
+
+  LINK POLICY — identical to the sibling listings. The booking and WhatsApp
+  destinations are NAKED LINKS: an <a> with NO href, the URL printed as the
+  visible label and encoded in a real QR image beside it. Only mailto: and
+  in-page #anchors carry an href. Do not put an http(s) URL into an href.
+
+  Class names are prefixed .pmc* because the store page may load its own
+  Bootstrap and we must not collide with it. No Bootstrap-owned class name
+  (nav, nav-pills, nav-link, tab-content, tab-pane, active, show) is used
+  anywhere on this page any more — nothing on it borrows another
+  framework's behaviour.
+  ==========================================================================
+-->
+
+      <style>
+         .pmc {
+            --violet: #270140;
+            --violet-2: #3a1a5a;
+            --coral: #fa7268;
+            --coral-dk: #e85c52;
+            --ink: #0a0a0a;
+            --ink-2: #171717;
+            --ink-3: #525252;
+            --ink-4: #737373;
+            --bg: #ffffff;
+            --surface: #faf7fc;
+            --surface-2: #f4eef8;
+            --line: #ece4f3;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warn: #d97706;
+            --r-sm: 6px;
+            --r-md: 10px;
+            --r-lg: 14px;
+            --r-xl: 20px;
+            --r-full: 9999px;
+            --xs: 0 0 0 1px rgba(39, 1, 64, 0.06);
+            --sm:
+               0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 1, 64, 0.08);
+            --md:
+               0 4px 14px rgba(39, 1, 64, 0.08), 0 0 0 1px rgba(39, 1, 64, 0.06);
+            --lg:
+               0 12px 32px rgba(39, 1, 64, 0.1), 0 0 0 1px rgba(39, 1, 64, 0.06);
+            --cta: 0 8px 22px rgba(250, 114, 104, 0.32);
+            background: var(--bg);
+            color: var(--ink-3);
+            font-family:
+               "Inter",
+               -apple-system,
+               BlinkMacSystemFont,
+               "Segoe UI",
+               Roboto,
+               sans-serif;
+            font-size: 16px;
+            line-height: 1.65;
+            font-feature-settings: "cv11", "ss01";
+            -webkit-font-smoothing: antialiased;
+            text-align: left;
+         }
+         .pmc * {
+            box-sizing: border-box;
+         }
+         .pmc h1,
+         .pmc h2,
+         .pmc h3,
+         .pmc h4 {
+            color: var(--violet);
+            letter-spacing: -0.015em;
+            margin: 0;
+            font-family: inherit;
+         }
+         .pmc p {
+            margin: 0;
+         }
+         .pmc a {
+            color: var(--coral-dk);
+         }
+         .pmc img {
+            max-width: 100%;
+         }
+         .pmc .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+         }
+         .pmc .narrow {
+            max-width: 740px;
+         }
+         .pmc .center {
+            text-align: center;
+         }
+         .pmc .muted {
+            color: var(--ink-4);
+         }
+         .pmc .pmcmark {
+            color: var(--coral-dk);
+         }
+
+         /* R-1: white throughout, sections separated by a single hairline */
+         .pmc .sec {
+            padding: 58px 0;
+            border-top: 1px solid var(--line);
+         }
+         .pmc .sec-tight {
+            padding: 30px 0;
+         }
+         .pmc .sec-first {
+            border-top: none;
+         }
+
+         /* ---------- type ---------- */
+         .pmc .pmch1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.028em;
+         }
+         .pmc .pmch2 {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+         }
+         .pmc .pmclead {
+            font-size: 17.5px;
+            line-height: 1.6;
+            color: var(--ink-3);
+            margin-top: 15px;
+         }
+         .pmc .pmcsmall {
+            font-size: 13.5px;
+            line-height: 1.6;
+         }
+         .pmc .eyebrow {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--coral-dk);
+            margin: 0 0 13px;
+         }
+         .pmc .fld {
+            display: inline-block;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12.5px;
+            background: var(--surface-2);
+            color: var(--violet);
+            padding: 1px 7px;
+            border-radius: var(--r-sm);
+         }
+
+         /* ---------- buttons ---------- */
+         .pmc .pmcbtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: var(--r-md);
+            line-height: 1.25;
+         }
+         .pmc .pmcbtn-1 {
+            background: var(--coral);
+            color: #fff;
+            box-shadow: var(--cta);
+         }
+         .pmc .pmcbtn-2 {
+            background: #fff;
+            color: var(--violet);
+            box-shadow: 0 0 0 1.5px var(--violet);
+         }
+         .pmc .pmcbtnrow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+            align-items: center;
+         }
+
+         /* ---------- header ---------- */
+         .pmc .pmchdr {
+            border-bottom: 1px solid var(--line);
+            background: #fff;
+         }
+         .pmc .pmchdr-in {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 0;
+         }
+         .pmc .pmcbrand {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--violet);
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+         }
+         /* The module icon itself, not a drawn stand-in. icon.png is a square canvas with
+   the pin inset in a transparent surround, so it is sized square (never stretched)
+   and needs no tile behind it. The negative margin cancels that surround's left
+   padding so the pin optically aligns with the page edge; the small gap does the
+   same on the right. Re-tune both if icon.png is ever redrawn with new margins. */
+         .pmc .pmcbrand .tile {
+            width: 28px;
+            height: 28px;
+            flex: none;
+            display: block;
+            margin-left: -6px;
+         }
+         .pmc .jump {
+            justify-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1px;
+         }
+         .pmc .jump a {
+            text-decoration: none;
+            color: var(--ink-2);
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 7px 9px;
+            border-radius: var(--r-full);
+            white-space: nowrap;
+         }
+         .pmc .hdr-cta {
+            padding: 9px 15px;
+            font-size: 13px;
+         }
+
+         /* ---------- hero H-4 compact ---------- */
+         .pmc .hero {
+            padding: 44px 0 34px;
+         }
+         .pmc .trust {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 26px;
+         }
+         .pmc .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--violet);
+            background: var(--surface-2);
+            padding: 7px 13px;
+            border-radius: var(--r-full);
+         }
+         .pmc .chip svg {
+            flex: none;
+            color: var(--coral-dk);
+         }
+
+         /* ---------- screenshot showcase (native <details>, no script of any kind) ----------
+   The step switcher is a <details> group. Opening and closing is done by the
+   browser itself, so it needs no JavaScript from us and none from the host
+   page either. The shared name= makes the group exclusive natively. */
+         .pmc .scase {
+            margin-top: 30px;
+            border: 1px solid var(--line);
+            border-radius: var(--r-lg);
+            background: #fff;
+            box-shadow: var(--xs);
+            overflow: hidden;
+         }
+         .pmc .scstep {
+            border-top: 1px solid var(--line);
+         }
+         .pmc .scstep:first-of-type {
+            border-top: 0;
+         }
+         .pmc .scsum {
+            display: block;
+            list-style: none;
+            cursor: pointer;
+            padding: 14px 18px;
+            background: var(--surface);
+         }
+         .pmc .scsum::-webkit-details-marker {
+            display: none;
+         }
+         .pmc .scsum::marker {
+            content: "";
+         }
+         .pmc .scsum:hover {
+            background: var(--surface-2);
+         }
+         .pmc .scstep[open] > .scsum {
+            background: #fff;
+         }
+         .pmc .scsum-in {
+            display: grid;
+            grid-template-columns: 32px 1fr 18px;
+            gap: 14px;
+            align-items: center;
+         }
+         .pmc .scn {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--r-full);
+            background: #fff;
+            flex: none;
+            border: 1px solid var(--line);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--coral-dk);
+         }
+         .pmc .scstep[open] .scn {
+            background: var(--violet);
+            border-color: var(--violet);
+            color: #fff;
+         }
+         .pmc .sct {
+            min-width: 0;
+         }
+         .pmc .sct .stp {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--coral-dk);
+            margin-bottom: 2px;
+         }
+         .pmc .sct b {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--ink-2);
+            line-height: 1.35;
+         }
+         .pmc .scstep[open] .sct b {
+            color: var(--violet);
+         }
+         .pmc .scchev {
+            width: 18px;
+            height: 18px;
+            flex: none;
+            color: var(--ink-4);
+            transition: transform 0.18s ease;
+         }
+         .pmc .scstep[open] .scchev {
+            transform: rotate(180deg);
+            color: var(--violet);
+         }
+         .pmc .scbody {
+            grid-template-columns: 1.45fr 0.85fr;
+            gap: 22px;
+            align-items: start;
+            padding: 4px 18px 22px 64px;
+         }
+         /* display is set only on the open step, so a browser that hides closed
+   <details> content with the old display:none UA rule is not overridden */
+         .pmc .scstep[open] > .scbody {
+            display: grid;
+         }
+         .pmc .scshot {
+            border-radius: var(--r-md);
+            overflow: hidden;
+            box-shadow: var(--md);
+            background: var(--surface);
+         }
+         .pmc .scshot img {
+            display: block;
+            width: 100%;
+            height: auto;
+         }
+         .pmc .sccap {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--ink-3);
+         }
+         .pmc .sccap b {
+            color: var(--violet);
+         }
+
+         /* ---------- feature icon rows (F-1) ---------- */
+         .pmc .featgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 46px;
+            margin-top: 26px;
+         }
+         .pmc .feat {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 14px;
+            padding: 17px 0;
+            border-top: 1px solid var(--line);
+         }
+         .pmc .feat .fi {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--surface-2);
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--violet);
+         }
+         .pmc .feat h3 {
+            font-size: 15px;
+            color: var(--ink-2);
+            margin-bottom: 4px;
+         }
+         .pmc .feat p {
+            font-size: 13px;
+            color: var(--ink-4);
+            line-height: 1.55;
+         }
+
+         /* ---------- feature gif gallery ---------- */
+         .pmc .gcards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-top: 30px;
+         }
+         .pmc .gcard {
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            box-shadow: var(--sm);
+            background: #fff;
+         }
+         .pmc .gcard .shot {
+            background: var(--surface);
+            border-bottom: 1px solid var(--line);
+         }
+         .pmc .gcard .shot img {
+            display: block;
+            width: 100%;
+            height: auto;
+         }
+         .pmc .gcard .body {
+            padding: 17px 19px 21px;
+         }
+         .pmc .gcard .n {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--coral-dk);
+            margin-bottom: 5px;
+         }
+         .pmc .gcard h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+         }
+         .pmc .gcard p {
+            font-size: 13.5px;
+            color: var(--ink-3);
+            line-height: 1.58;
+         }
+
+         /* ---------- requirement cards (PNG icons, ./assets/icons/req-*.png) ---------- */
+         .pmc .reqgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 30px;
+         }
+         .pmc .reqcard {
+            border: 1px solid var(--line);
+            border-radius: var(--r-lg);
+            background: #fff;
+            box-shadow: var(--xs);
+            padding: 20px 20px 22px;
+         }
+         .pmc .reqcard img {
+            width: 46px;
+            height: 46px;
+            display: block;
+            margin: 0 0 14px;
+         }
+         .pmc .reqcard h3 {
+            font-size: 15.5px;
+            line-height: 1.35;
+            margin-bottom: 6px;
+         }
+         .pmc .reqcard p {
+            font-size: 13.5px;
+            color: var(--ink-3);
+            line-height: 1.58;
+         }
+         .pmc .reqsub {
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--ink-4);
+            margin-top: 44px;
+         }
+
+         /* ---------- rebuttal rows ---------- */
+         .pmc .rebut .rrow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 44px;
+            padding: 17px 0;
+            border-top: 1px solid var(--line);
+         }
+         .pmc .rebut .rrow:last-child {
+            border-bottom: 1px solid var(--line);
+         }
+         .pmc .rebut b {
+            display: flex;
+            gap: 8px;
+            font-size: 14.5px;
+            margin-bottom: 4px;
+            font-weight: 700;
+         }
+         .pmc .rebut .no b {
+            color: var(--danger);
+         }
+         .pmc .rebut .yes b {
+            color: var(--violet);
+         }
+         .pmc .rebut .mk {
+            font-weight: 800;
+            flex: none;
+         }
+         .pmc .rebut .no .mk {
+            color: var(--danger);
+         }
+         .pmc .rebut .yes .mk {
+            color: var(--success);
+         }
+         .pmc .rebut p {
+            font-size: 13.5px;
+            line-height: 1.58;
+         }
+         .pmc .rebut .no p {
+            color: var(--ink-4);
+         }
+         .pmc .rebut .yes p {
+            color: var(--ink-2);
+         }
+
+         /* ---------- callout ---------- */
+         .pmc .callout {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 18px;
+            background: var(--surface);
+            border-radius: var(--r-lg);
+            padding: 24px 26px;
+            box-shadow: var(--xs);
+            margin-top: 24px;
+         }
+         .pmc .callout .ci {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: #fff;
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--warn);
+            box-shadow: var(--xs);
+         }
+         .pmc .callout h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+         }
+         .pmc .callout p {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--ink-3);
+         }
+         .pmc .callout p + p {
+            margin-top: 8px;
+         }
+
+         /* ---------- stat row ---------- */
+         .pmc .statrow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+            border: 1px solid var(--line);
+            border-radius: var(--r-lg);
+            background: #fff;
+         }
+         .pmc .statrow .st {
+            padding: 22px 14px;
+            border-left: 1px solid var(--line);
+         }
+         .pmc .statrow .st:first-child {
+            border-left: none;
+         }
+         .pmc .statrow .n {
+            font-size: 31px;
+            font-weight: 800;
+            color: var(--violet);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+         }
+         .pmc .statrow .l {
+            font-size: 12.5px;
+            color: var(--ink-4);
+            margin-top: 4px;
+         }
+
+         /* ---------- QR CTA ---------- */
+         .pmc .qrcta {
+            background: var(--violet);
+            border-radius: var(--r-xl);
+            padding: 32px 34px 26px;
+         }
+         .pmc .qrcta .qr-eyebrow {
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin: 0 0 8px;
+         }
+         .pmc .qrcta h2 {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin: 0 0 9px;
+         }
+         .pmc .qrcta .qr-sub {
+            color: rgba(255, 255, 255, 0.76);
+            font-size: 14.5px;
+            line-height: 1.58;
+            max-width: 680px;
+         }
+         .pmc .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 24px;
+         }
+         .pmc .qr-card {
+            background: #fff;
+            border-radius: var(--r-lg);
+            padding: 17px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+         }
+         .pmc .qr-lead {
+            box-shadow: 0 0 0 2px var(--coral);
+         }
+         .pmc .qr-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+         }
+         .pmc .qr-ico {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            background: var(--violet);
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+         }
+         .pmc .qr-tag {
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--violet);
+            background: var(--surface-2);
+            padding: 4px 9px;
+            border-radius: var(--r-full);
+         }
+         .pmc .qr-tag-hot {
+            background: var(--coral);
+            color: #fff;
+         }
+         .pmc .qrcta .qr-h {
+            font-size: 15.5px;
+            margin: 0;
+         }
+         .pmc .qrcta .qr-p {
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: var(--ink-4);
+            margin: 0;
+         }
+         .pmc .qr-code {
+            display: block;
+            background: var(--surface);
+            border-radius: var(--r-md);
+            padding: 10px;
+            margin-top: auto;
+         }
+         .pmc .qr-code img {
+            display: block;
+            width: 98px;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+         }
+         .pmc .qr-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            word-break: break-word;
+            text-align: center;
+         }
+         .pmc .qrcta .qr-foot {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            margin: 18px 0 0;
+         }
+
+         /* ---------- tables ---------- */
+         .pmc .tw {
+            overflow-x: auto;
+         }
+         .pmc table.pmct {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            margin-top: 22px;
+         }
+         .pmc table.pmct th {
+            background: var(--violet);
+            color: #fff;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 700;
+            font-size: 12.5px;
+         }
+         .pmc table.pmct th:first-child {
+            border-top-left-radius: var(--r-md);
+         }
+         .pmc table.pmct th:last-child {
+            border-top-right-radius: var(--r-md);
+         }
+         .pmc table.pmct td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--line);
+            vertical-align: top;
+            color: var(--ink-3);
+         }
+         .pmc table.pmct tbody tr:nth-child(even) {
+            background: var(--surface);
+         }
+         .pmc table.pmct td b {
+            color: var(--violet);
+         }
+
+         /* ---------- FAQ accordion (native <details>, no script) ----------
+   Each question is its own <details> with NO shared name=, so several answers
+   can stay open side by side for comparison. Question 1 ships open. As in the
+   showcase, `display` is bound to [open] so the UA rule that hides closed
+   content is never overridden. */
+         .pmc .faq {
+            margin-top: 24px;
+            border-top: 1px solid var(--line);
+         }
+         .pmc .faq .qa {
+            border-bottom: 1px solid var(--line);
+         }
+         .pmc .qsum {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 20px;
+            gap: 18px;
+            align-items: start;
+            padding: 17px 2px;
+            cursor: pointer;
+            list-style: none;
+         }
+         .pmc .qsum::-webkit-details-marker {
+            display: none;
+         }
+         .pmc .qsum::marker {
+            content: "";
+         }
+         .pmc .faq h3 {
+            font-size: 15.5px;
+            font-weight: 700;
+            line-height: 1.4;
+            transition: color 0.15s ease;
+         }
+         .pmc .qsum:hover h3 {
+            color: var(--coral-dk);
+         }
+         .pmc .qsum:focus-visible {
+            outline: 2px solid var(--coral);
+            outline-offset: -2px;
+            border-radius: var(--r-sm);
+         }
+         .pmc .scsum:focus-visible {
+            outline: 2px solid var(--coral);
+            outline-offset: -2px;
+         }
+         .pmc .qsign {
+            width: 20px;
+            height: 20px;
+            margin-top: 1px;
+            color: var(--coral-dk);
+            transition:
+               transform 0.2s ease,
+               color 0.2s ease;
+         }
+         .pmc .qa[open] .qsign {
+            transform: rotate(45deg);
+            color: var(--violet);
+         }
+         .pmc .qans {
+            padding: 0 46px 20px 2px;
+         }
+         .pmc .qa[open] > .qans {
+            display: block;
+         }
+         .pmc .faq p {
+            font-size: 13.5px;
+            line-height: 1.62;
+            color: var(--ink-3);
+         }
+         .pmc .faq p + p {
+            margin-top: 8px;
+         }
+
+         /* ---------- cross-sell (tinted band, three product cards) ----------
+   The only tinted section on the page: it marks the shelf of other modules as
+   somebody else's product, not part of this one. Everything else stays white. */
+         .pmc .xsec {
+            background: var(--surface);
+            border-top: 1px solid var(--line);
+         }
+         .pmc .tac {
+            text-align: center;
+         }
+         .pmc .eyebrow.tac {
+            display: block;
+         }
+         .pmc .pmclead.narrow.tac {
+            margin-left: auto;
+            margin-right: auto;
+         }
+         .pmc .xchips {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+         }
+         .pmc .xchip {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--violet);
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r-full);
+            padding: 9px 18px;
+         }
+         .pmc .xsell {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+         }
+         .pmc .xs {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--r-lg);
+            padding: 22px 22px 24px;
+            box-shadow: var(--xs);
+         }
+         .pmc .xs-dark {
+            background: var(--violet);
+            border-color: var(--violet);
+            box-shadow: var(--md);
+         }
+         .pmc .xtop {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+         }
+         .pmc .xico {
+            display: block;
+            width: 34px;
+            height: 34px;
+            flex: none;
+         }
+         .pmc .xs .pr {
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--violet);
+            background: var(--surface-2);
+            padding: 6px 11px;
+            border-radius: var(--r-full);
+            white-space: nowrap;
+         }
+         .pmc .xs-dark .pr {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.13);
+         }
+         .pmc .xbody {
+            flex: 1;
+         }
+         .pmc .xs h3 {
+            font-size: 17px;
+            margin-top: 18px;
+         }
+         .pmc .xs-dark h3 {
+            color: #fff;
+         }
+         .pmc .xs p {
+            font-size: 13.5px;
+            color: var(--ink-3);
+            line-height: 1.6;
+            margin-top: 9px;
+         }
+         .pmc .xs-dark p {
+            color: rgba(255, 255, 255, 0.72);
+         }
+         .pmc .xbtn {
+            display: block;
+            margin-top: 22px;
+            text-align: center;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--violet);
+            background: #fff;
+            border: 1.5px solid var(--violet);
+            border-radius: var(--r-md);
+            padding: 11px 14px;
+            text-decoration: none;
+         }
+         .pmc .xs-dark .xbtn {
+            color: #2b0733;
+            background: var(--coral);
+            border-color: var(--coral);
+         }
+         .pmc .xnote {
+            font-size: 12.5px;
+            color: var(--ink-4);
+            margin-top: 20px;
+         }
+         .pmc .xnote b {
+            color: var(--violet);
+         }
+         .pmc .rel {
+            margin-top: 24px;
+         }
+         .pmc .relrow {
+            display: grid;
+            grid-template-columns: 104px 92px 1fr;
+            gap: 16px;
+            padding: 15px 0;
+            border-top: 1px solid var(--line);
+            align-items: start;
+         }
+         .pmc .relrow:last-child {
+            border-bottom: 1px solid var(--line);
+         }
+         .pmc .relver {
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--violet);
+         }
+         .pmc .relbadge {
+            display: inline-block;
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: var(--r-sm);
+         }
+         .pmc .rb-new {
+            background: var(--violet);
+            color: #fff;
+         }
+         .pmc .rb-next {
+            background: var(--surface-2);
+            color: var(--violet);
+         }
+         .pmc .relrow p {
+            font-size: 13.5px;
+            line-height: 1.58;
+         }
+
+         /* ---------- responsive ---------- */
+         @media (max-width: 980px) {
+            .pmc .pmch1 {
+               font-size: 35px;
+            }
+            .pmc .pmchdr-in {
+               grid-template-columns: 1fr auto;
+            }
+            .pmc .jump {
+               grid-row: 2;
+               grid-column: 1 / -1;
+               justify-self: start;
+            }
+            .pmc .scbody {
+               grid-template-columns: 1.25fr 0.95fr;
+               gap: 16px;
+               padding-left: 52px;
+            }
+            .pmc .reqgrid,
+            .pmc .xsell {
+               grid-template-columns: 1fr 1fr;
+            }
+            .pmc .statrow {
+               grid-template-columns: 1fr 1fr;
+            }
+            .pmc .statrow .st {
+               border-left: none;
+               border-top: 1px solid var(--line);
+            }
+            .pmc .statrow .st:first-child,
+            .pmc .statrow .st:nth-child(2) {
+               border-top: none;
+            }
+         }
+         @media (max-width: 820px) {
+            .pmc .sec {
+               padding: 42px 0;
+            }
+            .pmc .pmch2 {
+               font-size: 24px;
+            }
+            .pmc .scbody {
+               grid-template-columns: 1fr;
+               gap: 14px;
+               padding: 4px 16px 20px;
+            }
+            .pmc .scsum {
+               padding: 13px 16px;
+            }
+            .pmc .featgrid,
+            .pmc .gcards {
+               grid-template-columns: 1fr;
+            }
+            .pmc .reqgrid {
+               gap: 14px;
+            }
+            .pmc .rebut .rrow {
+               grid-template-columns: 1fr;
+               gap: 12px;
+            }
+            .pmc .qans {
+               padding-right: 2px;
+            }
+            .pmc .callout {
+               grid-template-columns: 1fr;
+               gap: 12px;
+            }
+         }
+         @media (max-width: 620px) {
+            .pmc .pmch1 {
+               font-size: 29px;
+            }
+            .pmc .qr-grid,
+            .pmc .reqgrid,
+            .pmc .xsell {
+               grid-template-columns: 1fr;
+            }
+            .pmc .scsum-in {
+               grid-template-columns: 28px 1fr 16px;
+               gap: 11px;
+            }
+            .pmc .scn {
+               width: 28px;
+               height: 28px;
+               font-size: 12px;
+            }
+            .pmc .relrow {
+               grid-template-columns: 1fr;
+               gap: 6px;
+            }
+            .pmc .qrcta {
+               padding: 24px 20px 20px;
+            }
+         }
+      </style>
+
+      <div class="pmc">
+         <!-- ============================== HEADER ============================== -->
+         <header class="pmchdr">
+            <div class="wrap">
+               <div class="pmchdr-in">
+                  <div class="pmcbrand">
+                     <img
+                        class="tile"
+                        src="./icon.png"
+                        width="28"
+                        height="28"
+                        alt="The Pin Message in Chatter icon: a blue push pin."
+                     />
+                     <span>Pin Message in Chatter</span>
+                  </div>
+                  <nav class="jump">
+                     <a href="#pmc-tour">See it work</a>
+                     <a href="#pmc-features">Features</a>
+                     <a href="#pmc-detail">In motion</a>
+                     <a href="#pmc-requirements">Requirements</a>
+                     <a href="#pmc-faq">FAQ</a>
+                     <a href="#pmc-releases">Releases</a>
+                  </nav>
+                  <a
+                     class="pmcbtn pmcbtn-1 hdr-cta"
+                     href="mailto:odoo@doodex.net"
+                     >Ask Doodex</a
+                  >
+               </div>
+            </div>
+         </header>
+
+         <!-- ============================== HERO (H-4 compact) ============================== -->
+         <section class="hero sec-first">
+            <div class="wrap">
+               <div class="narrow">
+                  <p class="eyebrow">
+                     Odoo 17 &middot; Discuss &middot; Works on every model
+                  </p>
+                  <h1 class="pmch1">
+                     The note that matters,
+                     <span class="pmcmark"
+                        >pinned to the top of the chatter.</span
+                     >
+                  </h1>
+                  <p class="pmclead">
+                     The line that decides everything &mdash; a delivery
+                     instruction, an agreed exception, a customer on hold
+                     &mdash; sits sixty messages up.
+                     <b>Pin Message in Chatter</b> moves it to a
+                     <b>Pinned Messages</b> panel at the top of the chatter,
+                     with a count badge, on any Odoo record.
+                  </p>
+                  <div class="pmcbtnrow">
+                     <a class="pmcbtn pmcbtn-1" href="#pmc-tour"
+                        >See it in six screens</a
+                     >
+                     <a class="pmcbtn pmcbtn-2" href="mailto:odoo@doodex.net"
+                        >Ask a question</a
+                     >
+                  </div>
+               </div>
+               <div class="trust">
+                  <span class="chip"
+                     ><svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 7v5l3 2" /></svg
+                     >Built for Odoo 17.0</span
+                  >
+                  <span class="chip"
+                     ><svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="M4 5h16M4 12h16M4 19h10" /></svg
+                     >Any chatter, any model</span
+                  >
+                  <span class="chip"
+                     ><svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="M13 2L5 14h6l-1 8 8-12h-6z" /></svg
+                     >Live update, no refresh</span
+                  >
+                  <span class="chip"
+                     ><svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="M9 11l3 3L22 4" />
+                        <path
+                           d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                        /></svg
+                     >3 automated tests, 0 failures</span
+                  >
+                  <span class="chip"
+                     ><svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <rect x="4" y="10" width="16" height="11" rx="2" />
+                        <path d="M8 10V7a4 4 0 018 0v3" /></svg
+                     >No activation key</span
+                  >
+                  <span class="chip"
+                     ><svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path
+                           d="M12 3l8 4v6c0 4.5-3.4 7.3-8 8-4.6-.7-8-3.5-8-8V7z"
+                        /></svg
+                     >Licence LGPL-3</span
+                  >
+               </div>
+               <figure
+                  style="
+                     margin: 30px 0 0;
+                     border-radius: 20px;
+                     overflow: hidden;
+                     box-shadow:
+                        0 12px 32px rgba(39, 1, 64, 0.1),
+                        0 0 0 1px rgba(39, 1, 64, 0.06);
+                  "
+               >
+                  <img
+                     src="./assets/gifs/hero-pin-note.gif"
+                     alt="A delivery instruction eleven messages down the chatter of Odoo 17 sale order S00024 being pinned, moving to the Pinned Messages panel at the top with a count badge, and the See button jumping back to the original message."
+                  />
+               </figure>
+            </div>
+         </section>
+
+         <!-- ============================== SHOWCASE (Archetype C signature) ==============================
+  NO SCRIPT OF OURS AND NO DEPENDENCE ON ANYONE ELSE'S. The step switcher is a
+  native <details>/<summary> group: the browser opens and closes it on its own.
+  It therefore works on the store page whether or not the host page runs
+  Bootstrap, and the description still adds nothing executable, which is what
+  the vendor guideline ("You cannot inject JavaScript") requires.
+
+  The shared name="pmc-steps" makes the group exclusive natively — opening one
+  step closes the others. A browser that does not know that attribute simply
+  lets more than one step stay open, which is harmless. Step 1 carries `open`,
+  so a screenshot is on screen at first paint.
+
+  Do NOT reintroduce data-bs-toggle / data-toggle here: the store page's own
+  Bootstrap is not reliably present, and if it were, its class-based tab logic
+  would fight the browser's own open/close state.
+================================================================================ -->
+         <section class="sec" id="pmc-tour">
+            <div class="wrap">
+               <p class="eyebrow">See it work</p>
+               <h2 class="pmch2">Six screens, start to finish</h2>
+               <p class="pmclead narrow">
+                  Open a step below. This is the whole product &mdash; there is
+                  no configuration screen, no new menu and nothing to set up
+                  first.
+               </p>
+
+               <div class="scase">
+                  <details class="scstep" id="pmc-sc-0" name="pmc-steps" open>
+                     <summary class="scsum">
+                        <span class="scsum-in">
+                           <span class="scn">1</span>
+                           <span class="sct"
+                              ><span class="stp">Step 1</span
+                              ><b>The note nobody can find</b></span
+                           >
+                           <svg
+                              class="scchev"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                           >
+                              <path d="M6 9l6 6 6-6" />
+                           </svg>
+                        </span>
+                     </summary>
+                     <div class="scbody">
+                        <div class="scshot">
+                           <img
+                              src="./assets/screenshots/sc-01-buried-note.png"
+                              alt="Two crops of the same Odoo 17 sale order chatter: the top, where nothing mentions the delivery, and nine messages down, where the eleven-day-old delivery instruction sits outlined in coral."
+                           />
+                        </div>
+                        <p class="sccap">
+                           <b>The problem, on a real record.</b> Sixty messages
+                           of tracked-field changes, e-mails and notes.
+                           Somewhere in there is the one line that explains why
+                           this order is different. Everyone who opens this
+                           record has to be told again.
+                        </p>
+                     </div>
+                  </details>
+                  <details class="scstep" id="pmc-sc-1" name="pmc-steps">
+                     <summary class="scsum">
+                        <span class="scsum-in">
+                           <span class="scn">2</span>
+                           <span class="sct"
+                              ><span class="stp">Step 2</span
+                              ><b>One click on the pin</b></span
+                           >
+                           <svg
+                              class="scchev"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                           >
+                              <path d="M6 9l6 6 6-6" />
+                           </svg>
+                        </span>
+                     </summary>
+                     <div class="scbody">
+                        <div class="scshot">
+                           <img
+                              src="./assets/screenshots/sc-02-pin-click.png"
+                              alt="The Odoo chatter on sale order S00024 with the thumb-tack pin button ringed in the message's own hover bar, beside the author name."
+                              loading="lazy"
+                           />
+                        </div>
+                        <p class="sccap">
+                           <b>A thumb-tack on the message itself.</b> It sits
+                           beside the author's name, so pinning is one click
+                           where you are already reading. There is also a
+                           <b>Pin</b> entry in the message actions menu if you
+                           prefer that route.
+                        </p>
+                     </div>
+                  </details>
+                  <details class="scstep" id="pmc-sc-2" name="pmc-steps">
+                     <summary class="scsum">
+                        <span class="scsum-in">
+                           <span class="scn">3</span>
+                           <span class="sct"
+                              ><span class="stp">Step 3</span
+                              ><b>A panel with a count badge</b></span
+                           >
+                           <svg
+                              class="scchev"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                           >
+                              <path d="M6 9l6 6 6-6" />
+                           </svg>
+                        </span>
+                     </summary>
+                     <div class="scbody">
+                        <div class="scshot">
+                           <img
+                              src="./assets/screenshots/sc-03-panel-badge.png"
+                              alt="The collapsed Pinned Messages header sitting directly under the Odoo chatter topbar, its count badge showing one, ringed in coral."
+                              loading="lazy"
+                           />
+                        </div>
+                        <p class="sccap">
+                           <b
+                              >A Pinned Messages header appears under the
+                              topbar.</b
+                           >
+                           Collapsed by default, with a badge showing how many
+                           there are, so you know the record has context waiting
+                           without losing any vertical space to it.
+                        </p>
+                     </div>
+                  </details>
+                  <details class="scstep" id="pmc-sc-3" name="pmc-steps">
+                     <summary class="scsum">
+                        <span class="scsum-in">
+                           <span class="scn">4</span>
+                           <span class="sct"
+                              ><span class="stp">Step 4</span
+                              ><b>Expand it, jump to it</b></span
+                           >
+                           <svg
+                              class="scchev"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                           >
+                              <path d="M6 9l6 6 6-6" />
+                           </svg>
+                        </span>
+                     </summary>
+                     <div class="scbody">
+                        <div class="scshot">
+                           <img
+                              src="./assets/screenshots/sc-04-panel-open.png"
+                              alt="The Pinned Messages panel expanded at the top of the Odoo chatter, showing the pinned delivery instruction with its author and date and the See button ringed in coral."
+                              loading="lazy"
+                           />
+                        </div>
+                        <p class="sccap">
+                           <b
+                              >Expand it and the pinned notes are cards, newest
+                              first.</b
+                           >
+                           Each carries a <b>See</b> button that jumps the
+                           chatter to the original message, in place, with its
+                           full history and attachments around it.
+                        </p>
+                     </div>
+                  </details>
+                  <details class="scstep" id="pmc-sc-4" name="pmc-steps">
+                     <summary class="scsum">
+                        <span class="scsum-in">
+                           <span class="scn">5</span>
+                           <span class="sct"
+                              ><span class="stp">Step 5</span
+                              ><b>The same on any record</b></span
+                           >
+                           <svg
+                              class="scchev"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                           >
+                              <path d="M6 9l6 6 6-6" />
+                           </svg>
+                        </span>
+                     </summary>
+                     <div class="scbody">
+                        <div class="scshot">
+                           <img
+                              src="./assets/screenshots/sc-05-any-record.png"
+                              alt="The Pinned Messages panel on Odoo sale order S00024, above a list of the other record types that carry a chatter: contacts, purchase orders, invoices, products, employees, projects and custom models."
+                              loading="lazy"
+                           />
+                        </div>
+                        <p class="sccap">
+                           <b>It is not a Sales feature or a CRM feature.</b> It
+                           attaches to the chatter itself, so it is there on
+                           contacts, sale orders, purchase orders, invoices,
+                           tasks, products, employees &mdash; anything in Odoo
+                           with a chatter on it.
+                        </p>
+                     </div>
+                  </details>
+                  <details class="scstep" id="pmc-sc-5" name="pmc-steps">
+                     <summary class="scsum">
+                        <span class="scsum-in">
+                           <span class="scn">6</span>
+                           <span class="sct"
+                              ><span class="stp">Step 6</span
+                              ><b>Unpin when it stops mattering</b></span
+                           >
+                           <svg
+                              class="scchev"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                           >
+                              <path d="M6 9l6 6 6-6" />
+                           </svg>
+                        </span>
+                     </summary>
+                     <div class="scbody">
+                        <div class="scshot">
+                           <img
+                              src="./assets/screenshots/sc-06-unpin.png"
+                              alt="The same Odoo message before and after unpinning: the pin marker beside the author disappears, and the message stays in the same place with the same date."
+                              loading="lazy"
+                           />
+                        </div>
+                        <p class="sccap">
+                           <b>Unpinning is the same click again.</b> The message
+                           leaves the panel and stays exactly where it always
+                           was in the chatter. Nothing is deleted, moved or
+                           rewritten &mdash; a pin is a flag, not an edit.
+                        </p>
+                     </div>
+                  </details>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== FEATURES (F-1 icon rows) ============================== -->
+         <section class="sec" id="pmc-features">
+            <div class="wrap">
+               <p class="eyebrow">Features</p>
+               <h2 class="pmch2">Everything it does, in one screen</h2>
+               <p class="pmclead narrow">
+                  It is a small module and this is deliberately the whole list.
+                  Nothing is hidden behind a "premium" tier, because there is
+                  only one tier.
+               </p>
+               <div class="featgrid">
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M9 4h6M12 4v7" />
+                           <path d="M7 11h10l-1.4 4H8.4z" />
+                           <path d="M12 15v5" /></svg
+                     ></span>
+                     <div>
+                        <h3>One-click pin, one-click unpin</h3>
+                        <p>
+                           A thumb-tack on the message bubble, filled when
+                           pinned and outlined when not. No dialog, no
+                           confirmation step.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M4 6h16v10H8l-4 4z" />
+                           <path d="M9 11h6" /></svg
+                     ></span>
+                     <div>
+                        <h3>A Pinned Messages panel at the top</h3>
+                        <p>
+                           Injected directly under the chatter topbar, above
+                           every other message, so it is the first thing anyone
+                           opening the record sees.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <circle cx="12" cy="12" r="9" />
+                           <path d="M8.5 12h7" /></svg
+                     ></span>
+                     <div>
+                        <h3>Collapsed by default, with a count</h3>
+                        <p>
+                           A badge shows how many notes are pinned. You get the
+                           signal without giving up the screen space until you
+                           want it.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M13 2L5 14h6l-1 8 8-12h-6z" /></svg
+                     ></span>
+                     <div>
+                        <h3>Updates live, without a refresh</h3>
+                        <p>
+                           Pinning broadcasts on Odoo's own message bus, so an
+                           open screen picks the change up on its own rather
+                           than waiting for someone to reload.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                           <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                           <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                           <rect
+                              x="14"
+                              y="14"
+                              width="7"
+                              height="7"
+                              rx="1.5"
+                           /></svg
+                     ></span>
+                     <div>
+                        <h3>Works on every model with a chatter</h3>
+                        <p>
+                           Contacts, quotations, purchase orders, invoices,
+                           tasks, products, employees. Nothing to enable per
+                           model.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M4 12h11" />
+                           <path d="M11 8l4 4-4 4" />
+                           <path d="M19 5v14" /></svg
+                     ></span>
+                     <div>
+                        <h3>A See button that jumps to the message</h3>
+                        <p>
+                           From a pinned card straight to the original in the
+                           chatter, with its replies and attachments around it.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M3 6h13M3 12h9M3 18h13" />
+                           <path d="M18 10l3 2-3 2" /></svg
+                     ></span>
+                     <div>
+                        <h3>Newest pinned note first</h3>
+                        <p>
+                           The panel is ordered by date descending, so the most
+                           recent decision is the one at the top of the list.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M4 5h16v11H4z" />
+                           <path d="M8 20h8M12 16v4" />
+                           <path d="M9 10l2 2 4-4" /></svg
+                     ></span>
+                     <div>
+                        <h3>Follows you between records</h3>
+                        <p>
+                           Move from one record to another and the panel reloads
+                           for the new one instead of showing the previous
+                           record's pins.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M8 12l3 3 5-6" />
+                           <circle cx="12" cy="12" r="9" /></svg
+                     ></span>
+                     <div>
+                        <h3>No duplicate button next to Odoo's own</h3>
+                        <p>
+                           Discuss channel messages keep Odoo's native pin. This
+                           module's action appears only on chatter notes, so you
+                           never see two pins.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M5 4h14v16l-7-4-7 4z" /></svg
+                     ></span>
+                     <div>
+                        <h3>Notes only, not system noise</h3>
+                        <p>
+                           The pin is offered on log notes, not on tracked-field
+                           changelogs, e-mail notifications or automatic system
+                           messages.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="4" width="18" height="14" rx="2" />
+                           <path d="M7 9h6M7 13h4" /></svg
+                     ></span>
+                     <div>
+                        <h3>Pinned cards are visually distinct</h3>
+                        <p>
+                           A soft tinted card background so the panel reads as
+                           pinned content rather than as more of the same
+                           conversation.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="feat">
+                     <span class="fi"
+                        ><svg
+                           width="17"
+                           height="17"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path
+                              d="M12 3l8 4v6c0 4.5-3.4 7.3-8 8-4.6-.7-8-3.5-8-8V7z"
+                           />
+                           <path d="M9.5 12l1.8 1.8 3.4-3.6" /></svg
+                     ></span>
+                     <div>
+                        <h3>Nothing leaves your database</h3>
+                        <p>
+                           A boolean field and a bus notification. No external
+                           service, no activation key, no telemetry, nothing to
+                           renew.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== IN MOTION ============================== -->
+         <section class="sec" id="pmc-detail">
+            <div class="wrap">
+               <p class="eyebrow">In motion</p>
+               <h2 class="pmch2">
+                  Eight clips: pinned notes in a live Odoo chatter
+               </h2>
+               <p class="pmclead narrow">
+                  A screenshot proves the panel exists. These prove it behaves
+                  &mdash; an instant toggle with no save step, one user pinning
+                  and another's window updating on Odoo's own bus, and identical
+                  behaviour on every record with a chatter.
+               </p>
+               <div class="gcards">
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-01-toggle.gif"
+                           alt="A log note in the Odoo 17 chatter: the thumb-tack appears on hover, one click pins it and adds a pin marker beside the author, and the same click unpins it."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 01</span>
+                        <h3>Pin, unpin, pin again</h3>
+                        <p>
+                           The button is a toggle and the panel follows it
+                           immediately. No save step, no reload, no intermediate
+                           state to wonder about.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-02-realtime.gif"
+                           alt="The Odoo 17 chatter before and after pinning: no panel, then the Pinned Messages panel with its count badge, with no page reload in between."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 02</span>
+                        <h3>
+                           Pinned, and on screen at once &mdash; no save, no
+                           reload
+                        </h3>
+                        <p>
+                           The panel and its count appear the instant the pin is
+                           clicked. The change goes out on Odoo's own bus rather
+                           than being polled for, so a colleague already on the
+                           record sees it too.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-03-badge.gif"
+                           alt="The collapsed Pinned Messages header in the Odoo chatter with its count badge, then expanded to show the pinned note with its author and date."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 03</span>
+                        <h3>The badge, then the detail</h3>
+                        <p>
+                           Collapsed it costs one line of height and tells you
+                           there are three things to know. Open it when you want
+                           them.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-04-jump.gif"
+                           alt="The See button on a pinned card in the Odoo chatter, and the original message it lands on further down the same thread."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 04</span>
+                        <h3>From the card to the conversation</h3>
+                        <p>
+                           <b>See</b> takes you to the message where it actually
+                           lives, so you get the thread around it instead of a
+                           decontextualised excerpt.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-05-any-model.gif"
+                           alt="The same Pinned Messages panel on two different Odoo models: sale order S00024 and the contact Tennis Club."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 05</span>
+                        <h3>Contact, order, task &mdash; same behaviour</h3>
+                        <p>
+                           It is attached to the chatter component, not to a
+                           business app, which is why it turns up everywhere
+                           without being configured anywhere.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-06-switch-record.gif"
+                           alt="The pinned panel on sale order S00024, then on the contact Tennis Club showing that record's own pinned note instead."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 06</span>
+                        <h3>No leftovers from the last record</h3>
+                        <p>
+                           Switching records reloads the panel for the record
+                           you are now on. Obvious when it works, maddening when
+                           it does not.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-07-no-duplicate.gif"
+                           alt="A message in the Odoo Discuss channel #general with only Odoo's own actions and no thumb-tack, and a record chatter message where this module's thumb-tack appears."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 07</span>
+                        <h3>One pin button, never two</h3>
+                        <p>
+                           Odoo 17 already pins messages inside Discuss
+                           channels. That is left alone; this module fills the
+                           gap on record chatters, and the two never appear
+                           together.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="gcard">
+                     <div class="shot">
+                        <img
+                           src="./assets/gifs/feat-08-notes-only.gif"
+                           alt="The pin marker on an Odoo log note, and the system messages below it — “Invoice paid” and “Sales Order created” — which are offered no pin at all."
+                           loading="lazy"
+                        />
+                     </div>
+                     <div class="body">
+                        <span class="n">In motion 08</span>
+                        <h3>Only where pinning makes sense</h3>
+                        <p>
+                           No pin on "Stage: New &rarr; Qualified" or on an
+                           outgoing e-mail receipt. Pinning system noise would
+                           just make a second stream of noise.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== PROOF ============================== -->
+         <section class="sec-tight">
+            <div class="wrap">
+               <div class="statrow">
+                  <div class="st">
+                     <p class="n">3</p>
+                     <p class="l">automated tests, 0 failures</p>
+                  </div>
+                  <div class="st">
+                     <p class="n">3</p>
+                     <p class="l">standard Odoo dependencies</p>
+                  </div>
+                  <div class="st">
+                     <p class="n">1</p>
+                     <p class="l">field added to your database</p>
+                  </div>
+                  <div class="st">
+                     <p class="n">0</p>
+                     <p class="l">external services contacted</p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== QR CTA · MID ============================== -->
+         <section class="sec-tight">
+            <div class="wrap">
+               <div class="qrcta">
+                  <div>
+                     <p class="qr-eyebrow">
+                        The module is small, your time isn't
+                     </p>
+                     <h2>Ask us anything before you install it</h2>
+                     <p class="qr-sub">
+                        Whether it works on your custom model, whether pinning
+                        can be restricted, whether it survives your next
+                        upgrade, whether it clashes with another chatter module
+                        you already run &mdash; ask, and we will answer without
+                        pretending the answer is always yes.
+                     </p>
+                  </div>
+                  <div class="qr-grid">
+                     <div class="qr-card qr-lead">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="16"
+                                    rx="2"
+                                 />
+                                 <path d="M8 3v4M16 3v4M3 11h18" /></svg></span
+                           ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                        </div>
+                        <h3 class="qr-h">Book a demo</h3>
+                        <p class="qr-p">
+                           We show it on a live Odoo 17, on your kind of record.
+                        </p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex booking page"
+                           ><img
+                              src="./assets/icons/qr-meeting.png"
+                              alt="QR code encoding hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="pmcbtn pmcbtn-1 qr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                 />
+                                 <path d="M3 7l9 6 9-6" /></svg></span
+                           ><span class="qr-tag">Written reply</span>
+                        </div>
+                        <h3 class="qr-h">Send a question</h3>
+                        <p class="qr-p">
+                           Put it in writing and we answer by e-mail.
+                        </p>
+                        <a
+                           class="qr-code"
+                           href="mailto:odoo@doodex.net"
+                           aria-label="QR code for the Doodex contact page"
+                           ><img
+                              src="./assets/icons/qr-contact.png"
+                              alt="QR code encoding doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a
+                           class="pmcbtn pmcbtn-2 qr-btn"
+                           href="mailto:odoo@doodex.net"
+                           >odoo@doodex.net</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <path
+                                    d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.8A8.4 8.4 0 1121 11.5z"
+                                 /></svg></span
+                           ><span class="qr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="qr-h">Message us</h3>
+                        <p class="qr-p">Reach the team directly on WhatsApp.</p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex WhatsApp line"
+                           ><img
+                              src="./assets/icons/qr-whatsapp.png"
+                              alt="QR code encoding hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="pmcbtn pmcbtn-2 qr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</a
+                        >
+                     </div>
+                  </div>
+                  <p class="qr-foot">
+                     Scan a code with your phone camera to open the link. The
+                     address printed beside each code is the same destination
+                     typed out, so it still works if this page is copied as
+                     plain text.
+                  </p>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== REQUIREMENTS ==============================
+  Six beginner questions as icon cards (PNG tiles in ./assets/icons/req-*.png,
+  rendered at 46px from 112px sources), then the remaining detail as the table.
+  Icons are <img>, not an icon font: the store page has no icon webfont.
+================================================================================ -->
+         <section class="sec" id="pmc-requirements">
+            <div class="wrap">
+               <p class="eyebrow">Requirements</p>
+               <h2 class="pmch2">
+                  Runs on a standard Odoo 17. Nothing else to buy.
+               </h2>
+               <p class="pmclead narrow">
+                  Never installed an Odoo app before? This is the whole
+                  checklist in plain words &mdash; what you need, what it
+                  touches in your database, and how to undo it. There is no
+                  licence key, no external service and no configuration screen
+                  anywhere in it.
+               </p>
+
+               <div class="reqgrid">
+                  <div class="reqcard">
+                     <img
+                        src="./assets/icons/req-odoo-version.png"
+                        alt="A violet badge with a coral tick."
+                        loading="lazy"
+                        width="46"
+                        height="46"
+                     />
+                     <h3>Which Odoo do I need?</h3>
+                     <p>
+                        Odoo <b>17.0</b>, Community or Enterprise. This is the
+                        17.0 build, module version
+                        <span class="fld">17.0.1.0</span>. Nothing else on the
+                        server changes.
+                     </p>
+                  </div>
+
+                  <div class="reqcard">
+                     <img
+                        src="./assets/icons/req-depends.png"
+                        alt="Three stacked layers standing for standard Odoo modules."
+                        loading="lazy"
+                        width="46"
+                        height="46"
+                     />
+                     <h3>Do I need other apps first?</h3>
+                     <p>
+                        No. It uses only standard Odoo:
+                        <span class="fld">web</span>,
+                        <span class="fld">base</span> and
+                        <span class="fld">mail</span> &mdash; all already in
+                        your database. Nothing extra to buy or subscribe to.
+                     </p>
+                  </div>
+
+                  <div class="reqcard">
+                     <img
+                        src="./assets/icons/req-install.png"
+                        alt="A download arrow dropping into a tray."
+                        loading="lazy"
+                        width="46"
+                        height="46"
+                     />
+                     <h3>How do I install it?</h3>
+                     <p>
+                        Three steps: copy the folder into your addons path,
+                        update the apps list, click <b>Install</b>. No
+                        installer, no shell script, no settings screen
+                        afterwards.
+                     </p>
+                  </div>
+
+                  <div class="reqcard">
+                     <img
+                        src="./assets/icons/req-no-key.png"
+                        alt="A key crossed out in coral."
+                        loading="lazy"
+                        width="46"
+                        height="46"
+                     />
+                     <h3>Is there a licence key?</h3>
+                     <p>
+                        None. The module never contacts a licence server and
+                        never phones home, so there is nothing to activate,
+                        renew or lose. It keeps working if you never hear from
+                        us again.
+                     </p>
+                  </div>
+
+                  <div class="reqcard">
+                     <img
+                        src="./assets/icons/req-database.png"
+                        alt="A database cylinder with a coral band."
+                        loading="lazy"
+                        width="46"
+                        height="46"
+                     />
+                     <h3>What does it add to my database?</h3>
+                     <p>
+                        One indexed true/false field,
+                        <span class="fld">is_pinned</span>, on
+                        <span class="fld">mail.message</span>. Your messages are
+                        never rewritten, moved or copied anywhere.
+                     </p>
+                  </div>
+
+                  <div class="reqcard">
+                     <img
+                        src="./assets/icons/req-uninstall.png"
+                        alt="A clock with a coral undo arrow."
+                        loading="lazy"
+                        width="46"
+                        height="46"
+                     />
+                     <h3>Can I undo it?</h3>
+                     <p>
+                        Yes, in one click. Uninstalling removes the field, the
+                        panel and the buttons, and the chatter goes back to
+                        exactly what it was. Nothing is left behind.
+                     </p>
+                  </div>
+               </div>
+
+               <p class="reqsub">The rest of the detail</p>
+               <div class="tw">
+                  <table class="pmct">
+                     <thead>
+                        <tr>
+                           <th style="width: 26%">Item</th>
+                           <th>Detail</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td><b>Licence</b></td>
+                           <td>
+                              LGPL-3, with the full readable source. You may
+                              read it, audit it and change it for your own use.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Where it appears</b></td>
+                           <td>
+                              The chatter on any model &mdash; contacts, sale
+                              orders, invoices, tasks, products, your own custom
+                              models. Discuss channel messages keep Odoo's own
+                              native pin instead, so you never see two pin
+                              buttons.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Which messages</b></td>
+                           <td>
+                              Log notes and ordinary comments. The pin is not
+                              offered on system notifications, e-mail
+                              notifications or tracked-field entries such as
+                              "Stage: New &rarr; Qualified".
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Who can pin</b></td>
+                           <td>
+                              Any user who can write to messages, on any record
+                              they can already see. There is no group, setting
+                              or author check today, so treat a pin as a shared
+                              bookmark. Need it restricted to managers?
+                              <a href="mailto:odoo@doodex.net">Ask us</a> before
+                              you buy and we will quote it.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Languages</b></td>
+                           <td>
+                              The labels are English only. No translation files
+                              ship today; Odoo's own translation tools let you
+                              add your language, or ask us and we will add it.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>External services</b></td>
+                           <td>
+                              None. No data leaves your database, so there is
+                              nothing to disclose to your IT team and nothing to
+                              opt into.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Demo data</b></td>
+                           <td>
+                              None, and none needed. Open any record with a
+                              chatter, pin a note, and you have seen the whole
+                              product.
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== FAQ ============================== -->
+         <section class="sec" id="pmc-faq">
+            <div class="wrap">
+               <p class="eyebrow">FAQ</p>
+               <h2 class="pmch2">Twelve real questions, answered plainly</h2>
+               <p class="pmclead narrow">
+                  Open any question. These are what buyers ask us before paying:
+                  which records work, who can pin, what happens if you
+                  uninstall, and where Odoo's own Discuss pin still applies.
+               </p>
+               <div class="faq">
+                  <details class="qa" open>
+                     <summary class="qsum">
+                        <h3>Which records can I pin messages on?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Any record with a chatter. The module patches the
+                           chatter component itself rather than a particular
+                           app, so contacts, quotations, sale orders, purchase
+                           orders, invoices, project tasks, products, employees
+                           and your own custom models all work with nothing to
+                           configure.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>
+                           Does this replace or break Odoo's own message
+                           pinning?
+                        </h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Neither. Odoo 17 pins messages inside Discuss
+                           channels, and that is untouched. This module adds the
+                           equivalent for record chatters, and its button is
+                           deliberately hidden on discussion messages so you
+                           never see two pins next to each other.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>Can I pin any message, or only notes?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Log notes and ordinary comments. The pin is not
+                           offered on system notifications, e-mail
+                           notifications, automatic comments or tracked-field
+                           changelog entries such as "Stage: New &rarr;
+                           Qualified" &mdash; pinning those would create a
+                           second stream of noise rather than reduce the first.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>Who can pin and unpin?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Any user who can write to messages, which in practice
+                           means most internal users, on any record they are
+                           allowed to see. There is no group, no setting and no
+                           restriction to the message's author today &mdash; a
+                           pin behaves as a shared bookmark, which for most
+                           teams is the point. If you need pinning restricted to
+                           managers,
+                           <a href="mailto:odoo@doodex.net">tell us</a> before
+                           you buy and we will quote it rather than have you
+                           find the gap afterwards.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>Does pinning change or move the message?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           No. A pin sets one boolean on the existing message.
+                           The message stays where it was in the chatter, with
+                           its original author, date, body and attachments.
+                           Unpinning clears the flag and nothing else.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>Will my colleague see it without refreshing?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Yes. Pinning sends a notification on Odoo's own
+                           message bus, so a screen already open on that record
+                           updates by itself. No polling, no reload prompt.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>How many messages can I pin on one record?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           There is no limit in the module. The panel lists
+                           every pinned message on the record, newest first, and
+                           shows the count on its collapsed header. Practically
+                           speaking three or four is where a pinned panel stops
+                           being useful, but nothing stops you.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>Is it translated into my language?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Not yet &mdash; the labels are English only, and we
+                           would rather say so here than have you find out after
+                           paying. Odoo's own translation tools let you
+                           translate it in your own database, and if you ask us
+                           for a language we will add it to the module.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>Is it Community or Enterprise?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Both. It depends only on
+                           <span class="fld">web</span>,
+                           <span class="fld">base</span> and
+                           <span class="fld">mail</span>, which ship in
+                           Community, and it works the same on Enterprise.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>Does anything leave my server?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           Nothing. There is no outbound network call of any
+                           kind &mdash; no telemetry, no licence check, no cloud
+                           component. That is also why there is no activation
+                           key and nothing for us to switch off.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>What happens if I uninstall it?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           The <span class="fld">is_pinned</span> field, the
+                           panel and the buttons are removed and the chatter
+                           returns to standard Odoo. Because pinning never
+                           edited a message, every message survives exactly as
+                           it was &mdash; you only lose the record of which ones
+                           were pinned.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary class="qsum">
+                        <h3>What exactly do I get?</h3>
+                        <svg
+                           class="qsign"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.1"
+                           stroke-linecap="round"
+                           aria-hidden="true"
+                        >
+                           <path d="M12 5.5v13M5.5 12h13" />
+                        </svg>
+                     </summary>
+                     <div class="qans">
+                        <p>
+                           The module, its full LGPL-3 source, and a defect fix
+                           if you find a bug in it. Support and pre-sales go to
+                           the same inbox and a person who knows this code
+                           answers. Work beyond the module &mdash; restricting
+                           who may pin, adding a language, migrating to a newer
+                           Odoo &mdash; is quoted separately, and only if you
+                           ask.
+                        </p>
+                     </div>
+                  </details>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== CROSS-SELL ==============================
+  Reference layout: tinted band, centred header, three product cards, the suite
+  card inverted. Icons are the supplied product logos, normalised by
+  make_xsell_icons.py to 128px transparent PNGs shown at 34px.
+  LINK POLICY — these three buttons are the ONE place on the page that carries
+  an http href, and they point at apps.odoo.com itself: the store linking to
+  another page of the same store, not off it. Everything else on this page
+  still obeys the naked-link rule (mailto: and in-page #anchors only). If a
+  review ever invalidates these, drop the href and restore the "Find it on the
+  Apps Store" label — the naked search line below the grid is kept precisely so
+  the section still works without them.
+================================================================================ -->
+         <section class="sec xsec" id="pmc-works">
+            <div class="wrap">
+               <p class="eyebrow tac">Works great with</p>
+               <h2 class="pmch2 tac">
+                  Other Doodex modules, built the same way
+               </h2>
+               <p class="pmclead narrow tac">
+                  Different problems, same approach: narrow scope, a one-time
+                  price and the limits stated up front. Each one installs on its
+                  own.
+               </p>
+
+               <div class="xchips">
+                  <span class="xchip">Narrow scope</span>
+                  <span class="xchip">One-time price</span>
+                  <span class="xchip">Limits stated up front</span>
+               </div>
+
+               <div class="xsell">
+                  <div class="xs xs-dark">
+                     <div class="xtop">
+                        <img
+                           class="xico"
+                           src="./assets/icons/xs-growth-suite.png"
+                           width="34"
+                           height="34"
+                           alt="The Doodex Growth Suite mark: a white and coral triangle on a violet tile."
+                           loading="lazy"
+                        />
+                        <span class="pr">$349 once</span>
+                     </div>
+                     <div class="xbody">
+                        <h3>Doodex Growth Suite</h3>
+                        <p>
+                           Five CRM and marketing modules that share one
+                           another's data: BizScan AI, Campaign Manager, Smart
+                           Dashboards, User Roles and Email Sync+. Sold as one
+                           suite.
+                        </p>
+                     </div>
+                     <a
+                        class="xbtn"
+                        href="https://apps.odoo.com/apps/modules/17.0/marketing_crm_automation_dashboard_campaign_doodex"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+
+                  <div class="xs">
+                     <div class="xtop">
+                        <img
+                           class="xico"
+                           src="./assets/icons/xs-flow-reader.png"
+                           width="34"
+                           height="34"
+                           alt="The Flow Survey Reader mark: a coral and violet flow diagram."
+                           loading="lazy"
+                        />
+                        <span class="pr">Free</span>
+                     </div>
+                     <div class="xbody">
+                        <h3>Flow Survey Reader</h3>
+                        <p>
+                           Publish conditional surveys and forms straight from
+                           Odoo and keep every answer in your own database.
+                        </p>
+                     </div>
+                     <a
+                        class="xbtn"
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey_reader"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+
+                  <div class="xs">
+                     <div class="xtop">
+                        <img
+                           class="xico"
+                           src="./assets/icons/xs-flow-builder.png"
+                           width="34"
+                           height="34"
+                           alt="The Flow Survey Builder mark: an amber and purple flow diagram."
+                           loading="lazy"
+                        />
+                        <span class="pr">$199 once</span>
+                     </div>
+                     <div class="xbody">
+                        <h3>Flow Survey Builder</h3>
+                        <p>
+                           The drag-and-drop editor for those surveys: 25
+                           question types, slide branching and full theming.
+                        </p>
+                     </div>
+                     <a
+                        class="xbtn"
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+               </div>
+               <p class="xnote tac">
+                  On the Odoo Apps Store, search <b>Doodex Growth Suite</b>,
+                  <b>Flow Survey Reader</b> or
+                  <b>Flow Survey Builder</b> &mdash; all published by Doodex.
+               </p>
+            </div>
+         </section>
+
+         <!-- ============================== RELEASES ============================== -->
+         <section class="sec" id="pmc-releases">
+            <div class="wrap">
+               <p class="eyebrow">Releases</p>
+               <h2 class="pmch2">What has shipped, and what is next</h2>
+               <p class="pmclead narrow">
+                  A visible changelog is the honest answer to "will this still
+                  be maintained next year". Ours starts here.
+               </p>
+               <div class="rel">
+                  <div class="relrow">
+                     <div class="relver">17.0.1.0</div>
+                     <div><span class="relbadge rb-new">Current</span></div>
+                     <div>
+                        <p>
+                           <b>First release for Odoo 17.0.</b>
+                           <span class="fld">is_pinned</span> on
+                           <span class="fld">mail.message</span> with a toggle
+                           broadcast on the Odoo bus for live updates.
+                           Thumb-tack button on the message bubble plus a
+                           <b>Pin</b> entry in the message actions menu, both
+                           restricted to chatter notes so Odoo's native Discuss
+                           pin is never duplicated. Collapsible
+                           <b>Pinned Messages</b> panel above the chatter with a
+                           count badge, cards ordered newest first, a
+                           <b>See</b> button that jumps to the original, tinted
+                           card styling, and a reload when you move to another
+                           record. 3 automated tests, 0 failures.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="relrow">
+                     <div class="relver">Next</div>
+                     <div>
+                        <span class="relbadge rb-next">In progress</span>
+                     </div>
+                     <div>
+                        <p>
+                           The two gaps named above: an optional permission
+                           group controlling who may pin and unpin, and
+                           translation files so the panel is not English-only.
+                           Also under review: showing who pinned a message and
+                           when, and a way to see all pinned messages across
+                           records in one list. Tell us which matters most to
+                           you and it moves up.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== FINAL CTA ============================== -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="qrcta">
+                  <div class="center" style="max-width: 640px; margin: 0 auto">
+                     <p class="qr-eyebrow">
+                        Install it and it is on every record
+                     </p>
+                     <h2>Stop retyping the note everyone needs</h2>
+                     <p class="qr-sub" style="margin: 0 auto">
+                        Get it from this page and pin your first note this
+                        afternoon. Or spend half an hour with us first and be
+                        certain it does what you think it does.
+                     </p>
+                  </div>
+                  <div class="qr-grid">
+                     <div class="qr-card qr-lead">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="16"
+                                    rx="2"
+                                 />
+                                 <path d="M8 3v4M16 3v4M3 11h18" /></svg></span
+                           ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                        </div>
+                        <h3 class="qr-h">Book a demo</h3>
+                        <p class="qr-p">
+                           Live Odoo 17, on the kind of record you use.
+                        </p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex booking page"
+                           ><img
+                              src="./assets/icons/qr-meeting.png"
+                              alt="QR code encoding hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="pmcbtn pmcbtn-1 qr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                 />
+                                 <path d="M3 7l9 6 9-6" /></svg></span
+                           ><span class="qr-tag">Written reply</span>
+                        </div>
+                        <h3 class="qr-h">E-mail the team</h3>
+                        <p class="qr-p">
+                           Support and pre-sales share one inbox.
+                        </p>
+                        <a
+                           class="qr-code"
+                           href="mailto:odoo@doodex.net"
+                           aria-label="QR code for the Doodex contact page"
+                           ><img
+                              src="./assets/icons/qr-contact.png"
+                              alt="QR code encoding doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a
+                           class="pmcbtn pmcbtn-2 qr-btn"
+                           href="mailto:odoo@doodex.net"
+                           >odoo@doodex.net</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <path
+                                    d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.8A8.4 8.4 0 1121 11.5z"
+                                 /></svg></span
+                           ><span class="qr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="qr-h">WhatsApp</h3>
+                        <p class="qr-p">
+                           For the quick yes-or-no before buying.
+                        </p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex WhatsApp line"
+                           ><img
+                              src="./assets/icons/qr-whatsapp.png"
+                              alt="QR code encoding hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="pmcbtn pmcbtn-2 qr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</a
+                        >
+                     </div>
+                  </div>
+                  <p class="qr-foot center">
+                     Scan a code with your phone camera to open the link. The
+                     address printed beside each code is the same destination
+                     typed out.
+                  </p>
+               </div>
+            </div>
+         </section>
+      </div>
+   </body>
+</html>

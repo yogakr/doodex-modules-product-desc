@@ -1,0 +1,2846 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>
+         Sale Margin Threshold for Odoo 17 — minimum sale price checked on
+         quotation confirmation
+      </title>
+      <meta
+         name="description"
+         content="Give every Odoo product a minimum sale price and have the quotation Confirm button ask,
+or refuse, when a line falls below it. Free module for Odoo 17.0 by Doodex."
+      />
+   </head>
+   <body>
+      <!--
+  ==========================================================================
+  Sale Margin Threshold  ·  Odoo Apps Store listing  ·  Odoo 17.0
+  Doodex  ·  odoo@doodex.net
+
+  SOURCE OF TRUTH. Edit this file, then run:
+      python3 tools/build.py  sale-margin-threshold-v17-product-description
+      python3 tools/verify.py sale-margin-threshold-v17-product-description
+
+  Archetype D (Mechanism / Switcher) · hero H-3 violet panel · rhythm R-4
+  warm tint on the conversion zones · features F-4 ledger · accent A-3
+  assertive. Six sections carry the page: how it works, the routes, the
+  feature ledger, the rollout path, price and the FAQ. The two disclosed
+  limits live in the Requirements table and the FAQ, not in a section of
+  their own — do not remove them from both.
+  Deliberately unlike POS Margin Threshold (Archetype B, split white hero,
+  zigzag features) and Pin Message (Archetype C, compact hero, pill
+  showcase).
+
+  NO COMPARATIVE FRAMING. This page describes only what this module does,
+  on its own terms. It sets itself against no other publisher's product and
+  against no baseline install. If you add a section, describe the mechanism
+  — never a gap in anybody else's software.
+
+  LINK POLICY — identical to the sibling listings. Every booking / WhatsApp
+  destination is a NAKED LINK: an <a> with NO href, its URL printed as the
+  visible label and encoded in a real QR image beside it. Only mailto: and
+  in-page #anchors carry an href, because those are the only external
+  protocols the vendor guidelines let through. Do not put an http(s) URL
+  back into an href.
+
+  Class names are prefixed .smt* because the store page loads its own
+  Bootstrap, which already owns .h1 .h2 .lead .btn .badge .small .card .mark.
+  ==========================================================================
+-->
+
+      <style>
+         .smt {
+            --violet: #270140;
+            --violet-2: #3a1a5a;
+            --coral: #fa7268;
+            --coral-dk: #e85c52;
+            --ink: #0a0a0a;
+            --ink-2: #171717;
+            --ink-3: #525252;
+            --ink-4: #737373;
+            --bg: #ffffff;
+            --surface: #faf7fc;
+            --surface-2: #f4eef8;
+            --line: #ece4f3;
+            --warm: #fff5f2;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --r-sm: 6px;
+            --r-md: 10px;
+            --r-lg: 14px;
+            --r-xl: 20px;
+            --r-full: 9999px;
+            --xs: 0 0 0 1px rgba(39, 1, 64, 0.06);
+            --sm:
+               0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 1, 64, 0.08);
+            --md:
+               0 4px 14px rgba(39, 1, 64, 0.08), 0 0 0 1px rgba(39, 1, 64, 0.06);
+            --lg:
+               0 12px 32px rgba(39, 1, 64, 0.1), 0 0 0 1px rgba(39, 1, 64, 0.06);
+            --cta: 0 8px 22px rgba(250, 114, 104, 0.32);
+            background: var(--bg);
+            color: var(--ink-3);
+            font-family:
+               "Inter",
+               -apple-system,
+               BlinkMacSystemFont,
+               "Segoe UI",
+               Roboto,
+               sans-serif;
+            font-size: 16px;
+            line-height: 1.65;
+            font-feature-settings: "cv11", "ss01";
+            -webkit-font-smoothing: antialiased;
+            text-align: left;
+         }
+         .smt * {
+            box-sizing: border-box;
+         }
+         .smt h1,
+         .smt h2,
+         .smt h3,
+         .smt h4 {
+            color: var(--violet);
+            letter-spacing: -0.015em;
+            margin: 0;
+            font-family: inherit;
+         }
+         .smt p {
+            margin: 0;
+         }
+         .smt a {
+            color: var(--coral-dk);
+         }
+         .smt img {
+            max-width: 100%;
+         }
+         .smt .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+         }
+         .smt .narrow {
+            max-width: 760px;
+         }
+         .smt .sec {
+            padding: 60px 0;
+         }
+         .smt .sec-tight {
+            padding: 32px 0;
+         }
+         .smt .center {
+            text-align: center;
+         }
+         .smt .muted {
+            color: var(--ink-4);
+         }
+         .smt .smtmark {
+            color: var(--coral-dk);
+         }
+
+         /* ---------- type ---------- */
+         .smt .smth1 {
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.028em;
+            color: #fff;
+         }
+         .smt .smth2 {
+            font-size: 29px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+         }
+         .smt .smth3 {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.35;
+         }
+         .smt .smtlead {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--ink-3);
+            margin-top: 16px;
+         }
+         .smt .smtsmall {
+            font-size: 13.5px;
+            line-height: 1.6;
+         }
+         .smt .eyebrow {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--coral-dk);
+            margin: 0 0 14px;
+         }
+         .smt .fld {
+            display: inline-block;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12.5px;
+            background: var(--surface-2);
+            color: var(--violet);
+            padding: 1px 7px;
+            border-radius: var(--r-sm);
+         }
+
+         /* ---------- buttons ---------- */
+         .smt .smtbtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: var(--r-md);
+            line-height: 1.25;
+         }
+         .smt .smtbtn-1 {
+            background: var(--coral);
+            color: #fff;
+            box-shadow: var(--cta);
+         }
+         .smt .smtbtn-2 {
+            background: #fff;
+            color: var(--violet);
+            box-shadow: 0 0 0 1.5px var(--violet);
+         }
+         .smt .smtbtn-3 {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.42);
+         }
+         .smt .smtbtnrow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+         }
+
+         /* ---------- header ---------- */
+         .smt .smthdr {
+            border-bottom: 1px solid var(--line);
+            background: #fff;
+         }
+         .smt .smthdr-in {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 0;
+         }
+         .smt .smtbrand {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--violet);
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+         }
+         .smt .smtbrand .tile {
+            width: 26px;
+            height: 26px;
+            flex: none;
+            display: block;
+         }
+         .smt .jump {
+            justify-self: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1px;
+         }
+         .smt .jump a {
+            text-decoration: none;
+            color: var(--ink-2);
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 7px 9px;
+            border-radius: var(--r-full);
+            white-space: nowrap;
+         }
+         .smt .hdr-cta {
+            padding: 9px 15px;
+            font-size: 13px;
+         }
+
+         /* ---------- hero H-3: violet panel ---------- */
+         .smt .herowrap {
+            padding: 26px 0 0;
+         }
+         .smt .hero {
+            background: var(--violet);
+            border-radius: var(--r-xl);
+            padding: 52px 46px 46px;
+         }
+         .smt .hero .eyebrow {
+            color: var(--coral);
+         }
+         .smt .hero .sub {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            line-height: 1.6;
+            margin-top: 18px;
+            max-width: 640px;
+         }
+         .smt .hero .sub b {
+            color: #fff;
+         }
+         .smt .hero .smtmark {
+            color: var(--coral);
+         }
+         .smt .herochips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 30px;
+            padding-top: 26px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+         }
+         .smt .hchip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 7px 13px;
+            border-radius: var(--r-full);
+         }
+         .smt .hchip svg {
+            flex: none;
+            color: var(--coral);
+         }
+         .smt .herofig {
+            margin: 22px 0 0;
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+         }
+         .smt .herofig img {
+            display: block;
+            width: 100%;
+            height: auto;
+         }
+         .smt .figcap {
+            font-size: 12.5px;
+            color: var(--ink-4);
+            margin-top: 10px;
+         }
+
+         /* ---------- pipeline (how the check runs) ----------
+   Six-column grid: steps 1-3 span 2 (the setup, ~336px), steps 4-5 span 3
+   (the payoff, ~510px). The widening is deliberate — the two cards that
+   carry the actual check get the readable screenshots. */
+         .smt .pipe {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin-top: 28px;
+         }
+         .smt .pstep {
+            grid-column: span 2;
+            background: #fff;
+            border-radius: var(--r-lg);
+            padding: 20px;
+            box-shadow: var(--sm);
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            overflow: hidden;
+         }
+         .smt .pstep.wide {
+            grid-column: span 3;
+         }
+         .smt .pstep.last {
+            background: var(--warm);
+         }
+         .smt .pshot {
+            margin: -20px -20px 14px;
+            background: var(--surface);
+            box-shadow: inset 0 -1px 0 var(--line);
+         }
+         .smt .pshot img {
+            display: block;
+            width: 100%;
+            height: auto;
+         }
+         .smt .pstep .pn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: var(--r-full);
+            background: var(--violet);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            flex: none;
+         }
+         .smt .pstep h3 {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.35;
+         }
+         .smt .pstep p {
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: var(--ink-3);
+         }
+
+         /* ---------- numbered steps (rollout) ---------- */
+         .smt .steps {
+            margin-top: 26px;
+            border-top: 1px solid var(--line);
+         }
+         .smt .strow {
+            display: grid;
+            grid-template-columns: 62px 1fr;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--line);
+            align-items: start;
+         }
+         .smt .stn {
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--coral);
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+         }
+         .smt .strow h3 {
+            font-size: 16.5px;
+            font-weight: 700;
+            margin-bottom: 5px;
+         }
+         .smt .strow p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--ink-3);
+         }
+
+         /* ---------- routes ---------- */
+         .smt .routes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+         }
+         .smt .route {
+            background: #fff;
+            border-radius: var(--r-lg);
+            padding: 18px;
+            box-shadow: var(--sm);
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+         }
+         .smt .route .rt {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+         }
+         .smt .route .rico {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            background: var(--surface-2);
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--violet);
+         }
+         .smt .route h3 {
+            font-size: 15px;
+         }
+         .smt .route p {
+            font-size: 12.5px;
+            color: var(--ink-4);
+            line-height: 1.5;
+            flex: 1;
+         }
+
+         /* ---------- features (F-4: three-column icon grid) ----------
+   Three columns so it does not read like the Requirements grid, which is two
+   columns with the icon beside the text. Here the icon sits above the heading. */
+         .smt .fgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0 42px;
+            margin-top: 28px;
+            border-bottom: 1px solid var(--line);
+         }
+         .smt .feat {
+            padding: 26px 0 28px;
+            border-top: 1px solid var(--line);
+         }
+         .smt .fico {
+            display: block;
+            width: 40px;
+            height: 40px;
+            margin: 0 0 14px;
+         }
+         .smt .feat h3 {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 7px;
+         }
+         .smt .feat p {
+            font-size: 13.5px;
+            line-height: 1.62;
+            color: var(--ink-3);
+         }
+
+         /* ---------- callout ---------- */
+         .smt .callout {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 18px;
+            background: var(--warm);
+            border-radius: var(--r-lg);
+            padding: 24px 26px;
+            box-shadow: var(--xs);
+            margin-top: 26px;
+         }
+         .smt .callout .ci {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: #fff;
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--coral-dk);
+            box-shadow: var(--xs);
+         }
+         .smt .callout h3 {
+            font-size: 16.5px;
+            margin-bottom: 6px;
+         }
+         .smt .callout p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--ink-3);
+         }
+         .smt .callout p + p {
+            margin-top: 9px;
+         }
+
+         /* ---------- price ---------- */
+         .smt .pricecard {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            border-radius: var(--r-xl);
+            box-shadow: var(--lg);
+            margin-top: 28px;
+         }
+         .smt .priceleft {
+            background: var(--violet);
+            padding: 34px 30px;
+            border-top-left-radius: var(--r-xl);
+            border-bottom-left-radius: var(--r-xl);
+         }
+         .smt .pl-tag {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--coral);
+            box-shadow: 0 0 0 1px rgba(250, 114, 104, 0.55);
+            border-radius: var(--r-full);
+            padding: 5px 12px;
+         }
+         .smt .pl-amt {
+            font-size: 58px;
+            font-weight: 800;
+            line-height: 1;
+            margin: 20px 0 2px;
+            color: #fff;
+            letter-spacing: -0.03em;
+         }
+         .smt .pl-note {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.72);
+         }
+         .smt .pl-list {
+            margin: 20px 0 0;
+            padding: 18px 0 0;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+         }
+         .smt .pl-list div {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 9px 0;
+         }
+         .smt .pl-list .mk {
+            color: var(--coral);
+            font-weight: 800;
+            flex: none;
+         }
+         .smt .priceright {
+            background: #fff;
+            padding: 34px 32px;
+            border-top-right-radius: var(--r-xl);
+            border-bottom-right-radius: var(--r-xl);
+         }
+         .smt .pr-label {
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--ink-4);
+            margin: 0 0 14px;
+         }
+         .smt .prlist {
+            display: grid;
+            gap: 11px;
+         }
+         .smt .prlist div {
+            display: flex;
+            gap: 11px;
+            font-size: 14px;
+            color: var(--ink-2);
+            line-height: 1.5;
+         }
+         .smt .prlist .mk {
+            color: var(--success);
+            font-weight: 800;
+            flex: none;
+         }
+         .smt .prfoot {
+            margin-top: 22px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+            font-size: 12.5px;
+            color: var(--ink-4);
+         }
+
+         /* ---------- stat row ---------- */
+         .smt .statrow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+            border: 1px solid var(--line);
+            border-radius: var(--r-lg);
+            background: #fff;
+         }
+         .smt .statrow .st {
+            padding: 22px 14px;
+            border-left: 1px solid var(--line);
+         }
+         .smt .statrow .st:first-child {
+            border-left: none;
+         }
+         .smt .statrow .n {
+            font-size: 33px;
+            font-weight: 800;
+            color: var(--violet);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+         }
+         .smt .statrow .l {
+            font-size: 12.5px;
+            color: var(--ink-4);
+            margin-top: 4px;
+         }
+
+         /* ---------- QR CTA ---------- */
+         .smt .qrcta {
+            background: var(--violet);
+            border-radius: var(--r-xl);
+            padding: 32px 34px 26px;
+         }
+         .smt .qrcta .qr-eyebrow {
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--coral);
+            margin: 0 0 8px;
+         }
+         .smt .qrcta h2 {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin: 0 0 9px;
+         }
+         .smt .qrcta .qr-sub {
+            color: rgba(255, 255, 255, 0.76);
+            font-size: 14.5px;
+            line-height: 1.58;
+            max-width: 680px;
+         }
+         .smt .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 24px;
+         }
+         .smt .qr-card {
+            background: #fff;
+            border-radius: var(--r-lg);
+            padding: 17px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+         }
+         .smt .qr-lead {
+            box-shadow: 0 0 0 2px var(--coral);
+         }
+         .smt .qr-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+         }
+         .smt .qr-ico {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            background: var(--violet);
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+         }
+         .smt .qr-tag {
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--violet);
+            background: var(--surface-2);
+            padding: 4px 9px;
+            border-radius: var(--r-full);
+         }
+         .smt .qr-tag-hot {
+            background: var(--coral);
+            color: #fff;
+         }
+         .smt .qrcta .qr-h {
+            font-size: 15.5px;
+            margin: 0;
+         }
+         .smt .qrcta .qr-p {
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: var(--ink-4);
+            margin: 0;
+         }
+         .smt .qr-code {
+            display: block;
+            background: var(--surface);
+            border-radius: var(--r-md);
+            padding: 10px;
+            margin-top: auto;
+         }
+         .smt .qr-code img {
+            display: block;
+            width: 98px;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+         }
+         .smt .qr-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            word-break: break-word;
+            text-align: center;
+         }
+         .smt .qrcta .qr-foot {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            margin: 18px 0 0;
+         }
+
+         /* ---------- requirements grid ---------- */
+         .smt .reqgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 44px;
+            margin-top: 26px;
+            border-bottom: 1px solid var(--line);
+         }
+         .smt .req {
+            display: grid;
+            grid-template-columns: 32px minmax(0, 1fr);
+            gap: 14px;
+            align-items: start;
+            padding: 20px 0;
+            border-top: 1px solid var(--line);
+         }
+         .smt .rq-ico {
+            width: 32px;
+            height: 32px;
+            flex: none;
+         }
+         .smt .rq-ico img {
+            display: block;
+            width: 32px;
+            height: 32px;
+         }
+         .smt .req h3 {
+            font-size: 15.5px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 5px;
+         }
+         .smt .req p {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--ink-3);
+         }
+         .smt .req p + p {
+            margin-top: 9px;
+         }
+
+         /* ---------- FAQ accordion (pure CSS, no script) ----------
+   Built on the native details/summary elements so the sanitiser has nothing
+   to strip, and so the whole FAQ still reads as plain text if it strips them
+   anyway. Tag names are spelled out here on purpose: literal angle brackets
+   inside a style block give some sanitisers indigestion. */
+         .smt .faq {
+            margin-top: 26px;
+            border-top: 1px solid var(--line);
+         }
+         .smt .qa {
+            border-bottom: 1px solid var(--line);
+         }
+         .smt .qa > summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 19px 18px;
+         }
+         .smt .qa > summary::-webkit-details-marker {
+            display: none;
+         }
+         .smt .qa > summary::marker {
+            content: "";
+         }
+         .smt .qa > summary h3 {
+            flex: 1;
+            min-width: 0;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.45;
+            color: var(--violet);
+         }
+         .smt .qa > summary::after {
+            content: "";
+            flex: none;
+            width: 9px;
+            height: 9px;
+            margin: 7px 2px 0 0;
+            border-right: 2.2px solid var(--coral-dk);
+            border-bottom: 2.2px solid var(--coral-dk);
+            transform: rotate(45deg);
+         }
+         .smt .qa[open] {
+            background: var(--surface);
+         }
+         .smt .qa[open] > summary::after {
+            transform: rotate(-135deg);
+            margin-top: 11px;
+         }
+         .smt .qa > summary:hover h3 {
+            color: var(--coral-dk);
+         }
+         .smt .ans {
+            padding: 0 54px 22px 18px;
+            max-width: 900px;
+         }
+         .smt .ans p {
+            font-size: 14px;
+            line-height: 1.66;
+            color: var(--ink-3);
+         }
+         .smt .ans p + p {
+            margin-top: 9px;
+         }
+
+         /* ---------- works great with (tinted band, 3 module cards) ---------- */
+         .smt .xwrap {
+            background: var(--surface);
+         }
+         .smt .xpills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 26px;
+         }
+         .smt .xpill {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--violet);
+            background: #fff;
+            box-shadow: 0 0 0 1px var(--line);
+            padding: 9px 18px;
+            border-radius: var(--r-full);
+         }
+         .smt .xgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-top: 34px;
+            align-items: stretch;
+         }
+         .smt .xcard {
+            background: #fff;
+            border-radius: var(--r-lg);
+            padding: 24px;
+            box-shadow: 0 0 0 1px var(--line);
+            display: flex;
+            flex-direction: column;
+         }
+         .smt .xcard-dark {
+            background: var(--violet);
+            box-shadow: none;
+         }
+         .smt .xtop {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+         }
+         .smt .xlogo {
+            display: block;
+            width: 34px;
+            height: 34px;
+         }
+         .smt .xprice {
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--violet);
+            background: var(--surface-2);
+            padding: 6px 12px;
+            border-radius: var(--r-full);
+            white-space: nowrap;
+         }
+         .smt .xcard-dark .xprice {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.14);
+         }
+         .smt .xcard h3 {
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            margin-bottom: 9px;
+         }
+         .smt .xcard p {
+            font-size: 13.5px;
+            line-height: 1.62;
+            color: var(--ink-3);
+            margin-bottom: 24px;
+         }
+         .smt .xcard-dark h3 {
+            color: #fff;
+         }
+         .smt .xcard-dark p {
+            color: rgba(255, 255, 255, 0.74);
+         }
+         .smt .xbtn {
+            margin-top: auto;
+            align-self: flex-start;
+            padding: 11px 18px;
+            font-size: 13.5px;
+            cursor: pointer;
+         }
+
+         .smt .rel {
+            margin-top: 24px;
+         }
+         .smt .relrow {
+            display: grid;
+            grid-template-columns: 104px 92px 1fr;
+            gap: 16px;
+            padding: 15px 0;
+            border-top: 1px solid var(--line);
+            align-items: start;
+         }
+         .smt .relrow:last-child {
+            border-bottom: 1px solid var(--line);
+         }
+         .smt .relver {
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--violet);
+         }
+         .smt .relbadge {
+            display: inline-block;
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: var(--r-sm);
+         }
+         .smt .rb-new {
+            background: var(--violet);
+            color: #fff;
+         }
+         .smt .rb-next {
+            background: var(--surface-2);
+            color: var(--violet);
+         }
+         .smt .relrow p {
+            font-size: 13.5px;
+            line-height: 1.58;
+         }
+
+         /* ---------- responsive ---------- */
+         @media (max-width: 980px) {
+            .smt .smth1 {
+               font-size: 36px;
+            }
+            .smt .hero {
+               padding: 38px 26px 32px;
+            }
+            .smt .smthdr-in {
+               grid-template-columns: 1fr auto;
+            }
+            .smt .jump {
+               grid-row: 2;
+               grid-column: 1 / -1;
+               justify-self: start;
+            }
+            .smt .routes {
+               grid-template-columns: 1fr 1fr;
+            }
+            .smt .fgrid {
+               grid-template-columns: 1fr 1fr;
+               gap: 0 34px;
+            }
+            .smt .xgrid {
+               grid-template-columns: 1fr 1fr;
+            }
+            .smt .pipe {
+               grid-template-columns: repeat(2, 1fr);
+            }
+            .smt .pstep,
+            .smt .pstep.wide,
+            .smt .pstep.last {
+               grid-column: span 1;
+            }
+            .smt .statrow {
+               grid-template-columns: 1fr 1fr;
+            }
+            .smt .statrow .st {
+               border-left: none;
+               border-top: 1px solid var(--line);
+            }
+            .smt .statrow .st:first-child,
+            .smt .statrow .st:nth-child(2) {
+               border-top: none;
+            }
+         }
+         @media (max-width: 820px) {
+            .smt .sec {
+               padding: 44px 0;
+            }
+            .smt .smth2 {
+               font-size: 24px;
+            }
+            .smt .reqgrid {
+               grid-template-columns: 1fr;
+            }
+            .smt .xgrid {
+               grid-template-columns: 1fr;
+            }
+            .smt .qa > summary {
+               padding: 17px 12px;
+               gap: 14px;
+            }
+            .smt .ans {
+               padding: 0 40px 20px 12px;
+            }
+            .smt .pricecard {
+               grid-template-columns: 1fr;
+            }
+            .smt .priceleft {
+               border-radius: var(--r-xl) var(--r-xl) 0 0;
+            }
+            .smt .priceright {
+               border-radius: 0 0 var(--r-xl) var(--r-xl);
+            }
+            .smt .callout {
+               grid-template-columns: 1fr;
+               gap: 12px;
+            }
+         }
+         @media (max-width: 620px) {
+            .smt .smth1 {
+               font-size: 30px;
+            }
+            .smt .routes,
+            .smt .qr-grid,
+            .smt .pipe,
+            .smt .fgrid {
+               grid-template-columns: 1fr;
+            }
+            .smt .pstep,
+            .smt .pstep.wide,
+            .smt .pstep.last {
+               grid-column: span 1;
+            }
+            .smt .strow {
+               grid-template-columns: 1fr;
+               gap: 4px;
+            }
+            .smt .relrow {
+               grid-template-columns: 1fr;
+               gap: 6px;
+            }
+            .smt .qrcta {
+               padding: 24px 20px 20px;
+            }
+         }
+      </style>
+
+      <div class="smt">
+         <!-- ============================== HEADER ============================== -->
+         <header class="smthdr">
+            <div class="wrap">
+               <div class="smthdr-in">
+                  <div class="smtbrand">
+                     <img
+                        class="tile"
+                        src="./icon.png"
+                        alt="Sale Margin Threshold logo"
+                        width="26"
+                        height="26"
+                     />
+                     <span>Sale Margin Threshold</span>
+                  </div>
+                  <nav class="jump">
+                     <a href="#smt-how">How it works</a>
+                     <a href="#smt-features">Features</a>
+                     <a href="#smt-rollout">Rolling it out</a>
+                     <a href="#smt-price">Price</a>
+                     <a href="#smt-faq">FAQ</a>
+                     <a href="#smt-releases">Releases</a>
+                  </nav>
+                  <a
+                     class="smtbtn smtbtn-1 hdr-cta"
+                     href="mailto:odoo@doodex.net"
+                     >Ask Doodex</a
+                  >
+               </div>
+            </div>
+         </header>
+
+         <!-- ============================== HERO (H-3 violet panel) ============================== -->
+         <section class="herowrap">
+            <div class="wrap">
+               <div class="hero">
+                  <p class="eyebrow">
+                     Odoo 17 &middot; Sales &middot; Free module
+                  </p>
+                  <h1 class="smth1">
+                     Set a margin. Get a price floor.
+                     <span class="smtmark"
+                        >And a Confirm button that checks it.</span
+                     >
+                  </h1>
+                  <p class="sub">
+                     Give every product a <b>minimum sale price</b> &mdash; cost
+                     plus the margin you choose &mdash; and the Confirm button
+                     starts checking. A line below the floor either raises a
+                     dialog the rep can accept, or refuses the confirmation
+                     outright. <b>You pick which, with one switch.</b>
+                  </p>
+                  <div class="smtbtnrow">
+                     <a class="smtbtn smtbtn-1" href="mailto:odoo@doodex.net"
+                        >Ask if it fits your sales process</a
+                     >
+                     <a class="smtbtn smtbtn-3" href="#smt-how"
+                        >See how the check works</a
+                     >
+                  </div>
+                  <div class="herochips">
+                     <span class="hchip"
+                        ><svg
+                           width="14"
+                           height="14"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6L9 17l-5-5" /></svg
+                        >Free &mdash; AGPL-3</span
+                     >
+                     <span class="hchip"
+                        ><svg
+                           width="14"
+                           height="14"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <circle cx="12" cy="12" r="9" />
+                           <path d="M12 7v5l3 2" /></svg
+                        >Built for Odoo 17.0</span
+                     >
+                     <span class="hchip"
+                        ><svg
+                           width="14"
+                           height="14"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M9 11l3 3L22 4" />
+                           <path
+                              d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                           /></svg
+                        >5 automated tests, 0 failures</span
+                     >
+                     <span class="hchip"
+                        ><svg
+                           width="14"
+                           height="14"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <circle cx="12" cy="12" r="9" />
+                           <path
+                              d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"
+                           /></svg
+                        >6 languages, warnings in EN and FR</span
+                     >
+                     <span class="hchip"
+                        ><svg
+                           width="14"
+                           height="14"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="4" y="10" width="16" height="11" rx="2" />
+                           <path d="M8 10V7a4 4 0 018 0v3" /></svg
+                        >No activation key</span
+                     >
+                  </div>
+                  <figure class="herofig">
+                     <img
+                        src="./assets/gifs/hero-confirm-stopped.gif"
+                        alt="An Odoo 17 quotation line priced at 295.00 against a computed minimum sale price of 480.00, rendered in red, with the Confirm button about to run the margin check."
+                     />
+                  </figure>
+               </div>
+               <p class="figcap">
+                  A real Odoo 17 quotation: this line is &euro;185 under its
+                  floor, the unit price has already gone red, and Confirm is
+                  where the check runs.
+               </p>
+            </div>
+         </section>
+
+         <!-- ============================== HOW IT WORKS ============================== -->
+         <section class="sec" id="smt-how">
+            <div class="wrap">
+               <p class="eyebrow">How it works</p>
+               <h2 class="smth2">
+                  From a cost price to a stopped confirmation, in five steps
+               </h2>
+               <p class="smtlead narrow">
+                  There is no rules engine here, no approval matrix and no new
+                  menu to learn. One percentage, one computed floor, and one
+                  test that runs at the exact moment a quotation is about to
+                  become an order &mdash; with one setting,
+                  <span class="fld">Blocking Transaction Order</span>, deciding
+                  whether that test asks or refuses.
+               </p>
+               <div class="pipe">
+                  <div class="pstep">
+                     <figure class="pshot">
+                        <img
+                           src="./assets/screenshots/how-01-category-margin.png"
+                           alt="The Margin field on the Odoo product category All / Saleable / PoS, set to 30.00%, under Inventory Valuation."
+                           loading="lazy"
+                        />
+                     </figure>
+                     <span class="pn">1</span>
+                     <h3>A margin, set once</h3>
+                     <p>
+                        Type a percentage into
+                        <span class="fld">Margin</span> on a product category.
+                        Every product inside it inherits the number; individual
+                        templates override it when they need to.
+                     </p>
+                  </div>
+                  <div class="pstep">
+                     <figure class="pshot">
+                        <img
+                           src="./assets/screenshots/how-02-minimum-price.png"
+                           alt="An Odoo product form showing Cost 320.00, Margin 50.00% and the computed Minimum sale price of 480.00 with its tax-inclusive twin."
+                           loading="lazy"
+                        />
+                     </figure>
+                     <span class="pn">2</span>
+                     <h3>A floor, computed</h3>
+                     <p>
+                        <span class="fld">Minimum sale price</span> is cost
+                        &times; (1 + margin) &mdash; a cost of 100 at 25% gives
+                        a floor of 125. When the cost moves, the floor moves
+                        with it. Type the floor directly and the margin is
+                        worked out backwards.
+                     </p>
+                  </div>
+                  <div class="pstep">
+                     <figure class="pshot">
+                        <img
+                           src="./assets/screenshots/how-03-red-line.png"
+                           alt="An Odoo quotation order line whose unit price of 295.00 is rendered in red because it sits below the product's 480.00 minimum sale price."
+                           loading="lazy"
+                        />
+                     </figure>
+                     <span class="pn">3</span>
+                     <h3>A line that goes red</h3>
+                     <p>
+                        On the quotation, a unit price below that product's
+                        floor renders red in the order lines &mdash; visible
+                        while the rep is still typing, not after anyone presses
+                        anything.
+                     </p>
+                  </div>
+                  <div class="pstep wide">
+                     <figure class="pshot">
+                        <img
+                           src="./assets/screenshots/how-04-confirm-check.png"
+                           alt="An Odoo quotation with an under-priced line and the Confirm button about to run the margin check."
+                           loading="lazy"
+                        />
+                     </figure>
+                     <span class="pn">4</span>
+                     <h3>The test at Confirm</h3>
+                     <p>
+                        Confirming the order runs every line's unit price
+                        against its own floor and collects the products that
+                        fall short, each with the amount it is short by.
+                     </p>
+                  </div>
+                  <div class="pstep wide last">
+                     <figure class="pshot">
+                        <img
+                           src="./assets/screenshots/how-05-ask-or-refuse.png"
+                           alt="The Confirm minimum sale price dialog on a live Odoo 17 quotation, naming Acoustic Bloc Screens and its 480.00 minimum price above the Confirm and Cancel buttons; the warning body renders in French in this build."
+                           loading="lazy"
+                        />
+                     </figure>
+                     <span class="pn">5</span>
+                     <h3>Ask, or refuse</h3>
+                     <p>
+                        Ask mode opens a dialog listing each under-priced
+                        product and its floor; the rep confirms anyway or
+                        cancels. Refuse mode raises a validation error instead
+                        and the order stays a quotation.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== ROUTES ============================== -->
+         <section class="sec-tight">
+            <div class="wrap">
+               <div class="routes">
+                  <div class="route">
+                     <div class="rt">
+                        <span class="rico"
+                           ><svg
+                              width="17"
+                              height="17"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                           >
+                              <rect x="3" y="5" width="18" height="16" rx="2" />
+                              <path d="M8 3v4M16 3v4M3 11h18" /></svg
+                        ></span>
+                        <h3>See it on a live Odoo 17</h3>
+                     </div>
+                     <p>
+                        Half an hour, screen shared, your own discount policy
+                        used as the worked example.
+                     </p>
+                     <a class="smtbtn smtbtn-1 qr-btn"
+                        >hub.doodex.net<wbr />/r/meeting</a
+                     >
+                  </div>
+                  <div class="route">
+                     <div class="rt">
+                        <span class="rico"
+                           ><svg
+                              width="17"
+                              height="17"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                           >
+                              <rect x="3" y="5" width="18" height="14" rx="2" />
+                              <path d="M3 7l9 6 9-6" /></svg
+                        ></span>
+                        <h3>Ask in writing</h3>
+                     </div>
+                     <p>
+                        Tell us how your reps discount today and we will say
+                        whether this covers it.
+                     </p>
+                     <a
+                        class="smtbtn smtbtn-2 qr-btn"
+                        href="mailto:odoo@doodex.net"
+                        >odoo@doodex.net</a
+                     >
+                  </div>
+                  <div class="route">
+                     <div class="rt">
+                        <span class="rico"
+                           ><svg
+                              width="17"
+                              height="17"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                           >
+                              <path
+                                 d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.8A8.4 8.4 0 1121 11.5z"
+                              /></svg
+                        ></span>
+                        <h3>Message the team</h3>
+                     </div>
+                     <p>
+                        Fastest of the three. Good for one quick question before
+                        you install anything.
+                     </p>
+                     <a class="smtbtn smtbtn-2 qr-btn"
+                        >hub.doodex.net<wbr />/r/whatsapp</a
+                     >
+                  </div>
+               </div>
+               <p class="smtsmall muted" style="margin-top: 12px">
+                  The two web addresses are printed rather than linked: the Odoo
+                  Apps Store only allows a description to link to e-mail,
+                  YouTube and Microsoft Teams. Type them, or scan the matching
+                  QR code below.
+               </p>
+            </div>
+         </section>
+
+         <!-- ============================== FEATURES (F-4 icon grid) ============================== -->
+         <section class="sec" id="smt-features">
+            <div class="wrap">
+               <p class="eyebrow">Features</p>
+               <h2 class="smth2">
+                  Twelve ways it puts a minimum sale price into Odoo 17
+                  quotations
+               </h2>
+               <p class="smtlead narrow">
+                  All of it lands in the screens your sales team already uses
+                  &mdash; the product form, the quotation line, the Confirm
+                  button. There is no new app to learn, no approval matrix to
+                  design, and nothing to switch on beyond one percentage.
+               </p>
+
+               <div class="fgrid">
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-01-category.png"
+                        alt="Layers icon: one margin on an Odoo product category, inherited by every product"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Set the margin once, on the category</h3>
+                     <p>
+                        Type one percentage into
+                        <span class="fld">Margin</span> on a product category
+                        and every product inside it gets a price floor. Eleven
+                        categories instead of two thousand products.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-02-recompute.png"
+                        alt="Refresh icon: the minimum sale price recomputes when the Odoo cost price changes"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>The floor follows your cost price</h3>
+                     <p>
+                        <span class="fld">Minimum sale price</span> is cost
+                        &times; (1 + margin), recomputed the moment a supplier
+                        puts your cost up. Nobody has to remember to revisit a
+                        number.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-03-reverse.png"
+                        alt="Two-way arrows icon: type the minimum sale price and Odoo derives the margin"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Or type the floor and let the margin follow</h3>
+                     <p>
+                        Already know the price you will not go below? Type it in
+                        and the margin percentage is worked out backwards. The
+                        field is computed and writable, so both directions work.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-04-red-line.png"
+                        alt="Eye icon: under-priced Odoo quotation lines turn red before confirmation"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Under-priced lines turn red on the quotation</h3>
+                     <p>
+                        The unit price renders red in the order lines as soon as
+                        it drops below that product's floor &mdash; while the
+                        rep is still negotiating, not after the deal is done.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-05-named.png"
+                        alt="Checklist icon: the Odoo confirmation message names every under-priced product"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Confirm names every product that is short</h3>
+                     <p>
+                        The message lists each offending line with its minimum
+                        price in your own currency, so the rep knows exactly
+                        what to re-price instead of hunting through the order.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-06-override.png"
+                        alt="Cursor icon: an Odoo sales rep confirming a discounted order deliberately"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Reps can still override, on purpose</h3>
+                     <p>
+                        Ask mode lets them confirm anyway in one click.
+                        Judgement stays with the person closing the deal &mdash;
+                        they simply cannot exercise it by accident any more.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-07-refuse.png"
+                        alt="Padlock icon: refuse mode blocks the Odoo sale order confirmation entirely"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Or make the price floor absolute</h3>
+                     <p>
+                        Refuse mode raises a validation error and the document
+                        stays a quotation until a line is re-priced. There is no
+                        override anywhere in the interface.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-08-switch.png"
+                        alt="Toggle icon: the Blocking Transaction Order setting in Odoo Sales settings"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>One switch decides which one you get</h3>
+                     <p>
+                        <span class="fld">Blocking Transaction Order</span> in
+                        Sales settings moves the whole team between asking and
+                        refusing. Nothing is stored per order, so you can change
+                        your mind.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-09-languages.png"
+                        alt="Globe icon: the Odoo minimum sale price warning in English and French"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>The warning speaks your rep's language</h3>
+                     <p>
+                        Written in English and French, picked from the user's
+                        own Odoo language. The rest of the module ships in six:
+                        English, French, Arabic, Indonesian, Portuguese and
+                        Spanish.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-10-rental.png"
+                        alt="Calendar icon: Odoo rental orders confirm without a margin check"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Rental orders are left alone</h3>
+                     <p>
+                        With Odoo Rental installed, rental orders confirm with
+                        no margin check at all. Rental pricing follows its own
+                        logic and this module does not argue with it.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-11-bulk.png"
+                        alt="Multi-select icon: setting margins in bulk from the Odoo product list"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Set margins in bulk from the product list</h3>
+                     <p>
+                        Tick any group of products, run
+                        <b>Update margin sale</b>, and apply one percentage
+                        across all of them &mdash; for the exceptions that never
+                        map cleanly onto a category.
+                     </p>
+                  </div>
+
+                  <div class="feat">
+                     <img
+                        class="fico"
+                        src="./assets/icons/feat-12-alongside.png"
+                        alt="Interlocking rings icon: Sale Margin Threshold running alongside POS Margin Threshold in Odoo"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                     />
+                     <h3>Runs alongside the Point of Sale module</h3>
+                     <p>
+                        Install <b>POS Margin Threshold</b> too and the product
+                        form still shows one set of margin fields rather than
+                        two. The bulk action de-duplicates itself as well.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== FIRST THIRTY MINUTES ============================== -->
+         <section class="sec" id="smt-rollout">
+            <div class="wrap">
+               <p class="eyebrow">Rolling it out</p>
+               <h2 class="smth2">
+                  The first thirty minutes, if you want to be careful about it
+               </h2>
+               <p class="smtlead narrow">
+                  That is the whole module. A price floor is a rule about
+                  people's judgement, though, so it is worth introducing narrow
+                  and quiet rather than all at once &mdash; and because it is
+                  free, the cheapest way to find out whether this is the rule
+                  you want is to run it and read what it catches.
+               </p>
+               <div class="steps">
+                  <div class="strow">
+                     <div class="stn">01</div>
+                     <div>
+                        <h3>
+                           Install it, then set a margin on exactly one category
+                        </h3>
+                        <p>
+                           Drop the folder in your addons path, update the apps
+                           list, install. Then pick a single product category
+                           &mdash; ideally one where you already suspect the
+                           discounting is thin &mdash; and put a percentage in
+                           its <span class="fld">Margin</span> field. Every
+                           other product in the database is untouched and
+                           behaves exactly as it did this morning.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="strow">
+                     <div class="stn">02</div>
+                     <div>
+                        <h3>
+                           Leave it in ask mode and say nothing dramatic to the
+                           team
+                        </h3>
+                        <p>
+                           <span class="fld">Blocking Transaction Order</span>
+                           is off by default, so nothing is ever blocked. Reps
+                           confirm quotations the way they always have; the only
+                           new thing is a dialog when a line sits under a floor,
+                           and they can accept it and carry on. Tell them what
+                           it means, not that they are being measured.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="strow">
+                     <div class="stn">03</div>
+                     <div>
+                        <h3>Watch what it catches for a fortnight</h3>
+                        <p>
+                           The interesting number is not how many deals were bad
+                           &mdash; it is how often the dialog appeared at all.
+                           Constant firing usually means the floor is set higher
+                           than your real pricing; complete silence means it is
+                           set below anything anyone would ever type. Either way
+                           you have learned where your policy actually sits, and
+                           nobody has been stopped from selling.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="strow">
+                     <div class="stn">04</div>
+                     <div>
+                        <h3>Then widen it, tune it, or make it absolute</h3>
+                        <p>
+                           Three moves are available and each is one field or
+                           one switch: add margins to more categories, adjust
+                           the percentage on the one you started with, or turn
+                           <span class="fld">Blocking Transaction Order</span>
+                           on and make the floor genuinely non-negotiable.
+                           Orders you already confirmed are never revisited.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="callout">
+                  <span class="ci"
+                     ><svg
+                        width="19"
+                        height="19"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="M20 6L9 17l-5-5" /></svg
+                  ></span>
+                  <div>
+                     <h3>There is no trial clock, so there is no hurry</h3>
+                     <p>
+                        Nothing expires, nothing phones home and nothing counts
+                        your users, so a pilot can run as long as you want it
+                        to. If you decide against the idea, uninstalling takes
+                        the fields and the setting away and leaves every
+                        product, price, quotation and order exactly as it was
+                        &mdash; there is nothing in your data that depends on
+                        this module continuing to exist.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== PRICE ============================== -->
+         <section class="sec" id="smt-price">
+            <div class="wrap">
+               <p class="eyebrow">Price</p>
+               <h2 class="smth2">Free, and free in the way that matters</h2>
+               <p class="smtlead narrow">
+                  AGPL-3. No licence key, no seat count, no phone-home, no trial
+                  clock. The code you download is the whole product and it keeps
+                  working whatever happens to us.
+               </p>
+               <div class="pricecard">
+                  <div class="priceleft">
+                     <span class="pl-tag">Free module</span>
+                     <p class="pl-amt">$0</p>
+                     <p class="pl-note">
+                        Odoo 17.0 &middot; licence AGPL-3 &middot; version
+                        17.0.1.0
+                     </p>
+                     <div class="pl-list">
+                        <div>
+                           <span class="mk">&#8226;</span>Unlimited users and
+                           companies
+                        </div>
+                        <div>
+                           <span class="mk">&#8226;</span>Full readable source
+                        </div>
+                        <div>
+                           <span class="mk">&#8226;</span>Six languages in the
+                           box
+                        </div>
+                        <div>
+                           <span class="mk">&#8226;</span>Uninstall leaves your
+                           data alone
+                        </div>
+                     </div>
+                  </div>
+                  <div class="priceright">
+                     <p class="pr-label">What you are never billed for</p>
+                     <div class="prlist">
+                        <div>
+                           <span class="mk">&#10003;</span>An activation key or
+                           licence server &mdash; there isn't one, so nothing to
+                           renew
+                        </div>
+                        <div>
+                           <span class="mk">&#10003;</span>Extra sales users.
+                           The rule lives on the product, not on a seat
+                        </div>
+                        <div>
+                           <span class="mk">&#10003;</span>A cloud service in
+                           the middle. Nothing leaves your database
+                        </div>
+                        <div>
+                           <span class="mk">&#10003;</span>Fixing a bug in this
+                           module. If it is our defect, we fix it
+                        </div>
+                     </div>
+                     <p class="prfoot">
+                        Odoo Apps Store policy requires our store price to be no
+                        higher than anywhere else we sell. It is free here and
+                        free on doodex.net, so that holds by construction. Paid
+                        work &mdash; installation, changes to fit your process,
+                        migration to a newer Odoo &mdash; is quoted separately
+                        and only if you ask.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== PROOF ============================== -->
+         <section class="sec-tight">
+            <div class="wrap">
+               <div class="statrow">
+                  <div class="st">
+                     <p class="n">5</p>
+                     <p class="l">automated tests, 0 failures</p>
+                  </div>
+                  <div class="st">
+                     <p class="n">6</p>
+                     <p class="l">languages shipped</p>
+                  </div>
+                  <div class="st">
+                     <p class="n">2</p>
+                     <p class="l">limits disclosed up front</p>
+                  </div>
+                  <div class="st">
+                     <p class="n">0</p>
+                     <p class="l">activation keys, ever</p>
+                  </div>
+               </div>
+               <p class="smtsmall muted center" style="margin-top: 14px">
+                  Test figure from the module's own
+                  <span class="fld">tests/</span> suite, run on Odoo 17.0 in a
+                  clean Docker instance on 31 July 2026: 5 tests, 0 failed, 0
+                  errors. Languages: Arabic, English, French, Indonesian,
+                  Portuguese, Spanish. Dependencies:
+                  <span class="fld">base</span>,
+                  <span class="fld">product</span>,
+                  <span class="fld">sale</span>,
+                  <span class="fld">stock_account</span> &mdash; all standard
+                  Odoo.
+               </p>
+            </div>
+         </section>
+
+         <!-- ============================== QR CTA · MID ============================== -->
+         <section class="sec-tight">
+            <div class="wrap">
+               <div class="qrcta">
+                  <div>
+                     <p class="qr-eyebrow">Before you install anything</p>
+                     <h2>
+                        Describe how your reps discount. We will be straight
+                        with you.
+                     </h2>
+                     <p class="qr-sub">
+                        Per-customer pricelists, negotiated framework
+                        agreements, rentals, variants with different costs,
+                        batch-confirmed quotations &mdash; tell us what you
+                        actually do and we will say whether this module handles
+                        it. If it does not, we will say that instead of selling
+                        you something.
+                     </p>
+                  </div>
+                  <div class="qr-grid">
+                     <div class="qr-card qr-lead">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="16"
+                                    rx="2"
+                                 />
+                                 <path d="M8 3v4M16 3v4M3 11h18" /></svg></span
+                           ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                        </div>
+                        <h3 class="qr-h">Book a demo</h3>
+                        <p class="qr-p">
+                           Live Odoo 17, your discount policy as the example.
+                        </p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex booking page"
+                           ><img
+                              src="./assets/icons/qr-meeting.png"
+                              alt="QR code encoding hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="smtbtn smtbtn-1 qr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                 />
+                                 <path d="M3 7l9 6 9-6" /></svg></span
+                           ><span class="qr-tag">Written reply</span>
+                        </div>
+                        <h3 class="qr-h">Send a question</h3>
+                        <p class="qr-p">
+                           Put it in writing and we answer by e-mail.
+                        </p>
+                        <a
+                           class="qr-code"
+                           href="mailto:odoo@doodex.net"
+                           aria-label="QR code for the Doodex contact page"
+                           ><img
+                              src="./assets/icons/qr-contact.png"
+                              alt="QR code encoding doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a
+                           class="smtbtn smtbtn-2 qr-btn"
+                           href="mailto:odoo@doodex.net"
+                           >odoo@doodex.net</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <path
+                                    d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.8A8.4 8.4 0 1121 11.5z"
+                                 /></svg></span
+                           ><span class="qr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="qr-h">Message us</h3>
+                        <p class="qr-p">Reach the team directly on WhatsApp.</p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex WhatsApp line"
+                           ><img
+                              src="./assets/icons/qr-whatsapp.png"
+                              alt="QR code encoding hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="smtbtn smtbtn-2 qr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</a
+                        >
+                     </div>
+                  </div>
+                  <p class="qr-foot">
+                     Scan a code with your phone camera to open the link. The
+                     address printed beside each code is the same destination
+                     typed out, so it still works if this page is copied as
+                     plain text.
+                  </p>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== REQUIREMENTS ============================== -->
+         <section class="sec" id="smt-requirements">
+            <div class="wrap">
+               <p class="eyebrow">Requirements &amp; compatibility</p>
+               <h2 class="smth2">
+                  What you need to run Sale Margin Threshold on Odoo 17
+               </h2>
+               <p class="smtlead narrow">
+                  The short answer: an Odoo 17 database and about ten minutes.
+                  No licence key, no external service, nothing extra to buy. The
+                  longer answer is below, written for someone who has never
+                  installed a third-party Odoo module before &mdash; so if you
+                  are weighing this up for a sales team rather than for
+                  yourself, you can read it end to end and know exactly what
+                  lands in your database.
+               </p>
+
+               <div class="reqgrid">
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-01-odoo-version.png"
+                           alt="Version tag icon: Sale Margin Threshold runs on Odoo 17 Community and Enterprise"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Runs on Odoo 17, Community or Enterprise</h3>
+                        <p>
+                           This is the Odoo 17.0 build, module version
+                           <span class="fld">17.0.1.0</span>, and it behaves
+                           identically on both editions &mdash; there is no
+                           "Enterprise only" half of it. On a different Odoo
+                           version?
+                           <a href="mailto:odoo@doodex.net"
+                              >Tell us which one</a
+                           >
+                           before you plan your upgrade.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-02-dependencies.png"
+                           alt="Layers icon: the module depends only on standard Odoo apps"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Nothing else to buy alongside it</h3>
+                        <p>
+                           It depends on four standard Odoo apps you already
+                           have: <span class="fld">base</span>,
+                           <span class="fld">product</span>,
+                           <span class="fld">sale</span> and
+                           <span class="fld">stock_account</span>. No paid
+                           add-on underneath, no third-party library to install,
+                           no subscription hiding behind the free download.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-03-install.png"
+                           alt="Download icon: installing the Odoo margin control module takes minutes"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Installs in minutes, not in a project</h3>
+                        <p>
+                           Copy the folder into your addons path, update the
+                           apps list in Odoo, click <b>Install</b>. That is the
+                           whole procedure &mdash; no installer to run, no shell
+                           script, no post-install step and no downtime for the
+                           rest of your team.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-04-free-licence.png"
+                           alt="Key icon: free AGPL-3 Odoo module with no activation key"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Free, open source, and no licence key</h3>
+                        <p>
+                           AGPL-3, with the full readable source in the download
+                           &mdash; you may change it for your own use. No
+                           activation code, no seat count, no trial clock,
+                           nothing to renew. It is free here and free on
+                           doodex.net, so the price is the same wherever you
+                           find it.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-05-private.png"
+                           alt="Shield icon: your Odoo costs and prices never leave your server"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Your costs and margins never leave your server</h3>
+                        <p>
+                           The module makes no outbound network call of any
+                           kind: no telemetry, no licence check, no cloud
+                           component in the middle. Your cost prices and margin
+                           percentages stay in your own database, which is
+                           usually the first question a finance team asks.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-06-languages.png"
+                           alt="Globe icon: the Odoo minimum sale price module ships in six languages"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Six languages, and a bilingual warning</h3>
+                        <p>
+                           English, French, Arabic, Indonesian, Portuguese and
+                           Spanish ship in the box. The minimum-sale-price
+                           warning your reps actually read is written in English
+                           and French, and a user whose Odoo language is French
+                           gets French automatically &mdash; nobody has to
+                           configure that.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-07-scope.png"
+                           alt="Clipboard check icon: the margin check runs only on quotation confirmation"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>It only touches quotation confirmation</h3>
+                        <p>
+                           The margin check runs on the sale order Confirm
+                           button and nowhere else. Your pricelists, discounts,
+                           invoices, deliveries and reports carry on exactly as
+                           they do today. Need the same price floor at the till?
+                           That is the <b>POS Margin Threshold</b> module, also
+                           free, also from Doodex &mdash; search the Apps Store
+                           for it by name.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-08-rental.png"
+                           alt="Calendar icon: Odoo rental orders skip the margin check"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Rental orders are deliberately left alone</h3>
+                        <p>
+                           If Odoo Rental is installed, rental orders confirm
+                           with no margin check at all. Rental pricing follows
+                           its own logic and this module does not argue with it.
+                           That is a design decision, not something we forgot.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-09-demo-data.png"
+                           alt="Database icon: no demo data is written into your Odoo database"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>No demo data to clean up afterwards</h3>
+                        <p>
+                           Nothing is written into your database on install
+                           &mdash; no sample products, no sample categories, no
+                           test orders. Set a margin on one real product
+                           category and try it on your own products in about ten
+                           minutes.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="req">
+                     <span class="rq-ico"
+                        ><img
+                           src="./assets/icons/req-10-uninstall.png"
+                           alt="Undo arrow icon: uninstalling leaves your Odoo products and orders untouched"
+                           width="32"
+                           height="32"
+                           loading="lazy"
+                     /></span>
+                     <div>
+                        <h3>Uninstalling leaves your data exactly as it was</h3>
+                        <p>
+                           Remove the module and the margin fields, the
+                           minimum-price fields and the setting go with it.
+                           Every product, price, cost, quotation and sale order
+                           stays untouched. Nothing in your data ends up
+                           depending on this module continuing to exist.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== FAQ ============================== -->
+         <section class="sec" id="smt-faq">
+            <div class="wrap">
+               <p class="eyebrow">FAQ</p>
+               <h2 class="smth2">Thirteen real questions, answered plainly</h2>
+               <p class="smtlead narrow">
+                  Every answer comes from the module's source and a clean Odoo
+                  17.0 test run.
+               </p>
+               <div class="faq">
+                  <details class="qa" open>
+                     <summary>
+                        <h3>Does it block the order, or just warn about it?</h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           Whichever you choose. With
+                           <span class="fld">Blocking Transaction Order</span>
+                           off &mdash; the default &mdash; Confirm opens a
+                           dialog listing the under-priced products and the rep
+                           can confirm anyway or cancel. With it on, Confirm
+                           raises a validation error and the order stays a
+                           quotation.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>How is the minimum price worked out?</h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           Cost price times one plus the margin. Cost 100 with a
+                           25% margin gives a floor of 125. You can also type
+                           the floor directly and the margin percentage is
+                           derived from it.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>Do I have to fill in a margin on every product?</h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           No. Set it on the product category and everything
+                           inside inherits it. Override the individual
+                           exceptions, and use the bulk
+                           <b>Update margin sale</b> action for a group that
+                           does not match a category cleanly.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>Which cost does it compare against?</h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           The product's standard cost field, which your own
+                           costing method maintains. If you run average cost,
+                           the floor follows your average cost. The module does
+                           not impose a costing method.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>
+                           Does the check use the price before or after tax?
+                        </h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           The confirmation check compares the line's unit price
+                           against <span class="fld">Minimum sale price</span>,
+                           which is the pre-tax figure &mdash; the same basis as
+                           the unit price on the quotation line, so it is
+                           comparing like with like. The tax-inclusive figure is
+                           also computed on the product and shown there for
+                           reference.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>
+                           Can I confirm several quotations at once from the
+                           list view?
+                        </h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           Not with this module installed, and this is a defect
+                           rather than a design choice. The check is written for
+                           one order at a time, so a multi-order confirmation
+                           raises an
+                           <span class="fld">Expected singleton</span> error
+                           instead of confirming. Confirm orders one at a time
+                           from the order form and everything works. It is ours,
+                           we found it in our own test run, and the fix is first
+                           on the list in <i>Releases</i> below.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>
+                           Can two variants of the same product have different
+                           margins?
+                        </h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           Not today, and this is the second limit we would
+                           rather you heard from us. The margin field appears on
+                           product variants, but writing it on one variant
+                           writes to the shared product template, so the other
+                           variants follow it. If your variants have genuinely
+                           different costs and need genuinely different margins,
+                           this module does not give you that yet &mdash; it is
+                           on the list in <i>Releases</i>. Template-level
+                           margins work exactly as described.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary><h3>What happens to rental orders?</h3></summary>
+                     <div class="ans">
+                        <p>
+                           They are skipped entirely and confirm as normal. The
+                           module checks whether the order is a rental order
+                           and, if it is, hands straight back to Odoo without
+                           running the margin test. That is deliberate, not an
+                           oversight.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>Will it fight with my pricelists or discounts?</h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           No. Pricelists and discounts still decide the price.
+                           The floor is a separate test applied to whatever unit
+                           price ends up on the line, however it got there.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>Can I install this and the POS module together?</h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           Yes, and they are designed for it. They share the
+                           same product fields, and this module hides its
+                           duplicate copies and steps back from the bulk action
+                           when <b>POS Margin Threshold</b> is present. You get
+                           one set of margin fields, not two.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary><h3>Is the warning translated?</h3></summary>
+                     <div class="ans">
+                        <p>
+                           The message is written in English and French: a user
+                           whose Odoo language starts with
+                           <span class="fld">fr</span> reads French, everyone
+                           else reads English. The rest of the module's labels
+                           also ship in Arabic, Indonesian, Portuguese and
+                           Spanish.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary>
+                        <h3>
+                           Does anything about my costs or prices leave my
+                           server?
+                        </h3>
+                     </summary>
+                     <div class="ans">
+                        <p>
+                           Nothing. The module makes no outbound network call of
+                           any kind &mdash; no telemetry, no licence check, no
+                           cloud component. There is nothing for us to switch
+                           off.
+                        </p>
+                     </div>
+                  </details>
+
+                  <details class="qa">
+                     <summary><h3>What happens if I uninstall it?</h3></summary>
+                     <div class="ans">
+                        <p>
+                           The margin and minimum-price fields, the setting and
+                           the confirmation dialog go away. Your products,
+                           prices, costs, quotations and sale orders stay
+                           exactly as they were. Nothing in your data depends on
+                           the module continuing to exist.
+                        </p>
+                     </div>
+                  </details>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== WORKS GREAT WITH ============================== -->
+         <section class="sec xwrap" id="smt-works">
+            <div class="wrap">
+               <div class="center" style="max-width: 760px; margin: 0 auto">
+                  <p class="eyebrow">Works great with</p>
+                  <h2 class="smth2">
+                     Other Doodex modules, built the same way
+                  </h2>
+                  <p
+                     class="smtlead"
+                     style="margin-left: auto; margin-right: auto"
+                  >
+                     Different problems, same approach: narrow scope, a one-time
+                     price and the limits stated up front. Each one installs on
+                     its own.
+                  </p>
+                  <div class="xpills">
+                     <span class="xpill">Narrow scope</span>
+                     <span class="xpill">One-time price</span>
+                     <span class="xpill">Limits stated up front</span>
+                  </div>
+               </div>
+
+               <div class="xgrid">
+                  <div class="xcard xcard-dark">
+                     <div class="xtop">
+                        <img
+                           class="xlogo"
+                           src="./assets/icons/mod-growth-suite.png"
+                           alt="Doodex Growth Suite logo"
+                           width="34"
+                           height="34"
+                           loading="lazy"
+                        />
+                        <span class="xprice">$349 once</span>
+                     </div>
+                     <h3>Doodex Growth Suite</h3>
+                     <p>
+                        Five CRM and marketing modules that <i>do</i> share one
+                        another's data: BizScan AI, Campaign Manager, Smart
+                        Dashboards, User Roles and Email Sync+. Sold as one
+                        suite.
+                     </p>
+                     <a
+                        class="smtbtn smtbtn-1 xbtn"
+                        href="https://apps.odoo.com/apps/modules/17.0/marketing_crm_automation_dashboard_campaign_doodex"
+                        target="_blank"
+                        rel="noopener"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+
+                  <div class="xcard">
+                     <div class="xtop">
+                        <img
+                           class="xlogo"
+                           src="./assets/icons/mod-flow-survey-reader.png"
+                           alt="Flow Survey Reader logo"
+                           width="34"
+                           height="34"
+                           loading="lazy"
+                        />
+                        <span class="xprice">Free</span>
+                     </div>
+                     <h3>Flow Survey Reader</h3>
+                     <p>
+                        Publish conditional surveys and forms straight from Odoo
+                        and keep every answer in your own database.
+                     </p>
+                     <a
+                        class="smtbtn smtbtn-2 xbtn"
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey_reader"
+                        target="_blank"
+                        rel="noopener"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+
+                  <div class="xcard">
+                     <div class="xtop">
+                        <img
+                           class="xlogo"
+                           src="./assets/icons/mod-flow-survey-builder.png"
+                           alt="Flow Survey Builder logo"
+                           width="34"
+                           height="34"
+                           loading="lazy"
+                        />
+                        <span class="xprice">$199 once</span>
+                     </div>
+                     <h3>Flow Survey Builder</h3>
+                     <p>
+                        The drag-and-drop editor for those surveys: 25 question
+                        types, slide branching and full theming.
+                     </p>
+                     <a
+                        class="smtbtn smtbtn-2 xbtn"
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey"
+                        target="_blank"
+                        rel="noopener"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+               </div>
+               <p class="smtsmall muted center" style="margin-top: 20px">
+                  Each button opens that module&rsquo;s own page on the Odoo
+                  Apps Store.
+               </p>
+            </div>
+         </section>
+
+         <!-- ============================== RELEASES ============================== -->
+         <section class="sec" id="smt-releases">
+            <div class="wrap">
+               <p class="eyebrow">Releases</p>
+               <h2 class="smth2">What has shipped, and what is next</h2>
+               <p class="smtlead narrow">
+                  A visible changelog is the honest answer to "will this still
+                  be maintained next year". Ours starts here, including the bug
+                  we have already told you about.
+               </p>
+               <div class="rel">
+                  <div class="relrow">
+                     <div class="relver">17.0.1.0</div>
+                     <div><span class="relbadge rb-new">Current</span></div>
+                     <div>
+                        <p>
+                           <b>First release for Odoo 17.0.</b> Margin on product
+                           category, template and variant. Minimum sale price
+                           and its tax-inclusive twin, computed in both
+                           directions. Red unit price in the order lines. Margin
+                           check on quotation confirmation with a confirmation
+                           wizard in ask mode and a validation error in refuse
+                           mode.
+                           <span class="fld">Blocking Transaction Order</span>
+                           setting. Bilingual English and French warning text.
+                           Rental orders exempt. Bulk
+                           <b>Update margin sale</b> action, de-duplicated when
+                           POS Margin Threshold is also installed. Arabic,
+                           French, Indonesian, Portuguese and Spanish
+                           translations. 5 automated tests, 0 failures.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="relrow">
+                     <div class="relver">Next</div>
+                     <div>
+                        <span class="relbadge rb-next">In progress</span>
+                     </div>
+                     <div>
+                        <p>
+                           <b>Batch confirmation.</b> Making the confirmation
+                           check loop over the selection so confirming many
+                           quotations at once works &mdash; the limitation set
+                           out in the FAQ above, and our first priority. Then:
+                           margin that can genuinely differ between variants of
+                           one template, a confirmation step on the bulk assign
+                           action before it overwrites margins, and an optional
+                           approval on the ask-mode override. Tell us which of
+                           these matters most and it moves up.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ============================== FINAL CTA ============================== -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="qrcta">
+                  <div class="center" style="max-width: 660px; margin: 0 auto">
+                     <p class="qr-eyebrow">
+                        It is free &mdash; the only cost is ten minutes
+                     </p>
+                     <h2>Try it on one product category</h2>
+                     <p class="qr-sub" style="margin: 0 auto">
+                        Download it from this page, set a margin on a single
+                        category, and confirm a deliberately cheap quotation.
+                        You will know in ten minutes whether this is the shape
+                        of rule you wanted.
+                     </p>
+                  </div>
+                  <div class="qr-grid">
+                     <div class="qr-card qr-lead">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="16"
+                                    rx="2"
+                                 />
+                                 <path d="M8 3v4M16 3v4M3 11h18" /></svg></span
+                           ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                        </div>
+                        <h3 class="qr-h">Book a demo</h3>
+                        <p class="qr-p">
+                           Live Odoo 17, your rules as the example.
+                        </p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex booking page"
+                           ><img
+                              src="./assets/icons/qr-meeting.png"
+                              alt="QR code encoding hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="smtbtn smtbtn-1 qr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                 />
+                                 <path d="M3 7l9 6 9-6" /></svg></span
+                           ><span class="qr-tag">Written reply</span>
+                        </div>
+                        <h3 class="qr-h">E-mail the team</h3>
+                        <p class="qr-p">
+                           Support and pre-sales share one inbox.
+                        </p>
+                        <a
+                           class="qr-code"
+                           href="mailto:odoo@doodex.net"
+                           aria-label="QR code for the Doodex contact page"
+                           ><img
+                              src="./assets/icons/qr-contact.png"
+                              alt="QR code encoding doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></a>
+                        <a
+                           class="smtbtn smtbtn-2 qr-btn"
+                           href="mailto:odoo@doodex.net"
+                           >odoo@doodex.net</a
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico"
+                              ><svg
+                                 width="17"
+                                 height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="#fff"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                              >
+                                 <path
+                                    d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.8A8.4 8.4 0 1121 11.5z"
+                                 /></svg></span
+                           ><span class="qr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="qr-h">WhatsApp</h3>
+                        <p class="qr-p">
+                           For the quick yes-or-no before installing.
+                        </p>
+                        <span
+                           class="qr-code"
+                           aria-label="QR code for the Doodex WhatsApp line"
+                           ><img
+                              src="./assets/icons/qr-whatsapp.png"
+                              alt="QR code encoding hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <a class="smtbtn smtbtn-2 qr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</a
+                        >
+                     </div>
+                  </div>
+                  <p class="qr-foot center">
+                     Scan a code with your phone camera to open the link. The
+                     address printed beside each code is the same destination
+                     typed out.
+                  </p>
+               </div>
+            </div>
+         </section>
+      </div>
+   </body>
+</html>

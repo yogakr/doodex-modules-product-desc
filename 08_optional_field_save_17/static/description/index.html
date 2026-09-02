@@ -1,0 +1,4123 @@
+<!-- =========================================================================
+  Optional Field Save — Odoo App Store listing description
+  Odoo 17.0 · module version 17.0.1.0.0 · Free · AGPL-3 · Doodex
+
+  PASTE TARGET: the "Description" / static/description/index.html of the Odoo
+  Apps Store upload for optional_field_save 17.0.1.0.0.
+
+  LAYOUT
+   Archetype B "Long-form scroll", deliberately built to match the Flow Survey
+   Builder listing so the two read as one family: logo nav + pill tabs, centred
+   violet trust bar, centred hero over a full-width hero GIF, numbered section
+   bands (01/06 … 06/06), alternating feature blocks, details-based FAQ
+   accordion, release rows, violet CTA bands. Same skeleton, same tokens, this
+   module's own content.
+
+  RULES BAKED IN
+   • Zero script tags of our own. The store sanitizer strips them and this page
+     needs none: one continuous scroll, a plain jump menu, and an FAQ built on
+     native details/summary rather than JavaScript.
+   • LINKS ARE CONSTRAINED BY THE VENDOR GUIDELINES. Only static/description
+     resources, canonical YouTube links, Microsoft Teams links, mailto: and
+     skype: survive; every other external link is invalidated. So internal jump
+     links use #anchors, the remaining e-mail links use mailto:, and the three
+     contact CTAs (contact form, booking, WhatsApp) carry NO href at all — their
+     destination is printed beside them as visible text AND encoded in the QR
+     image, neither of which the sanitizer has a reason to touch.
+
+     The one exception is the "Works great with" band, whose three buttons link
+     to apps.odoo.com module pages — the store's own host. Do NOT paste any other
+     http(s) URL back into an href on this page; doodex.net in particular will be
+     stripped, not honoured.
+   • The nav bar sits in normal flow and is deliberately not pinned; no rule
+     targets html or :root. A pinned bar in a description is a widget riding over
+     the store's own header, and this fragment does not own the document root.
+   • Every rule is scoped under .ofs so nothing leaks into the store page.
+   • ALL MEDIA IN ./assets IS A PLACEHOLDER. Each plate states its own filename,
+     pixel size and what should be recorded. Replace the file in place, keeping
+     the same name, and this page needs no edit. The three QR codes, the Doodex
+     logo and the three cross-sell module icons are real, not placeholders.
+   • Icons are inline SVG (stroke=currentColor). The store has no icon webfont,
+     so never introduce icon-webfont "i" tags here.
+   • Upload ./assets (including ./assets/icons) into the module's
+     static/description folder next to index.html, keeping the folder names.
+     Nothing on this page loads an image from anywhere else.
+========================================================================== -->
+<div class="ofs">
+   <style>
+      .ofs {
+         --violet: #270140;
+         --violet-2: #3a1a5a;
+         --coral: #fa7268;
+         --coral-dk: #e85c52;
+         --ink: #0a0a0a;
+         --ink-2: #171717;
+         --ink-3: #525252;
+         --ink-4: #737373;
+         --bg: #ffffff;
+         --surface: #faf7fc;
+         --surface-2: #f4eef8;
+         --warm: #fff5f2;
+         --line: #ece4f3;
+         --success: #16a34a;
+         --danger: #dc2626;
+         --r-sm: 6px;
+         --r-md: 10px;
+         --r-lg: 14px;
+         --r-xl: 20px;
+         --r-full: 9999px;
+         --xs: 0 0 0 1px rgba(39, 1, 64, 0.06);
+         --sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 1, 64, 0.08);
+         --md:
+            0 4px 14px rgba(39, 1, 64, 0.08), 0 0 0 1px rgba(39, 1, 64, 0.06);
+         --cta: 0 8px 22px rgba(250, 114, 104, 0.32);
+      }
+      .ofs * {
+         box-sizing: border-box;
+      }
+      .ofs {
+         background: var(--bg);
+         color: var(--ink-3);
+         font-family:
+            "Inter",
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
+         font-size: 16px;
+         line-height: 1.65;
+         font-feature-settings: "cv11", "ss01";
+         -webkit-font-smoothing: antialiased;
+      }
+      .ofs h1,
+      .ofs h2,
+      .ofs h3,
+      .ofs h4 {
+         color: var(--violet);
+         letter-spacing: -0.015em;
+         margin: 0;
+      }
+      .ofs p {
+         margin: 0 0 14px;
+      }
+      .ofs a {
+         color: var(--coral-dk);
+         overflow-wrap: anywhere;
+      }
+      /* naked URLs are printed as visible text everywhere as a sanitizer fallback,
+   so long paths must be allowed to break rather than push the page wide. */
+      .ofs,
+      .ofs p,
+      .ofs td,
+      .ofs li,
+      .ofs h1,
+      .ofs h2 {
+         overflow-wrap: break-word;
+      }
+      .ofs img {
+         max-width: 100%;
+         height: auto;
+      }
+      .omuted {
+         color: var(--ink-4);
+      }
+      .ocenter {
+         text-align: center;
+      }
+      .owrap {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 0 24px;
+      }
+      .onarrow {
+         max-width: 820px;
+         margin: 0 auto;
+      }
+      .osec {
+         padding: 56px 0;
+      }
+      .osec-tight {
+         padding: 32px 0;
+      }
+      .oeyebrow {
+         display: inline-block;
+         font-size: 12px;
+         font-weight: 700;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--coral-dk);
+         margin: 0 0 14px;
+      }
+      .oh1 {
+         font-size: 46px;
+         font-weight: 800;
+         line-height: 1.08;
+      }
+      .oh2 {
+         font-size: 27px;
+         font-weight: 800;
+         line-height: 1.2;
+      }
+      .oh3 {
+         font-size: 19px;
+         font-weight: 700;
+      }
+      .olead {
+         font-size: 18.5px;
+         line-height: 1.6;
+         color: var(--ink-3);
+      }
+      .osm {
+         font-size: 13.5px;
+      }
+      .oxs {
+         font-size: 12.5px;
+      }
+      .ostrong {
+         color: var(--violet);
+         font-weight: 700;
+      }
+      .oico {
+         flex: none;
+         display: inline-flex;
+      }
+      .oico svg {
+         display: block;
+      }
+
+      /* buttons. .obtn is used both for real mailto:/#anchor links and for spans that
+   only PRINT a destination. Both look identical on purpose: the visitor scans the
+   QR or types the address. */
+      .obtn {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         gap: 8px;
+         font-weight: 700;
+         font-size: 15px;
+         text-decoration: none;
+         padding: 13px 24px;
+         border-radius: var(--r-md);
+      }
+      .obtn-1 {
+         background: var(--coral);
+         color: #fff !important;
+         box-shadow: var(--cta);
+      }
+      .obtn-2 {
+         background: #fff;
+         color: var(--violet) !important;
+         box-shadow: 0 0 0 1.5px var(--violet);
+      }
+      .obtn-row {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 12px;
+      }
+      .ocard {
+         background: #fff;
+         border-radius: var(--r-lg);
+         padding: 22px;
+         box-shadow: var(--sm);
+      }
+
+      /* ---- nav: logo left, pill tabs centre, CTA right. In flow, never pinned. ---- */
+      .onav {
+         background: #fff;
+         border-bottom: 1px solid var(--line);
+      }
+      .onav-in {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 10px 24px;
+         display: grid;
+         grid-template-columns: 1fr auto 1fr;
+         align-items: center;
+         gap: 12px;
+      }
+      /* qualified with .ofs on purpose: `.ofs a` has specificity (0,1,1) and a bare
+   `.onav-brand` only (0,1,0), so the brand would lose to the generic link colour
+   and render coral instead of plum. */
+      .ofs .onav-brand {
+         display: inline-flex;
+         align-items: center;
+         gap: 7px;
+         font-weight: 800;
+         color: var(--violet);
+         font-size: 15px;
+         letter-spacing: -0.01em;
+         text-decoration: none;
+      }
+      .ofs .onav-brand span {
+         color: var(--coral-dk);
+      }
+      /* The brand mark is portrait (89x120), so it is sized by height with width:auto
+   - a fixed square would squash it. Scoped .ofs because the generic
+   .ofs img { max-width:100%; height:auto } would otherwise win. */
+      .ofs .onav-logo {
+         display: block;
+         height: 30px;
+         width: auto;
+         max-width: none;
+      }
+      .otabgroup {
+         justify-self: center;
+         display: inline-flex;
+         gap: 2px;
+         background: var(--surface);
+         border: 1px solid var(--line);
+         border-radius: var(--r-full);
+         padding: 4px;
+      }
+      .otabgroup a {
+         text-decoration: none;
+         color: var(--ink-2);
+         font-size: 14px;
+         font-weight: 600;
+         padding: 8px 15px;
+         border-radius: var(--r-full);
+         white-space: nowrap;
+      }
+      .otabgroup a:hover {
+         background: #fff;
+         color: var(--violet);
+         box-shadow: var(--xs);
+      }
+      .onav-cta {
+         justify-self: end;
+      }
+      .onav-cta a {
+         font-size: 13.5px;
+         padding: 9px 17px;
+      }
+      @media (max-width: 900px) {
+         .onav-in {
+            grid-template-columns: 1fr;
+            justify-items: center;
+         }
+         .onav-cta {
+            justify-self: center;
+         }
+         .otabgroup {
+            flex-wrap: wrap;
+            justify-content: center;
+         }
+      }
+
+      /* ---- trust bar ---------------------------------------------------------- */
+      .otrust {
+         background: var(--violet);
+         padding: 13px 0;
+      }
+      .otrust-in {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 0 24px;
+         display: flex;
+         flex-wrap: wrap;
+         gap: 9px 10px;
+         align-items: center;
+         justify-content: center;
+      }
+      .otchip {
+         display: inline-flex;
+         align-items: center;
+         gap: 7px;
+         font-size: 12.5px;
+         font-weight: 600;
+         color: #fff;
+         border: 1px solid rgba(255, 255, 255, 0.22);
+         border-radius: var(--r-full);
+         padding: 5px 13px;
+      }
+      .otchip .oico {
+         color: var(--coral);
+      }
+
+      /* ---- numbered section band ---------------------------------------------- */
+      .okick {
+         display: grid;
+         grid-template-columns: auto auto 1fr;
+         align-items: center;
+         gap: 0 20px;
+         margin: 0 0 30px;
+         scroll-margin-top: 24px;
+      }
+      .okick-n {
+         font-size: 38px;
+         font-weight: 800;
+         color: var(--violet);
+         letter-spacing: -0.03em;
+         line-height: 1;
+         font-variant-numeric: tabular-nums;
+      }
+      .okick-n i {
+         font-style: normal;
+         font-size: 16px;
+         font-weight: 700;
+         color: var(--ink-4);
+         letter-spacing: 0;
+         vertical-align: super;
+         margin-left: 2px;
+      }
+      .okick-l {
+         font-size: 12.5px;
+         font-weight: 800;
+         letter-spacing: 0.15em;
+         text-transform: uppercase;
+         color: var(--coral-dk);
+      }
+      .okick-r {
+         height: 1px;
+         background: var(--line);
+      }
+      @media (max-width: 560px) {
+         .okick {
+            grid-template-columns: auto 1fr;
+            gap: 0 14px;
+         }
+         .okick-l {
+            grid-column: 1/-1;
+            margin-top: 10px;
+         }
+         .okick-n {
+            font-size: 32px;
+         }
+      }
+      .osecband {
+         border-top: 1px solid var(--line);
+         padding-top: 56px;
+      }
+      /* the kicker band already supplies the top rhythm, so the first block of a
+   section must not stack its own 56px on top of it */
+      .osecband + section.osec {
+         padding-top: 0;
+      }
+
+      /* ---- hero media --------------------------------------------------------- */
+      .oheroshot {
+         width: 100%;
+         border-radius: var(--r-lg);
+         border: 1px solid #e9ddf2;
+         display: block;
+      }
+      .ocap {
+         font-size: 12px;
+         color: var(--ink-4);
+         margin: 10px 0 0;
+      }
+
+      /* ---- demo card ---------------------------------------------------------- */
+      .odemorow {
+         display: grid;
+         grid-template-columns: 1fr auto;
+         gap: 32px;
+         align-items: center;
+      }
+      .odemorow > * {
+         min-width: 0;
+      }
+      .odemo-copy {
+         background: var(--surface-2);
+         border-radius: var(--r-lg);
+         padding: 20px 24px;
+      }
+      .odemorow .obtn-row {
+         flex-direction: column;
+         align-items: flex-end;
+         border-left: 1px solid var(--line);
+         padding-left: 28px;
+      }
+      @media (max-width: 760px) {
+         .odemorow {
+            grid-template-columns: 1fr;
+            gap: 20px;
+         }
+         .odemorow .obtn-row {
+            align-items: stretch;
+            border-left: 0;
+            padding-left: 0;
+         }
+      }
+
+      /* ---- free / offer card (the pricing block's counterpart) ---------------- */
+      .opricecard {
+         display: grid;
+         grid-template-columns: 360px 1fr;
+         border-radius: var(--r-xl);
+         overflow: hidden;
+         box-shadow: var(--md);
+      }
+      .opricecard > * {
+         min-width: 0;
+      }
+      .opriceleft {
+         background: var(--violet);
+         color: #fff;
+         padding: 34px 28px;
+      }
+      .opl-tag {
+         display: inline-block;
+         font-size: 11px;
+         font-weight: 700;
+         letter-spacing: 0.09em;
+         text-transform: uppercase;
+         color: var(--coral);
+         border: 1px solid rgba(250, 114, 104, 0.55);
+         border-radius: var(--r-full);
+         padding: 4px 12px;
+      }
+      .opl-amt {
+         font-size: 64px;
+         font-weight: 800;
+         line-height: 1;
+         margin: 18px 0 2px;
+         color: #fff;
+      }
+      .opl-sub {
+         font-size: 13.5px;
+         color: rgba(255, 255, 255, 0.78);
+      }
+      .opl-anchor {
+         margin-top: 20px;
+         padding-top: 18px;
+         border-top: 1px solid rgba(255, 255, 255, 0.15);
+         font-size: 13px;
+         color: rgba(255, 255, 255, 0.82);
+      }
+      .opl-anchor strong {
+         color: var(--coral);
+      }
+      .opl-bul {
+         list-style: none;
+         padding: 0;
+         margin: 16px 0 0;
+      }
+      .opl-bul li {
+         position: relative;
+         padding-left: 20px;
+         font-size: 13.5px;
+         margin: 10px 0;
+         color: rgba(255, 255, 255, 0.9);
+         line-height: 1.5;
+      }
+      .opl-bul li:before {
+         content: "";
+         position: absolute;
+         left: 0;
+         top: 7px;
+         width: 7px;
+         height: 7px;
+         border-radius: 50%;
+         background: var(--coral);
+      }
+      .opriceright {
+         background: #fff;
+         padding: 32px 30px;
+         display: flex;
+         flex-direction: column;
+      }
+      .opr-label {
+         font-size: 11px;
+         font-weight: 700;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--ink-4);
+         margin: 0 0 14px;
+      }
+      /* the de-risking grid: every commercial objection answered with an icon, a
+   three-word promise and one line. Replaces a flat dash list that read as filler
+   and left the panel bottom-heavy. */
+      .onocatch {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 26px 22px;
+      }
+      .onocatch > * {
+         min-width: 0;
+      }
+      .onc {
+         display: flex;
+         gap: 12px;
+         align-items: flex-start;
+      }
+      .onc-ico {
+         flex: none;
+         width: 34px;
+         height: 34px;
+         border-radius: 9px;
+         background: var(--surface-2);
+         color: var(--coral-dk);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         transition:
+            background 0.18s ease,
+            color 0.18s ease;
+      }
+      .onc:hover .onc-ico {
+         background: var(--coral);
+         color: #fff;
+      }
+      .onc > div > b {
+         display: block;
+         font-size: 14px;
+         color: var(--violet);
+         line-height: 1.35;
+         margin-bottom: 3px;
+      }
+      .onc p {
+         margin: 0;
+         font-size: 12.5px;
+         color: var(--ink-4);
+         line-height: 1.5;
+      }
+      @media (max-width: 560px) {
+         .onocatch {
+            grid-template-columns: 1fr;
+         }
+      }
+      /* pinned to the bottom of the white panel so the card's two halves finish level */
+      .ofactstrip {
+         margin-top: auto;
+         padding-top: 20px;
+         border-top: 1px solid var(--line);
+         display: flex;
+         gap: 12px;
+         align-items: flex-start;
+      }
+      .ofactstrip .oico {
+         color: var(--coral-dk);
+         margin-top: 3px;
+      }
+      .ofactstrip p {
+         margin: 0;
+         font-size: 13.5px;
+         color: var(--ink-2);
+         line-height: 1.6;
+      }
+      .ofactstrip strong {
+         color: var(--coral-dk);
+      }
+      @media (max-width: 760px) {
+         .opricecard {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* ---- counters ----------------------------------------------------------- */
+      .ostatrow {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+         gap: 1px;
+         background: var(--line);
+         border-radius: var(--r-lg);
+         overflow: hidden;
+         box-shadow: var(--xs);
+      }
+      .ostat {
+         background: #fff;
+         padding: 20px 16px;
+         text-align: center;
+      }
+      .ostat .on {
+         font-size: 30px;
+         font-weight: 800;
+         color: var(--violet);
+         line-height: 1;
+         letter-spacing: -0.02em;
+      }
+      .ostat .ol {
+         font-size: 12px;
+         color: var(--ink-4);
+         margin-top: 6px;
+         line-height: 1.4;
+      }
+
+      /* ---- "how it works" icon rows ------------------------------------------- */
+      .obfor {
+         display: grid;
+      }
+      .obfor .obrow {
+         display: grid;
+         grid-template-columns: 54px 1fr;
+         gap: 18px;
+         padding: 22px 0;
+         border-top: 1px solid var(--line);
+      }
+      .obfor .obrow:first-child {
+         border-top: 0;
+         padding-top: 0;
+      }
+      .obfor .obrow:last-child {
+         padding-bottom: 0;
+      }
+      .obico {
+         width: 54px;
+         height: 54px;
+         border-radius: var(--r-md);
+         background: #fff;
+         box-shadow: 0 0 0 1px rgba(39, 1, 64, 0.1);
+         color: var(--coral-dk);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         transition: box-shadow 0.18s ease;
+      }
+      .obfor .obrow:hover .obico {
+         box-shadow: 0 0 0 1px rgba(250, 114, 104, 0.5);
+      }
+      .obfor .obhd {
+         display: block;
+         font-size: 16px;
+         font-weight: 700;
+         line-height: 1.4;
+         letter-spacing: -0.005em;
+         color: var(--violet);
+         margin: 0 0 6px;
+      }
+      .obfor .obrow p {
+         margin: 0;
+         font-size: 14.5px;
+         line-height: 1.6;
+         color: var(--ink-3);
+      }
+      .obfor .obrow p b {
+         color: var(--violet);
+      }
+      @media (max-width: 560px) {
+         .obfor .obrow {
+            grid-template-columns: 40px 1fr;
+            gap: 14px;
+         }
+         .obico {
+            width: 40px;
+            height: 40px;
+         }
+      }
+
+      /* ---- two-col ------------------------------------------------------------ */
+      .otwo {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 36px;
+      }
+      .otwo > * {
+         min-width: 0;
+      }
+      @media (max-width: 820px) {
+         .otwo {
+            grid-template-columns: 1fr;
+            gap: 26px;
+         }
+      }
+
+      /* Overview: the three steps, side by side across the full width. The Why
+   section keeps the icon-row treatment, so the two do not read as the same block. */
+      .oflow {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         border: 1px solid var(--line);
+         border-radius: var(--r-lg);
+         overflow: hidden;
+         background: #fff;
+         box-shadow: var(--sm);
+      }
+      .oflow > * {
+         min-width: 0;
+      }
+      .oflowstep {
+         position: relative;
+         padding: 24px 22px;
+         border-left: 1px solid var(--line);
+      }
+      .oflowstep:first-child {
+         border-left: none;
+      }
+      .oflowstep .on {
+         position: absolute;
+         top: 20px;
+         right: 20px;
+         font-size: 26px;
+         font-weight: 800;
+         color: var(--surface-2);
+         line-height: 1;
+         letter-spacing: -0.03em;
+         font-variant-numeric: tabular-nums;
+      }
+      .oflow-ico {
+         width: 40px;
+         height: 40px;
+         border-radius: 11px;
+         background: var(--surface-2);
+         color: var(--coral-dk);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         margin-bottom: 14px;
+         transition:
+            background 0.18s ease,
+            color 0.18s ease;
+      }
+      .oflowstep:hover .oflow-ico {
+         background: var(--coral);
+         color: #fff;
+      }
+      .oflowstep h3 {
+         font-size: 16px;
+         font-weight: 700;
+         margin: 0 0 6px;
+         padding-right: 34px;
+      }
+      .oflowstep p {
+         margin: 0;
+         font-size: 13.5px;
+         line-height: 1.6;
+         color: var(--ink-4);
+      }
+      @media (max-width: 820px) {
+         .oflow {
+            grid-template-columns: 1fr;
+         }
+         .oflowstep {
+            border-left: none;
+            border-top: 1px solid var(--line);
+         }
+         .oflowstep:first-child {
+            border-top: none;
+         }
+      }
+
+      /* ---- QR CTA block ------------------------------------------------------- */
+      .oqr {
+         background: var(--violet);
+         border-radius: var(--r-xl);
+         padding: 26px 28px 22px;
+      }
+      .oqr-head {
+         max-width: 660px;
+      }
+      .oqr .oqr-eyebrow {
+         font-size: 11px;
+         font-weight: 700;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--coral);
+         margin: 0 0 8px;
+      }
+      .oqr h2.oqr-title {
+         color: #fff;
+         font-size: 23px;
+         font-weight: 800;
+         letter-spacing: -0.015em;
+         margin: 0 0 8px;
+      }
+      .oqr .oqr-sub {
+         color: rgba(255, 255, 255, 0.74);
+         font-size: 14.5px;
+         line-height: 1.55;
+         margin: 0;
+      }
+      .oqr-grid {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 14px;
+         margin: 22px 0 0;
+      }
+      .oqr-grid > * {
+         min-width: 0;
+      }
+      .oqr-card {
+         background: #fff;
+         border-radius: var(--r-lg);
+         padding: 15px;
+         display: flex;
+         flex-direction: column;
+         gap: 9px;
+      }
+      .oqr-lead {
+         box-shadow: 0 0 0 2px var(--coral);
+      }
+      .oqr-top {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 10px;
+      }
+      .oqr-ico {
+         width: 30px;
+         height: 30px;
+         border-radius: 9px;
+         background: var(--violet);
+         color: #fff;
+         flex: none;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+      }
+      .oqr-tag {
+         font-size: 10px;
+         font-weight: 800;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         color: var(--violet);
+         background: var(--surface-2);
+         border-radius: var(--r-full);
+         padding: 4px 9px;
+      }
+      .oqr-tag-hot {
+         background: var(--coral);
+         color: #fff;
+      }
+      .oqr .oqr-h {
+         font-size: 15.5px;
+         color: var(--violet);
+         margin: 1px 0 0;
+      }
+      .oqr .oqr-p {
+         font-size: 12.5px;
+         line-height: 1.5;
+         color: var(--ink-4);
+         margin: 0;
+      }
+      .oqr-code {
+         display: block;
+         background: var(--surface);
+         border-radius: var(--r-md);
+         padding: 10px;
+         margin-top: auto;
+      }
+      .oqr-code img {
+         display: block;
+         width: 98px;
+         max-width: 100%;
+         margin: 0 auto;
+      }
+      .oqr-btn {
+         width: 100%;
+         padding: 9px 10px;
+         font-size: 13px;
+      }
+      .oqr .oqr-foot {
+         color: rgba(255, 255, 255, 0.5);
+         font-size: 12px;
+         margin: 16px 0 0;
+      }
+      .oqr-end {
+         padding: 34px 28px 26px;
+      }
+      .oqr-end .oqr-head {
+         max-width: 660px;
+         margin-left: auto;
+         margin-right: auto;
+         text-align: center;
+      }
+      .oqr-end h2.oqr-title {
+         font-size: 27px;
+      }
+      .oqr-end .oqr-foot {
+         text-align: center;
+      }
+      @media (max-width: 820px) {
+         .oqr-grid {
+            grid-template-columns: 1fr;
+         }
+         .oqr {
+            padding: 26px 20px 22px;
+         }
+         .oqr-end {
+            padding: 30px 20px 24px;
+         }
+      }
+
+      /* ---- use cases: department grid, no imagery -----------------------------
+   Deliberately content-first. Each tile names the Odoo app, the list view and
+   the fields teams actually add there, so the section carries real search
+   weight instead of six near-identical screenshots. */
+      .odeptgrid {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 18px;
+      }
+      .odeptgrid > * {
+         min-width: 0;
+      }
+      .odept {
+         background: #fff;
+         border: 1px solid var(--line);
+         border-radius: var(--r-lg);
+         padding: 22px 20px;
+         box-shadow: var(--sm);
+         display: flex;
+         flex-direction: column;
+         transition:
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
+      }
+      .odept:hover {
+         box-shadow: var(--md);
+         transform: translateY(-2px);
+      }
+      .odept-ico {
+         width: 40px;
+         height: 40px;
+         border-radius: 11px;
+         background: var(--surface-2);
+         color: var(--coral-dk);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         margin-bottom: 14px;
+         transition:
+            background 0.18s ease,
+            color 0.18s ease;
+      }
+      .odept:hover .odept-ico {
+         background: var(--coral);
+         color: #fff;
+      }
+      .odept-tag {
+         font-size: 10.5px;
+         font-weight: 800;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--coral-dk);
+         margin-bottom: 5px;
+      }
+      .odept h3 {
+         font-size: 16.5px;
+         font-weight: 700;
+         margin: 0 0 7px;
+      }
+      .odept p {
+         margin: 0 0 14px;
+         font-size: 13.5px;
+         line-height: 1.6;
+         color: var(--ink-3);
+      }
+      .odept .ochipset {
+         margin-top: auto;
+         display: flex;
+         flex-wrap: wrap;
+         gap: 6px;
+      }
+      .ochipx {
+         display: inline-flex;
+         font-size: 11.5px;
+         font-weight: 600;
+         color: var(--violet);
+         background: var(--surface);
+         border-radius: var(--r-full);
+         padding: 4px 11px;
+         box-shadow: 0 0 0 1px rgba(39, 1, 64, 0.07);
+      }
+      @media (max-width: 900px) {
+         .odeptgrid {
+            grid-template-columns: 1fr 1fr;
+         }
+      }
+      @media (max-width: 600px) {
+         .odeptgrid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* the three moments where the saved layout actually pays off */
+      .ositband {
+         background: var(--surface);
+         border: 1px solid var(--line);
+         border-radius: var(--r-xl);
+         padding: 28px 30px;
+      }
+      .ositgrid {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 26px;
+      }
+      .ositgrid > * {
+         min-width: 0;
+      }
+      .osit {
+         display: flex;
+         gap: 14px;
+         align-items: flex-start;
+      }
+      .osit-ico {
+         flex: none;
+         width: 38px;
+         height: 38px;
+         border-radius: 10px;
+         background: #fff;
+         color: var(--coral-dk);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         box-shadow: 0 0 0 1px rgba(39, 1, 64, 0.1);
+      }
+      .osit h4 {
+         font-size: 15px;
+         font-weight: 700;
+         margin: 0 0 4px;
+         line-height: 1.35;
+      }
+      .osit p {
+         margin: 0;
+         font-size: 13px;
+         color: var(--ink-4);
+         line-height: 1.55;
+      }
+      @media (max-width: 820px) {
+         .ositgrid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+         }
+         .ositband {
+            padding: 24px 22px;
+         }
+      }
+
+      /* ---- alternating feature blocks ---------------------------------------- */
+      .ofblocks .ofblock {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 26px;
+         align-items: center;
+         padding: 26px 0;
+         border-top: 1px solid var(--line);
+      }
+      .ofblocks .ofblock > * {
+         min-width: 0;
+      }
+      .ofblocks .ofblock:nth-child(even) .ofb-text {
+         order: 2;
+      }
+      .ofblock .ofb-n {
+         font-size: 11.5px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         color: var(--coral-dk);
+         text-transform: uppercase;
+         margin-bottom: 7px;
+      }
+      .ofblock h3 {
+         margin-bottom: 7px;
+      }
+      .ofblock p {
+         margin: 0;
+         font-size: 14.5px;
+      }
+      .ofblock .ofb-fact {
+         margin: 14px 0 0;
+         font-size: 12.5px;
+         color: var(--ink-4);
+         display: flex;
+         gap: 8px;
+      }
+      .ofblock .ofb-fact .oico {
+         color: var(--success);
+      }
+      .ofblock img {
+         border-radius: var(--r-lg);
+         box-shadow: var(--sm);
+         display: block;
+         width: 100%;
+      }
+      @media (max-width: 820px) {
+         .ofblocks .ofblock {
+            grid-template-columns: 1fr;
+         }
+         .ofblocks .ofblock:nth-child(even) .ofb-text {
+            order: 0;
+         }
+      }
+
+      /* ---- feature grid (icon rows) ------------------------------------------- */
+      .ofeatgrid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 0 44px;
+      }
+      .ofeat {
+         position: relative;
+         padding: 15px 0 15px 26px;
+         border-top: 1px solid var(--line);
+      }
+      .ofeat::before {
+         content: "";
+         position: absolute;
+         left: 2px;
+         top: 22px;
+         width: 9px;
+         height: 9px;
+         background: var(--coral);
+         transform: rotate(45deg);
+         border-radius: 2px;
+      }
+      .ofeat h4 {
+         font-size: 14.5px;
+         color: var(--ink-2);
+         margin: 0 0 3px;
+      }
+      .ofeat p {
+         margin: 0;
+         font-size: 12.5px;
+         color: var(--ink-4);
+         line-height: 1.55;
+      }
+      @media (max-width: 820px) {
+         .ofeatgrid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* ---- why: the recurring cost, as three numbered cards -------------------
+   No comparison and no competitor anywhere in this section. The Odoo Apps
+   vendor guidelines warn against comparative claims, so the argument is made
+   from the reader's own week instead of against anyone else's product. */
+      .owhy3 {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 18px;
+      }
+      .owhy3 > * {
+         min-width: 0;
+      }
+      .owhycard {
+         position: relative;
+         background: #fff;
+         border: 1px solid var(--line);
+         border-radius: var(--r-lg);
+         padding: 24px 22px;
+         box-shadow: var(--sm);
+         transition:
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
+      }
+      .owhycard:hover {
+         box-shadow: var(--md);
+         transform: translateY(-2px);
+      }
+      .owhycard .own {
+         position: absolute;
+         top: 18px;
+         right: 20px;
+         font-size: 30px;
+         font-weight: 800;
+         color: var(--surface-2);
+         letter-spacing: -0.03em;
+         line-height: 1;
+         font-variant-numeric: tabular-nums;
+         transition: color 0.18s ease;
+      }
+      .owhycard:hover .own {
+         color: var(--warm);
+      }
+      .owhy-ico {
+         width: 40px;
+         height: 40px;
+         border-radius: 11px;
+         background: var(--surface-2);
+         color: var(--coral-dk);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         margin-bottom: 16px;
+         transition:
+            background 0.18s ease,
+            color 0.18s ease;
+      }
+      .owhycard:hover .owhy-ico {
+         background: var(--coral);
+         color: #fff;
+      }
+      .owhycard h3 {
+         font-size: 16.5px;
+         font-weight: 700;
+         margin: 0 0 7px;
+         padding-right: 34px;
+      }
+      .owhycard p {
+         margin: 0;
+         font-size: 13.5px;
+         line-height: 1.6;
+         color: var(--ink-3);
+      }
+      @media (max-width: 900px) {
+         .owhy3 {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* the one violet interlude on the page: the whole argument in one sentence */
+      .ointerlude {
+         background: var(--violet);
+         border-radius: var(--r-xl);
+         padding: 44px 40px;
+         text-align: center;
+      }
+      .ointerlude .obig {
+         font-size: 31px;
+         font-weight: 800;
+         color: #fff;
+         letter-spacing: -0.02em;
+         line-height: 1.28;
+         margin: 0;
+         max-width: 760px;
+         margin-left: auto;
+         margin-right: auto;
+      }
+      .ointerlude .obig .omk {
+         color: var(--coral);
+      }
+      .ointerlude .osub {
+         color: rgba(255, 255, 255, 0.72);
+         margin: 12px 0 0;
+         font-size: 15px;
+      }
+      @media (max-width: 820px) {
+         .ointerlude {
+            padding: 32px 22px;
+         }
+         .ointerlude .obig {
+            font-size: 23px;
+         }
+      }
+
+      /* "safe to install" — compact icon rows, three across, hairline-separated */
+      .osafe {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 0 36px;
+      }
+      .osafe > * {
+         min-width: 0;
+      }
+      .osafeitem {
+         display: flex;
+         gap: 13px;
+         align-items: flex-start;
+         padding: 18px 0;
+         border-top: 1px solid var(--line);
+      }
+      .osafe-ico {
+         flex: none;
+         color: var(--coral-dk);
+         margin-top: 2px;
+      }
+      .osafeitem > div > b {
+         display: block;
+         font-size: 14.5px;
+         color: var(--violet);
+         margin-bottom: 3px;
+         line-height: 1.35;
+      }
+      .osafeitem p {
+         margin: 0;
+         font-size: 12.5px;
+         color: var(--ink-4);
+         line-height: 1.55;
+      }
+      @media (max-width: 900px) {
+         .osafe {
+            grid-template-columns: 1fr 1fr;
+            gap: 0 28px;
+         }
+      }
+      @media (max-width: 600px) {
+         .osafe {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* ---- requirement cards -------------------------------------------------- */
+      .oreqgrid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 12px;
+      }
+      .oreqgrid > * {
+         min-width: 0;
+      }
+      .oreqcard {
+         display: flex;
+         align-items: flex-start;
+         gap: 12px;
+         background: #fff;
+         border: 1px solid rgba(39, 1, 64, 0.1);
+         border-radius: var(--r-md);
+         padding: 16px;
+      }
+      .oreqicon {
+         flex: none;
+         margin-top: 1px;
+         color: var(--success);
+      }
+      .oreqicon.omute {
+         color: var(--ink-4);
+      }
+      .oreqlabel {
+         display: block;
+         font-size: 14px;
+         font-weight: 700;
+         letter-spacing: -0.005em;
+         line-height: 1.4;
+         color: var(--violet);
+         margin: 0 0 5px;
+      }
+      p.oreqcopy {
+         margin: 0;
+         font-size: 14.5px;
+         line-height: 1.6;
+         color: var(--ink-3);
+      }
+      @media (max-width: 760px) {
+         .oreqgrid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* ---- FAQ accordion — native details/summary, no JavaScript --------------
+   Borders are shadow-as-border per the Doodex design system, which prefers a 1px
+   ring over a hard border. Closed rows carry the standard ring; hover and open
+   carry the coral ring the system specifies for the active state. */
+      .ofaqlist {
+         display: grid;
+      }
+      .ofaq {
+         margin-bottom: 10px;
+         background: #fff;
+         border-radius: var(--r-md);
+         box-shadow: 0 0 0 1px rgba(39, 1, 64, 0.1);
+         transition:
+            box-shadow 0.18s ease,
+            background 0.18s ease;
+      }
+      .ofaq:last-child {
+         margin-bottom: 0;
+      }
+      .ofaq > summary {
+         list-style: none;
+         cursor: pointer;
+         display: flex;
+         align-items: flex-start;
+         gap: 16px;
+         padding: 16px 24px;
+      }
+      .ofaq > summary::-webkit-details-marker {
+         display: none;
+      }
+      .ofaq > summary::marker {
+         content: "";
+      }
+      .ofaq:hover {
+         box-shadow: 0 0 0 1px rgba(250, 114, 104, 0.5);
+      }
+      .ofaq[open] {
+         background: var(--surface);
+         box-shadow: 0 0 0 1px rgba(250, 114, 104, 0.5);
+      }
+      .ofaq > summary:focus-visible {
+         outline: none;
+         border-radius: var(--r-md);
+         box-shadow: 0 0 0 3px rgba(250, 114, 104, 0.24);
+      }
+      .ofaq-q {
+         flex: 1;
+         font-size: 16px;
+         font-weight: 700;
+         line-height: 1.45;
+         color: var(--violet);
+         letter-spacing: -0.005em;
+      }
+      /* the chevron only exists to mark an expandable row, so it is scoped to summary:
+   if a sanitiser ever drops the summary element, the arrow goes with it instead of
+   stranding a lone chevron under every question. */
+      .ofaq-chev {
+         display: none;
+      }
+      .ofaq > summary .ofaq-chev {
+         display: block;
+         flex: none;
+         margin-top: 4px;
+         color: var(--coral-dk);
+         transition: transform 0.18s ease;
+      }
+      .ofaq[open] > summary .ofaq-chev {
+         transform: rotate(180deg);
+      }
+      .ofaq-a {
+         padding: 0 24px 16px;
+      }
+      .ofaq-a p {
+         margin: 0;
+         font-size: 15px;
+         line-height: 1.62;
+         color: var(--ink-3);
+      }
+      @media (max-width: 560px) {
+         .ofaq > summary {
+            padding: 16px;
+            gap: 12px;
+         }
+         .ofaq-a {
+            padding: 0 16px 16px;
+         }
+      }
+
+      /* ---- notice ------------------------------------------------------------- */
+      .onotice {
+         border-left: 3px solid var(--coral);
+         background: var(--surface);
+         border-radius: 0 var(--r-md) var(--r-md) 0;
+         padding: 20px 22px;
+      }
+      .onotice h3 {
+         margin-bottom: 8px;
+      }
+      .onotice p:last-child {
+         margin-bottom: 0;
+      }
+
+      /* ---- releases ----------------------------------------------------------- */
+      .orel {
+         border-top: 1px solid var(--line);
+         padding: 20px 0;
+      }
+      .orel:last-child {
+         border-bottom: 1px solid var(--line);
+      }
+      .orel-head {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 10px;
+         align-items: center;
+         margin-bottom: 10px;
+      }
+      .orel-v {
+         font-size: 17px;
+         font-weight: 800;
+         color: var(--violet);
+         letter-spacing: -0.015em;
+      }
+      .obadge {
+         font-size: 10.5px;
+         font-weight: 800;
+         letter-spacing: 0.06em;
+         padding: 3px 8px;
+         border-radius: var(--r-sm);
+      }
+      /* ob-imp and ob-fix are unused today and kept on purpose: the next release
+   entry will need them, and the badge set should stay complete. */
+      .ob-new {
+         background: #dcfce7;
+         color: #15803d;
+      }
+      .ob-imp {
+         background: #dbeafe;
+         color: #1d4ed8;
+      }
+      .ob-fix {
+         background: #fee2e2;
+         color: #b91c1c;
+      }
+      .orel ul {
+         margin: 0;
+         padding-left: 20px;
+         font-size: 14px;
+      }
+      .orel li {
+         margin: 6px 0;
+      }
+
+      /* ---- cross-sell band ("Works great with") -------------------------------
+   Full-width tinted band, centred header, three price cards. The first card
+   is inverted so the paid suite carries the most weight; the other two stay
+   on white. The buttons link to each module's apps.odoo.com page. That host is
+   the store itself, so the href survives where an outbound doodex.net link
+   would not - keep these pointing at apps.odoo.com only. */
+      .oxband {
+         background: var(--surface);
+         border-top: 1px solid var(--line);
+         border-bottom: 1px solid var(--line);
+         padding: 52px 0 56px;
+      }
+      .oxeyebrow {
+         font-size: 11.5px;
+         font-weight: 800;
+         letter-spacing: 0.1em;
+         text-transform: uppercase;
+         color: var(--coral-dk);
+         text-align: center;
+         margin: 0 0 10px;
+      }
+      /* text-wrap:balance evens out the centred lines so nothing ends on an orphan;
+   browsers without it fall back to normal wrapping, which is what this was.
+   .oxlead is scoped .ofs because .ofs p (0,1,1) beats a bare class and would
+   reset margin-left to 0, parking the centred block against the left edge of
+   the column instead of the middle. Do not unscope it. */
+      .oxtitle {
+         text-align: center;
+         margin: 0 0 12px;
+         text-wrap: balance;
+      }
+      .ofs .oxlead {
+         text-align: center;
+         max-width: 560px;
+         margin: 0 auto 22px;
+         text-wrap: balance;
+      }
+      .oxchips {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         gap: 10px;
+         margin-bottom: 30px;
+      }
+      .oxchip {
+         background: #fff;
+         border: 1px solid var(--line);
+         border-radius: var(--r-full);
+         padding: 8px 17px;
+         font-size: 12.5px;
+         font-weight: 600;
+         color: var(--violet);
+         box-shadow: var(--xs);
+      }
+      .oxsell {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 18px;
+         align-items: stretch;
+      }
+      .oxsell > * {
+         min-width: 0;
+      }
+      .oxcard {
+         display: flex;
+         flex-direction: column;
+         background: #fff;
+         border: 1px solid var(--line);
+         border-radius: var(--r-lg);
+         padding: 22px;
+         box-shadow: var(--sm);
+      }
+      .oxcard-top {
+         display: flex;
+         align-items: flex-start;
+         justify-content: space-between;
+         gap: 12px;
+         margin-bottom: 16px;
+      }
+      .ofs .oxicon {
+         width: 30px;
+         height: 30px;
+         max-width: none;
+         border-radius: 8px;
+         display: block;
+      }
+      .oxprice {
+         flex: none;
+         font-size: 10.5px;
+         font-weight: 800;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         padding: 5px 11px;
+         border-radius: var(--r-full);
+         background: var(--surface-2);
+         color: var(--violet);
+         white-space: nowrap;
+      }
+      .oxcard h3 {
+         font-size: 16px;
+         margin: 0 0 8px;
+      }
+      .oxcard p {
+         font-size: 13.5px;
+         color: var(--ink-4);
+         margin: 0 0 24px;
+         line-height: 1.6;
+         text-wrap: pretty;
+      }
+      /* margin-top:auto pins the button to the card floor, so the three buttons line
+   up however long the copy is; the paragraph's own margin keeps the gap. */
+      /* .ofs a (0,1,1) beats a bare .oxbtn (0,1,0) and would repaint these coral,
+   so both button rules are scoped .ofs — same trap as .ofs img. */
+      .ofs .oxbtn {
+         display: block;
+         margin-top: auto;
+         padding: 11px 14px;
+         border-radius: var(--r-md);
+         font-size: 12.5px;
+         font-weight: 700;
+         text-align: center;
+         text-decoration: none;
+         border: 1px solid var(--violet);
+         color: var(--violet);
+         background: #fff;
+         overflow-wrap: normal;
+      }
+      .oxcard-dark {
+         background: var(--violet);
+         border-color: var(--violet);
+      }
+      .oxcard-dark h3 {
+         color: #fff;
+      }
+      .oxcard-dark p {
+         color: rgba(255, 255, 255, 0.74);
+      }
+      .oxcard-dark .oxprice {
+         background: rgba(255, 255, 255, 0.13);
+         color: #fff;
+      }
+      .oxcard-dark .oxicon {
+         border-radius: 8px;
+      }
+      .ofs .oxbtn-solid {
+         background: var(--coral);
+         border-color: var(--coral);
+         color: #fff;
+         box-shadow: var(--cta);
+      }
+      @media (max-width: 900px) {
+         .oxsell {
+            grid-template-columns: 1fr;
+         }
+         .oxband {
+            padding: 40px 0 44px;
+         }
+      }
+   </style>
+
+   <!-- ============================== NAV =================================== -->
+   <div class="onav">
+      <div class="onav-in">
+         <a class="onav-brand" href="#ofs-overview"
+            ><img
+               class="onav-logo"
+               src="./assets/icons/ofs-brand.png"
+               alt=""
+               width="22"
+               height="30"
+            />Optional Field <span>Save</span></a
+         >
+         <nav class="otabgroup">
+            <a href="#ofs-overview">Overview</a
+            ><a href="#ofs-usecases">Use Cases</a
+            ><a href="#ofs-features">Features</a><a href="#ofs-why">Why</a
+            ><a href="#ofs-faqs">FAQs</a><a href="#ofs-releases">Releases</a>
+         </nav>
+         <div class="onav-cta">
+            <a class="obtn obtn-1" href="mailto:odoo@doodex.net"
+               >Talk to Doodex</a
+            >
+         </div>
+      </div>
+   </div>
+
+   <!-- ============================ TRUST BAR =============================== -->
+   <div class="otrust">
+      <div class="otrust-in">
+         <span class="otchip"
+            ><span class="oico"
+               ><svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+               >
+                  <path d="M20 6 9 17l-5-5" /></svg></span
+            >Odoo 17.0 &middot; Community &amp; Enterprise</span
+         >
+         <span class="otchip"
+            ><span class="oico"
+               ><svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+               >
+                  <path d="M20 6 9 17l-5-5" /></svg></span
+            >Free &mdash; no subscription</span
+         >
+         <span class="otchip"
+            ><span class="oico"
+               ><svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+               >
+                  <path d="M20 6 9 17l-5-5" /></svg></span
+            >Works on every list view</span
+         >
+         <span class="otchip"
+            ><span class="oico"
+               ><svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+               >
+                  <path d="M20 6 9 17l-5-5" /></svg></span
+            >Your data stays in your database</span
+         >
+         <span class="otchip"
+            ><span class="oico"
+               ><svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+               >
+                  <path d="M20 6 9 17l-5-5" /></svg></span
+            >AGPL-3</span
+         >
+      </div>
+   </div>
+
+   <!-- ============================== HERO ================================== -->
+   <section class="osec">
+      <div class="owrap">
+         <div class="onarrow ocenter">
+            <p class="oeyebrow">
+               Optional Field Save &middot; Odoo 17.0 &middot; Free
+            </p>
+            <h1 class="oh1" style="margin-bottom: 18px">
+               Save your Odoo list view columns once &mdash; and keep them on
+               every browser.
+            </h1>
+            <p class="olead">
+               You tick the extra columns you need on a list view, and Odoo
+               forgets them the moment you open a different browser. Optional
+               Field Save writes that choice to your own user record instead, so
+               it comes back on any machine you log in from &mdash;
+               automatically, with nothing to set up.
+            </p>
+            <div
+               class="obtn-row"
+               style="justify-content: center; margin-top: 26px"
+            >
+               <a class="obtn obtn-1" href="#ofs-features"
+                  >See the 8 things it does</a
+               >
+               <a class="obtn obtn-2" href="#ofs-why"
+                  >Doesn't Odoo already do this?</a
+               >
+            </div>
+         </div>
+         <div style="margin-top: 40px">
+            <img
+               class="oheroshot"
+               src="./assets/hero-columns-follow-you.gif"
+               alt="Optional Field Save — the full journey in one take: ticking optional columns in an Odoo list view, logging in from a second browser, and finding the same columns already applied."
+            />
+            <p class="ocap ocenter">
+               Pick your columns once. They follow you to the next browser.
+            </p>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================ DEMO CARD =============================== -->
+   <section class="osec-tight">
+      <div class="owrap">
+         <div class="ocard" style="box-shadow: var(--md)">
+            <div class="odemorow">
+               <div class="odemo-copy">
+                  <p class="oeyebrow" style="margin-bottom: 8px">
+                     See it before you commit anything
+                  </p>
+                  <h3 class="oh3" style="margin-bottom: 6px">
+                     There is no trial to start, because the module is free.
+                  </h3>
+                  <p class="osm omuted" style="margin: 0">
+                     Install it on a test database, tick a few columns, then
+                     open Odoo in a second browser. That is the whole
+                     demonstration &mdash; and if you would rather watch someone
+                     else do it first, book thirty minutes with us.
+                  </p>
+               </div>
+               <div class="obtn-row">
+                  <span class="obtn obtn-1"
+                     >hub.doodex.net<wbr />/r/meeting</span
+                  >
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================ 01 · OVERVIEW =========================== -->
+   <div class="osecband">
+      <div class="owrap">
+         <div class="okick" id="ofs-overview">
+            <span class="okick-n">01<i>/06</i></span
+            ><span class="okick-l">Overview</span><span class="okick-r"></span>
+         </div>
+      </div>
+   </div>
+   <section class="osec">
+      <div class="owrap">
+         <p class="oeyebrow ocenter" style="display: block">Free forever</p>
+         <h2 class="oh2 ocenter" style="max-width: 780px; margin: 0 auto 12px">
+            Free, on every database you run. Then nothing, ever.
+         </h2>
+         <p class="olead ocenter" style="max-width: 700px; margin: 0 auto 34px">
+            There is no paid edition of this module and no upgrade waiting
+            behind a wall. Doodex earns from Odoo implementation work; small
+            modules that came out of that work are given back.
+         </p>
+
+         <div class="opricecard">
+            <div class="opriceleft">
+               <span class="opl-tag">One edition</span>
+               <div class="opl-amt">Free</div>
+               <div class="opl-sub">
+                  optional_field_save &middot; any number of databases
+               </div>
+               <ul class="opl-bul">
+                  <li>Full source code, AGPL-3</li>
+                  <li>Every feature on this page included</li>
+                  <li>Unlimited users on the database</li>
+                  <li>No licence key and no activation</li>
+                  <li>No subscription and no renewal</li>
+               </ul>
+               <p class="opl-anchor">
+                  Published by <strong>Doodex</strong>, an Odoo services
+                  company. What we charge for is implementation, not licences.
+               </p>
+            </div>
+            <div class="opriceright">
+               <p class="opr-label">Six things you will never be asked for</p>
+               <div class="onocatch">
+                  <div class="onc">
+                     <span class="onc-ico"
+                        ><svg
+                           width="18"
+                           height="18"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="1.9"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="m21 3-9.5 9.5" />
+                           <path d="m17.5 6.5 2 2" />
+                           <circle cx="8" cy="16" r="5" /></svg
+                     ></span>
+                     <div>
+                        <b>No licence key</b>
+                        <p>
+                           Nothing to activate, nothing that can expire on you
+                           mid-quarter.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="onc">
+                     <span class="onc-ico"
+                        ><svg
+                           width="18"
+                           height="18"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="1.9"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <circle cx="12" cy="8" r="3.5" />
+                           <path d="M5 20a7 7 0 0 1 14 0" /></svg
+                     ></span>
+                     <div>
+                        <b>No account to create</b>
+                        <p>
+                           You never register with us, and we never see your
+                           database.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="onc">
+                     <span class="onc-ico"
+                        ><svg
+                           width="18"
+                           height="18"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="1.9"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <circle cx="9" cy="8" r="3.2" />
+                           <path d="M3 20a6 6 0 0 1 12 0" />
+                           <path
+                              d="M16.4 5.3a3.2 3.2 0 0 1 0 5.4M18.4 20a6 6 0 0 0-2.6-4.9"
+                           /></svg
+                     ></span>
+                     <div>
+                        <b>No per-user fee</b>
+                        <p>
+                           Five people or five hundred, the module costs the
+                           same. Nothing.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="onc">
+                     <span class="onc-ico"
+                        ><svg
+                           width="18"
+                           height="18"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="1.9"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="5" width="18" height="16" rx="2" />
+                           <path d="M16 3v4M8 3v4M3 11h18" /></svg
+                     ></span>
+                     <div>
+                        <b>No renewal date</b>
+                        <p>
+                           Nothing to diary, nothing to cancel, no invoice next
+                           year.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="onc">
+                     <span class="onc-ico"
+                        ><svg
+                           width="18"
+                           height="18"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="1.9"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path
+                              d="M12 3l8 4v5c0 5-3.5 8.2-8 9-4.5-.8-8-4-8-9V7z"
+                           />
+                           <path d="M9 12h6" /></svg
+                     ></span>
+                     <div>
+                        <b>No external service</b>
+                        <p>
+                           No API key and no outbound call. Your data stays
+                           where it is.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="onc">
+                     <span class="onc-ico"
+                        ><svg
+                           width="18"
+                           height="18"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="1.9"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="4" y="10" width="16" height="11" rx="2" />
+                           <path d="M8 10V7a4 4 0 0 1 7.6-1.8" /></svg
+                     ></span>
+                     <div>
+                        <b>No lock-in</b>
+                        <p>
+                           Uninstall whenever you like and Odoo goes straight
+                           back to standard.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <div class="ofactstrip">
+                  <span class="oico"
+                     ><svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <ellipse cx="12" cy="6" rx="8" ry="3" />
+                        <path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
+                        <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" /></svg
+                  ></span>
+                  <p>
+                     The only thing it adds to your database is
+                     <strong>one field</strong> on the user record, holding a
+                     small piece of JSON. No new table, no log file, and no
+                     history to prune later.
+                  </p>
+               </div>
+            </div>
+         </div>
+
+         <div class="ostatrow" style="margin-top: 34px">
+            <div class="ostat">
+               <div class="on">1</div>
+               <div class="ol">field added to your database</div>
+            </div>
+            <div class="ostat">
+               <div class="on">0</div>
+               <div class="ol">settings screens to configure</div>
+            </div>
+            <div class="ostat">
+               <div class="on">0</div>
+               <div class="ol">external services contacted</div>
+            </div>
+            <div class="ostat">
+               <div class="on">2</div>
+               <div class="ol">dependencies, both Odoo core</div>
+            </div>
+            <div class="ostat">
+               <div class="on">All</div>
+               <div class="ol">list views, in every Odoo app</div>
+            </div>
+         </div>
+
+         <h3 class="oh3" style="margin: 48px 0 6px">What the module is for</h3>
+         <p class="osm omuted" style="max-width: 760px; margin-bottom: 20px">
+            Three steps, and you only ever perform the first one.
+         </p>
+         <div class="oflow">
+            <div class="oflowstep">
+               <span class="on">01</span>
+               <span class="oflow-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M3 5h18M3 12h18M3 19h11" />
+                     <circle cx="19" cy="19" r="2.5" /></svg
+               ></span>
+               <h3>You tick the columns</h3>
+               <p>
+                  Open the <b class="ostrong">&#9881;</b> menu at the right of
+                  any list view header and choose the optional fields you want.
+                  It is the standard Odoo control &mdash; nothing new to learn.
+               </p>
+            </div>
+            <div class="oflowstep">
+               <span class="on">02</span>
+               <span class="oflow-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <ellipse cx="12" cy="6" rx="8" ry="3" />
+                     <path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6" />
+                     <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" /></svg
+               ></span>
+               <h3>Odoo saves it twice</h3>
+               <p>
+                  Your browser keeps the copy it always kept, and the module
+                  writes the same choice to
+                  <b class="ostrong">your own user record</b> in the database.
+                  There is no Save button to remember.
+               </p>
+            </div>
+            <div class="oflowstep">
+               <span class="on">03</span>
+               <span class="oflow-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+                     <path d="M21 3v6h-6" /></svg
+               ></span>
+               <h3>It comes back on its own</h3>
+               <p>
+                  Next log in &mdash; any browser, any computer, even after a
+                  cache clear &mdash; the saved choice loads with the web client
+                  and <b class="ostrong">your columns are already set</b>.
+               </p>
+            </div>
+         </div>
+
+         <div class="onotice" style="margin-top: 26px">
+            <h3 class="oh3">It does not replace anything</h3>
+            <p class="osm" style="margin: 0; max-width: 900px">
+               Odoo's own browser storage keeps being written on every toggle,
+               exactly as before. The module reads the saved database copy first
+               and falls back to the browser copy when nothing has been saved
+               yet, so a fresh install behaves like standard Odoo until you make
+               your first choice.
+            </p>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================== QR CTA #1 ============================= -->
+   <section class="osec-tight">
+      <div class="owrap">
+         <div class="oqr">
+            <div class="oqr-head">
+               <p class="oqr-eyebrow">Before you install</p>
+               <h2 class="oqr-title">Ask us anything about this module</h2>
+               <p class="oqr-sub">
+                  Not sure it fits your Odoo, or wondering what it would take on
+                  your own list views? Ask &mdash; a real person from the Doodex
+                  team answers.
+               </p>
+            </div>
+            <div class="oqr-grid">
+               <div class="oqr-card oqr-lead">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="5" width="18" height="16" rx="2" />
+                           <path d="M16 3v4M8 3v4M3 11h18" /></svg
+                     ></span>
+                     <span class="oqr-tag oqr-tag-hot">30 minutes</span>
+                  </div>
+                  <h3 class="oqr-h">Book a live demo</h3>
+                  <p class="oqr-p">
+                     See it running on a real Odoo 17 database, with your own
+                     list views.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-meeting.png"
+                        alt="QR code for https://hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-1 oqr-btn"
+                     >https://hub.doodex.net<wbr />/r/meeting</span
+                  >
+               </div>
+               <div class="oqr-card">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="5" width="18" height="14" rx="2" />
+                           <path d="m3 7 9 6 9-6" /></svg
+                     ></span>
+                     <span class="oqr-tag">Written reply</span>
+                  </div>
+                  <h3 class="oqr-h">Send us a question</h3>
+                  <p class="oqr-p">
+                     Put it in writing and we answer by e-mail, in English or
+                     French.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-contact.png"
+                        alt="QR code for https://doodex.net/contactus"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-2 oqr-btn"
+                     >https://doodex.net<wbr />/contactus</span
+                  >
+               </div>
+               <div class="oqr-card">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path
+                              d="M21 12a9 9 0 0 1-13.1 8L3 21l1.1-4.7A9 9 0 1 1 21 12z"
+                           /></svg
+                     ></span>
+                     <span class="oqr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="oqr-h">Message us on WhatsApp</h3>
+                  <p class="oqr-p">
+                     Reach the Doodex team directly on +62 821-3120-5030.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-whatsapp.png"
+                        alt="QR code for https://hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-2 oqr-btn"
+                     >https://hub.doodex.net<wbr />/r/whatsapp</span
+                  >
+               </div>
+            </div>
+            <p class="oqr-foot">
+               Scan a code with your phone camera to open the page &mdash; the
+               address is printed under each code as well.
+            </p>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================ 02 · USE CASES ========================== -->
+   <div class="osecband">
+      <div class="owrap">
+         <div class="okick" id="ofs-usecases">
+            <span class="okick-n">02<i>/06</i></span
+            ><span class="okick-l">Use Cases</span><span class="okick-r"></span>
+         </div>
+      </div>
+   </div>
+   <section class="osec">
+      <div class="owrap">
+         <h2 class="oh2" style="margin-bottom: 10px">
+            Every team adds different columns &mdash; and loses them the same
+            way
+         </h2>
+         <p class="olead omuted" style="max-width: 800px; margin-bottom: 28px">
+            Optional Field Save extends the list view itself, so it covers every
+            Odoo app at once. Whichever screen your team lives in, the layout
+            they built there survives the next browser, the next laptop and the
+            next cache clear.
+         </p>
+
+         <div class="odeptgrid">
+            <div class="odept">
+               <span class="odept-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M5 3h11l4 4v14H5z" />
+                     <path d="M16 3v4h4" />
+                     <path d="M9 13h6M9 17h4" /></svg
+               ></span>
+               <p class="odept-tag">Sales</p>
+               <h3>Quotations and sales orders</h3>
+               <p>
+                  Your sales team reads the pipeline by delivery date and owner,
+                  not by the default four columns. Set that once and it holds on
+                  every device they use.
+               </p>
+               <div class="ochipset">
+                  <span class="ochipx">Delivery date</span
+                  ><span class="ochipx">Salesperson</span
+                  ><span class="ochipx">Source document</span>
+               </div>
+            </div>
+
+            <div class="odept">
+               <span class="odept-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <rect x="2" y="6" width="20" height="12" rx="2" />
+                     <circle cx="12" cy="12" r="2.5" />
+                     <path d="M6 12h.01M18 12h.01" /></svg
+               ></span>
+               <p class="odept-tag">Accounting</p>
+               <h3>Customer invoices and bills</h3>
+               <p>
+                  Chasing payment means seeing what is due and what it refers
+                  to. Those columns stop vanishing every time a browser is
+                  cleaned up or replaced.
+               </p>
+               <div class="ochipset">
+                  <span class="ochipx">Due date</span
+                  ><span class="ochipx">Payment reference</span
+                  ><span class="ochipx">Source document</span>
+               </div>
+            </div>
+
+            <div class="odept">
+               <span class="odept-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M21 8v8l-9 5-9-5V8l9-5z" />
+                     <path d="m3 8 9 5 9-5M12 13v8" /></svg
+               ></span>
+               <p class="odept-tag">Inventory</p>
+               <h3>Products and transfers</h3>
+               <p>
+                  Stock decisions are made on forecast and cost, not on name and
+                  price. Your warehouse keeps its own view of the product list,
+                  on any machine.
+               </p>
+               <div class="ochipset">
+                  <span class="ochipx">Forecasted</span
+                  ><span class="ochipx">Cost</span
+                  ><span class="ochipx">Internal reference</span>
+               </div>
+            </div>
+
+            <div class="odept">
+               <span class="odept-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <circle cx="9" cy="20" r="1.6" />
+                     <circle cx="18" cy="20" r="1.6" />
+                     <path
+                        d="M2 3h3l2.6 12.4a1.6 1.6 0 0 0 1.6 1.3h8.2a1.6 1.6 0 0 0 1.6-1.3L21 7H6"
+                     /></svg
+               ></span>
+               <p class="odept-tag">Purchase</p>
+               <h3>Purchase orders and vendors</h3>
+               <p>
+                  Buyers work from arrival dates and vendor references. One
+                  saved layout means no rebuilding the order list after every IT
+                  change.
+               </p>
+               <div class="ochipset">
+                  <span class="ochipx">Expected arrival</span
+                  ><span class="ochipx">Vendor reference</span
+                  ><span class="ochipx">Buyer</span>
+               </div>
+            </div>
+
+            <div class="odept">
+               <span class="odept-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <rect x="3" y="4" width="7" height="16" rx="1.5" />
+                     <rect x="14" y="4" width="7" height="10" rx="1.5" /></svg
+               ></span>
+               <p class="odept-tag">Project &amp; Helpdesk</p>
+               <h3>Tasks and tickets</h3>
+               <p>
+                  Deadlines and owners are the whole point of a task list.
+                  Project managers stop rebuilding the same view every time they
+                  switch machine.
+               </p>
+               <div class="ochipset">
+                  <span class="ochipx">Deadline</span
+                  ><span class="ochipx">Assignee</span
+                  ><span class="ochipx">Priority</span
+                  ><span class="ochipx">Tags</span>
+               </div>
+            </div>
+
+            <div class="odept">
+               <span class="odept-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <rect x="2" y="5" width="20" height="14" rx="2" />
+                     <circle cx="9" cy="11" r="2.2" />
+                     <path
+                        d="M5.5 16.2a3.9 3.9 0 0 1 7 0M15 10h4M15 14h3"
+                     /></svg
+               ></span>
+               <p class="odept-tag">Contacts &amp; CRM</p>
+               <h3>Customers and leads</h3>
+               <p>
+                  Everyone filters contacts differently &mdash; by city, by job
+                  title, by tax number. Each person keeps their own columns
+                  without arguing over a default.
+               </p>
+               <div class="ochipset">
+                  <span class="ochipx">Job position</span
+                  ><span class="ochipx">City</span
+                  ><span class="ochipx">Phone</span
+                  ><span class="ochipx">Tax ID</span>
+               </div>
+            </div>
+         </div>
+
+         <h3 class="oh3" style="margin: 44px 0 16px">
+            Three moments where a saved layout pays for itself
+         </h3>
+         <div class="ositband">
+            <div class="ositgrid">
+               <div class="osit">
+                  <span class="osit-ico"
+                     ><svg
+                        width="19"
+                        height="19"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <rect x="2" y="4" width="20" height="12" rx="2" />
+                        <path d="M8 20h8M12 16v4" /></svg
+                  ></span>
+                  <div>
+                     <h4>The shared workstation</h4>
+                     <p>
+                        Two shifts, one shop-floor PC. Each person signs in and
+                        gets their own columns, because the layout follows the
+                        user and not the machine.
+                     </p>
+                  </div>
+               </div>
+               <div class="osit">
+                  <span class="osit-ico"
+                     ><svg
+                        width="19"
+                        height="19"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M3 12h18" />
+                        <path
+                           d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"
+                        /></svg
+                  ></span>
+                  <div>
+                     <h4>The hybrid week</h4>
+                     <p>
+                        Home laptop on Monday, office desktop on Tuesday, a
+                        borrowed machine on Thursday. One layout, and nobody
+                        notices the difference.
+                     </p>
+                  </div>
+               </div>
+               <div class="osit">
+                  <span class="osit-ico"
+                     ><svg
+                        width="19"
+                        height="19"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <circle cx="9" cy="8" r="3.5" />
+                        <path d="M2.5 20a6.5 6.5 0 0 1 13 0" />
+                        <path d="M18 8v6M15 11h6" /></svg
+                  ></span>
+                  <div>
+                     <h4>The first week of a new starter</h4>
+                     <p>
+                        Tune the list views once during onboarding. The work
+                        survives the first cache clear instead of quietly
+                        disappearing overnight.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <p class="oxs omuted" style="margin-top: 14px">
+            The fields named above are the ones teams most often add. Exactly
+            which columns can be shown or hidden depends on your Odoo version
+            and on any customisations you have &mdash; the module remembers
+            whichever ones your list views offer.
+         </p>
+      </div>
+   </section>
+
+   <!-- ============================ 03 · FEATURES =========================== -->
+   <div class="osecband">
+      <div class="owrap">
+         <div class="okick" id="ofs-features">
+            <span class="okick-n">03<i>/06</i></span
+            ><span class="okick-l">Features</span><span class="okick-r"></span>
+         </div>
+      </div>
+   </div>
+   <section class="osec">
+      <div class="owrap">
+         <h2 class="oh2" style="margin-bottom: 10px">
+            Everything Optional Field Save does for your Odoo list views
+         </h2>
+         <p class="olead omuted" style="max-width: 760px; margin-bottom: 10px">
+            Five features, and a screenshot of each one taken on a live Odoo 17
+            database. If a claim is not pictured somewhere on this page, it is
+            not a claim we make.
+         </p>
+
+         <div class="ofblocks">
+            <div class="ofblock">
+               <div class="ofb-text">
+                  <p class="ofb-n">Feature 01</p>
+                  <h3 class="oh3">
+                     Pick your columns in the menu you already use
+                  </h3>
+                  <p>
+                     Nothing changes about how you choose columns. Open the
+                     <b class="ostrong">&#9881;</b> button at the right of any
+                     list view header, tick the optional fields you want, and
+                     carry on working. Each tick is written to your own user
+                     record straight away &mdash; no Save button to remember, no
+                     confirmation to dismiss.
+                  </p>
+                  <p class="ofb-fact">
+                     <span class="oico"
+                        ><svg
+                           width="15"
+                           height="15"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.4"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg></span
+                     ><span
+                        >Uses Odoo's standard optional-columns dropdown. No
+                        replacement widget.</span
+                     >
+                  </p>
+               </div>
+               <div>
+                  <img
+                     src="./assets/feat-01-pick-your-columns.png"
+                     alt="The Odoo optional-columns dropdown open on a list view, with the extra fields listed as checkboxes"
+                  />
+               </div>
+            </div>
+
+            <div class="ofblock">
+               <div class="ofb-text">
+                  <p class="ofb-n">Feature 02</p>
+                  <h3 class="oh3">Restored automatically on the next log in</h3>
+                  <p>
+                     When the Odoo web client loads, the module fetches
+                     everything you have saved and puts it back in place before
+                     your list views render. You do not press anything. You
+                     simply find your columns where you left them &mdash; on a
+                     new browser, a new machine, or after a cache clear.
+                  </p>
+                  <p class="ofb-fact">
+                     <span class="oico"
+                        ><svg
+                           width="15"
+                           height="15"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.4"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg></span
+                     ><span
+                        >All saved list views are loaded in a single read, once
+                        per page load.</span
+                     >
+                  </p>
+               </div>
+               <div>
+                  <img
+                     src="./assets/feat-02-new-browser.png"
+                     alt="An Odoo list view showing the optional columns restored from the user record"
+                  />
+               </div>
+            </div>
+
+            <div class="ofblock">
+               <div class="ofb-text">
+                  <p class="ofb-n">Feature 03</p>
+                  <h3 class="oh3">Every list view in every Odoo app</h3>
+                  <p>
+                     The module extends the shared component Odoo uses to draw
+                     list views, so it covers Contacts, Sales, Invoicing,
+                     Inventory, Purchase, Project, Helpdesk and any custom model
+                     you have added &mdash; without naming a single one of them.
+                  </p>
+                  <p class="ofb-fact">
+                     <span class="oico"
+                        ><svg
+                           width="15"
+                           height="15"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.4"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg></span
+                     ><span
+                        >Each list view is remembered separately, under its own
+                        key.</span
+                     >
+                  </p>
+               </div>
+               <div>
+                  <img
+                     src="./assets/feat-03-every-list-view.png"
+                     alt="The same saved-column behaviour across three different Odoo app list views"
+                  />
+               </div>
+            </div>
+
+            <div class="ofblock">
+               <div class="ofb-text">
+                  <p class="ofb-n">Feature 04</p>
+                  <h3 class="oh3">Cleared at log out</h3>
+                  <p>
+                     Logging out clears the cached column choices from that
+                     browser tab, so the next person signing in on a shared
+                     machine starts from their own layout instead of inheriting
+                     yours. It matters more than it sounds on a shop floor or a
+                     front desk.
+                  </p>
+                  <p class="ofb-fact">
+                     <span class="oico"
+                        ><svg
+                           width="15"
+                           height="15"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.4"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg></span
+                     ><span
+                        >Only this module's cached keys are removed &mdash;
+                        nothing else is touched.</span
+                     >
+                  </p>
+               </div>
+               <div>
+                  <img
+                     src="./assets/feat-04-clean-logout.png"
+                     alt="The Odoo user menu open, showing the Log out entry that clears the cached choices"
+                  />
+               </div>
+            </div>
+
+            <div class="ofblock">
+               <div class="ofb-text">
+                  <p class="ofb-n">Feature 05</p>
+                  <h3 class="oh3">Native behaviour kept intact</h3>
+                  <p>
+                     Odoo's own browser storage is still written on every
+                     toggle. Uninstall the module later and everything falls
+                     back to standard Odoo, with no clean-up to do and no data
+                     stranded behind a module you no longer have.
+                  </p>
+                  <p class="ofb-fact">
+                     <span class="oico"
+                        ><svg
+                           width="15"
+                           height="15"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.4"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg></span
+                     ><span
+                        >Reads the database copy first, falls back to Odoo's
+                        browser copy.</span
+                     >
+                  </p>
+               </div>
+               <div>
+                  <img
+                     src="./assets/feat-05-native-intact.png"
+                     alt="An Odoo list view with nothing saved yet, behaving exactly like standard Odoo"
+                  />
+               </div>
+            </div>
+         </div>
+
+         <h3 class="oh3" style="margin: 44px 0 4px">
+            Six things you will not have to worry about
+         </h3>
+         <div class="ofeatgrid" style="margin-top: 14px">
+            <div class="ofeat">
+               <h4>No setup, no step two</h4>
+               <p>
+                  No settings page, no wizard, no menu entry, no access group to
+                  create. Install it, and the next Odoo list view you open
+                  already behaves this way.
+               </p>
+            </div>
+            <div class="ofeat">
+               <h4>Nobody overwrites your layout</h4>
+               <p>
+                  Column choices are saved per user, not per company and not per
+                  machine. Two colleagues on the same database keep two
+                  different views, side by side.
+               </p>
+            </div>
+            <div class="ofeat">
+               <h4>Light on the database</h4>
+               <p>
+                  One field is added, holding a small piece of JSON per user
+                  &mdash; every list view you have ever adjusted, in a single
+                  record. No new table, no log file, no history to prune.
+               </p>
+            </div>
+            <div class="ofeat">
+               <h4>No external service</h4>
+               <p>
+                  No API key, no account, no outbound call. The module works
+                  entirely inside your own Odoo instance.
+               </p>
+            </div>
+            <div class="ofeat">
+               <h4>No new dependency</h4>
+               <p>
+                  It needs only Odoo's <b>base</b> and <b>web</b> modules, so
+                  there is nothing to install first and nothing to conflict with
+                  your existing apps.
+               </p>
+            </div>
+            <div class="ofeat">
+               <h4>Open source, AGPL-3</h4>
+               <p>
+                  The full source ships with the module. Read it, audit it,
+                  adapt it to your own standards &mdash; nothing is obfuscated
+                  or locked.
+               </p>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================== 04 · WHY ============================== -->
+   <div class="osecband">
+      <div class="owrap">
+         <div class="okick" id="ofs-why">
+            <span class="okick-n">04<i>/06</i></span
+            ><span class="okick-l">Why</span><span class="okick-r"></span>
+         </div>
+      </div>
+   </div>
+   <section class="osec">
+      <div class="owrap">
+         <h2 class="oh2" style="margin-bottom: 12px">
+            A small friction, repeated by everyone, all year
+         </h2>
+         <p class="olead omuted" style="max-width: 800px; margin-bottom: 30px">
+            Choosing columns on an Odoo list view takes a minute. Choosing them
+            again takes another. The cost is never the minute &mdash; it is the
+            number of times your team spends it, on every machine, for as long
+            as they use Odoo.
+         </p>
+
+         <div class="owhy3">
+            <div class="owhycard">
+               <span class="own">01</span>
+               <span class="owhy-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <rect x="3" y="5" width="18" height="12" rx="2" />
+                     <path d="M2 20h20" /></svg
+               ></span>
+               <h3>Every new machine starts blank</h3>
+               <p>
+                  A replacement laptop, a reimaged desktop, a second browser or
+                  a fresh profile &mdash; each one opens Odoo on the default
+                  columns, and somebody has to build the view again.
+               </p>
+            </div>
+            <div class="owhycard">
+               <span class="own">02</span>
+               <span class="owhy-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M4 7h16" />
+                     <path d="M9 7V5h6v2" />
+                     <path d="M6.5 7 7.5 20h9l1-13" /></svg
+               ></span>
+               <h3>Routine cleanup takes it with it</h3>
+               <p>
+                  Clearing browsing data, an IT policy that wipes profiles, a
+                  private window for one quick check. Months of small
+                  adjustments disappear without anyone deciding they should.
+               </p>
+            </div>
+            <div class="owhycard">
+               <span class="own">03</span>
+               <span class="owhy-ico"
+                  ><svg
+                     width="21"
+                     height="21"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M12 4v10" />
+                     <path d="m8 11 4 4 4-4" />
+                     <path d="M5 20h14" /></svg
+               ></span>
+               <h3>People settle for the default</h3>
+               <p>
+                  After rebuilding the same view a few times, most users stop
+                  bothering &mdash; and then work from a list that no longer
+                  shows the field they actually needed to see.
+               </p>
+            </div>
+         </div>
+
+         <div class="ointerlude" style="margin-top: 34px">
+            <p class="obig">
+               Set the columns up
+               <span class="omk">once per person</span> &mdash; not once per
+               person, per machine, per browser, per year.
+            </p>
+            <p class="osub">
+               That is the whole of it. Installing takes about two minutes and
+               costs nothing.
+            </p>
+         </div>
+
+         <h3 class="oh3" style="margin: 48px 0 6px">
+            What changes the day you install it
+         </h3>
+         <p class="osm omuted" style="max-width: 760px; margin-bottom: 18px">
+            Nothing your team has to learn, and three things they stop doing.
+         </p>
+         <div class="obfor">
+            <div class="obrow">
+               <div class="obico">
+                  <svg
+                     width="26"
+                     height="26"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M20 6 9 17l-5-5" />
+                  </svg>
+               </div>
+               <div>
+                  <b class="obhd">The layout becomes part of the account</b>
+                  <p>
+                     Column choices are saved to <b>your own user record</b>, so
+                     they arrive with the login rather than with the machine.
+                     New laptop, new browser, borrowed desk &mdash; the view is
+                     already right.
+                  </p>
+               </div>
+            </div>
+            <div class="obrow">
+               <div class="obico">
+                  <svg
+                     width="26"
+                     height="26"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <circle cx="12" cy="12" r="9" />
+                     <path d="M12 7v5l3 3" />
+                  </svg>
+               </div>
+               <div>
+                  <b class="obhd">Set-up time stops repeating</b>
+                  <p>
+                     Configuring list views becomes a <b>one-off</b> for each
+                     person, done whenever they like, instead of a small tax
+                     charged again after every IT change.
+                  </p>
+               </div>
+            </div>
+            <div class="obrow">
+               <div class="obico">
+                  <svg
+                     width="26"
+                     height="26"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M3 5h18M3 12h18M3 19h11" />
+                     <circle cx="19" cy="19" r="2.5" />
+                  </svg>
+               </div>
+               <div>
+                  <b class="obhd">Onboarding work actually sticks</b>
+                  <p>
+                     Tune a new starter's list views on day one and the work
+                     <b>survives their first cache clear</b>, so consultants and
+                     team leads stop redoing it a fortnight later.
+                  </p>
+               </div>
+            </div>
+         </div>
+
+         <h3 class="oh3" style="margin: 48px 0 4px">
+            Safe to install on a live database
+         </h3>
+         <p class="osm omuted" style="max-width: 760px; margin-bottom: 10px">
+            Six reasons your Odoo administrator will not push back on this one.
+         </p>
+         <div class="osafe">
+            <div class="osafeitem">
+               <span class="osafe-ico"
+                  ><svg
+                     width="19"
+                     height="19"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <rect x="3" y="4" width="18" height="16" rx="2" />
+                     <path d="M3 10h18" /></svg
+               ></span>
+               <div>
+                  <b>One field, one model</b>
+                  <p>
+                     A single JSON field on the user record. No new table, no
+                     log, no scheduled job &mdash; and uninstalling removes it
+                     cleanly.
+                  </p>
+               </div>
+            </div>
+            <div class="osafeitem">
+               <span class="osafe-ico"
+                  ><svg
+                     width="19"
+                     height="19"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path
+                        d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"
+                     />
+                     <circle cx="12" cy="12" r="3" /></svg
+               ></span>
+               <div>
+                  <b>Invisible to your users</b>
+                  <p>
+                     Nobody needs telling it was installed. The menu they
+                     already use behaves exactly as before, only now it
+                     remembers.
+                  </p>
+               </div>
+            </div>
+            <div class="osafeitem">
+               <span class="osafe-ico"
+                  ><svg
+                     width="19"
+                     height="19"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M13 2 4 14h7l-1 8 9-12h-7z" /></svg
+               ></span>
+               <div>
+                  <b>Loads in a single read</b>
+                  <p>
+                     Every saved layout comes back in one query when the web
+                     client starts, not one round trip per list view you open.
+                  </p>
+               </div>
+            </div>
+            <div class="osafeitem">
+               <span class="osafe-ico"
+                  ><svg
+                     width="19"
+                     height="19"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M4 6h16M4 12h16M4 18h16" />
+                     <circle cx="9" cy="6" r="2" />
+                     <circle cx="15" cy="12" r="2" />
+                     <circle cx="7" cy="18" r="2" /></svg
+               ></span>
+               <div>
+                  <b>Nothing to configure wrongly</b>
+                  <p>
+                     No settings page, no access group, no wizard. There is no
+                     step in the middle that can be set up the wrong way.
+                  </p>
+               </div>
+            </div>
+            <div class="osafeitem">
+               <span class="osafe-ico"
+                  ><svg
+                     width="19"
+                     height="19"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 4l-4 16" /></svg
+               ></span>
+               <div>
+                  <b>Open source, auditable</b>
+                  <p>
+                     AGPL-3, three short JavaScript files and one model file.
+                     Your team can read every line before it goes anywhere near
+                     production.
+                  </p>
+               </div>
+            </div>
+            <div class="osafeitem">
+               <span class="osafe-ico"
+                  ><svg
+                     width="19"
+                     height="19"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                  >
+                     <path d="M9 15 15 9" />
+                     <path d="M10.5 6.5 12 5a4 4 0 0 1 5.7 5.7L16 12" />
+                     <path d="M13.5 17.5 12 19a4 4 0 0 1-5.7-5.7L8 12" /></svg
+               ></span>
+               <div>
+                  <b>No dependency risk</b>
+                  <p>
+                     It needs Odoo's <b>base</b> and <b>web</b> modules and
+                     nothing else, so there is no third-party library to keep
+                     patched.
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================== QR CTA #2 ============================= -->
+   <section class="osec-tight">
+      <div class="owrap">
+         <div class="oqr">
+            <div class="oqr-head">
+               <p class="oqr-eyebrow">Installation help</p>
+               <h2 class="oqr-title">Want us to put it on your server?</h2>
+               <p class="oqr-sub">
+                  Installing an Odoo module is a two-minute job for a technical
+                  team and an awkward afternoon for everyone else. If you would
+                  rather not, we can do it with you on a call.
+               </p>
+            </div>
+            <div class="oqr-grid">
+               <div class="oqr-card oqr-lead">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="5" width="18" height="16" rx="2" />
+                           <path d="M16 3v4M8 3v4M3 11h18" /></svg
+                     ></span>
+                     <span class="oqr-tag oqr-tag-hot">30 minutes</span>
+                  </div>
+                  <h3 class="oqr-h">Book a working session</h3>
+                  <p class="oqr-p">
+                     We install it with you and check it on your own list views.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-meeting.png"
+                        alt="QR code for https://hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-1 oqr-btn"
+                     >https://hub.doodex.net<wbr />/r/meeting</span
+                  >
+               </div>
+               <div class="oqr-card">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="5" width="18" height="14" rx="2" />
+                           <path d="m3 7 9 6 9-6" /></svg
+                     ></span>
+                     <span class="oqr-tag">Written reply</span>
+                  </div>
+                  <h3 class="oqr-h">Report a problem</h3>
+                  <p class="oqr-p">
+                     Tell us your Odoo version and what you saw. We answer by
+                     e-mail.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-contact.png"
+                        alt="QR code for https://doodex.net/contactus"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-2 oqr-btn"
+                     >https://doodex.net<wbr />/contactus</span
+                  >
+               </div>
+               <div class="oqr-card">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path
+                              d="M21 12a9 9 0 0 1-13.1 8L3 21l1.1-4.7A9 9 0 1 1 21 12z"
+                           /></svg
+                     ></span>
+                     <span class="oqr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="oqr-h">Quick question on WhatsApp</h3>
+                  <p class="oqr-p">
+                     For the short ones that do not need an e-mail thread.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-whatsapp.png"
+                        alt="QR code for https://hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-2 oqr-btn"
+                     >https://hub.doodex.net<wbr />/r/whatsapp</span
+                  >
+               </div>
+            </div>
+            <p class="oqr-foot">
+               Scan a code with your phone camera to open the page &mdash; the
+               address is printed under each code as well.
+            </p>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================== 05 · FAQS ============================= -->
+   <div class="osecband">
+      <div class="owrap">
+         <div class="okick" id="ofs-faqs">
+            <span class="okick-n">05<i>/06</i></span
+            ><span class="okick-l">FAQs</span><span class="okick-r"></span>
+         </div>
+      </div>
+   </div>
+   <section class="osec">
+      <div class="owrap">
+         <h2 class="oh2" style="margin-bottom: 24px">
+            Twelve questions buyers actually ask
+         </h2>
+         <div class="ofaqlist">
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">What does standard Odoo do today?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     Odoo lets you show or hide optional columns on a list view
+                     through the <b class="ostrong">&#9881;</b> button in the
+                     header row, and it remembers your choice in that browser's
+                     local storage. It is a real feature &mdash; it is simply
+                     tied to the browser rather than to your account.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q"
+                     >What exactly does this module change?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     It adds a second, permanent copy. Every time you show or
+                     hide an optional column, the resulting list of visible
+                     fields is also written to the database against your user,
+                     and it is read back automatically when the Odoo web client
+                     loads.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">Where is my column choice stored?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     In one field on your own user record inside your Odoo
+                     database. Nowhere else. It is a small piece of JSON that
+                     lists, for each list view you have adjusted, the fields you
+                     chose to display.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">Does it work on every list view?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     Yes. The module extends the shared list-view component that
+                     Odoo uses everywhere, so Contacts, Sales, Invoicing,
+                     Inventory, Purchase, Project and any custom model you have
+                     built are all covered, each remembered separately.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q"
+                     >Does it work on Odoo Community and Odoo Enterprise?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     Yes, both. It depends only on Odoo's
+                     <b class="ostrong">base</b> and
+                     <b class="ostrong">web</b> modules, which are present in
+                     every installation. It also works on Odoo Online, Odoo.sh
+                     and self-hosted servers, wherever you are allowed to
+                     install a third-party module.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">Will my colleagues see my columns?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     No. The choice is saved per person, on the record of the
+                     user who made it. Two people using the same database keep
+                     two different layouts, and neither one overwrites the
+                     other.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">What happens when I log out?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     The module clears the column choices it had cached in that
+                     browser tab. This matters on shared computers: the next
+                     person to sign in starts from what the database holds for
+                     them, not from what you left behind.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q"
+                     >Does it change how Odoo normally behaves?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     No. Odoo's own browser storage is still written on every
+                     toggle, exactly as before. The module reads the saved
+                     database copy first and falls back to Odoo's browser copy
+                     when nothing has been saved yet, so a fresh install behaves
+                     like standard Odoo until you make your first choice.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">Does anything leave my database?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     No. There is no external service, no API key, no account to
+                     create and no outbound call of any kind. Everything happens
+                     between your browser and your own Odoo server.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">Which Odoo version does it support?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     Odoo 17.0. The published version is 17.0.1.0.0. If you need
+                     it on a different major version, write to
+                     <a href="mailto:odoo@doodex.net">odoo@doodex.net</a> and
+                     tell us which one &mdash; that is how we decide what to
+                     port next.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q"
+                     >What is the licence, and what does it cost?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     AGPL-3, and nothing. The full source ships with the module,
+                     on any number of databases and users, with no subscription,
+                     no renewal and no licence key. Doodex earns from Odoo
+                     implementation services, not from this module.
+                  </p>
+               </div>
+            </details>
+
+            <details class="ofaq">
+               <summary>
+                  <span class="ofaq-q">What if I uninstall it later?</span
+                  ><span class="ofaq-chev"
+                     ><svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                     >
+                        <path d="m6 9 6 6 6-6" /></svg
+                  ></span>
+               </summary>
+               <div class="ofaq-a">
+                  <p>
+                     Odoo removes the field the module added, and your list
+                     views go back to Odoo's standard browser-only behaviour.
+                     Because the module never stopped writing that browser copy,
+                     the columns you are looking at right now stay as they are
+                     on the machine you are using.
+                  </p>
+               </div>
+            </details>
+         </div>
+
+         <h3 class="oh3" style="margin: 44px 0 16px">
+            What it needs, and what it does not
+         </h3>
+         <div class="otwo">
+            <div>
+               <p class="opr-label">What you need</p>
+               <div class="oreqgrid" style="grid-template-columns: 1fr">
+                  <div class="oreqcard">
+                     <span class="oreqicon"
+                        ><svg
+                           width="22"
+                           height="22"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg
+                     ></span>
+                     <div>
+                        <span class="oreqlabel">Odoo 17.0</span>
+                        <p class="oreqcopy">
+                           Community or Enterprise, on Odoo Online, Odoo.sh or
+                           your own server.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="oreqcard">
+                     <span class="oreqicon"
+                        ><svg
+                           width="22"
+                           height="22"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg
+                     ></span>
+                     <div>
+                        <span class="oreqlabel"
+                           >Permission to install a module</span
+                        >
+                        <p class="oreqcopy">
+                           Update the app list, search the module, press
+                           Install. That is the whole procedure.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="oreqcard">
+                     <span class="oreqicon"
+                        ><svg
+                           width="22"
+                           height="22"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path d="M20 6 9 17l-5-5" /></svg
+                     ></span>
+                     <div>
+                        <span class="oreqlabel"
+                           >Odoo's base and web modules</span
+                        >
+                        <p class="oreqcopy">
+                           Both are part of every Odoo installation, so there is
+                           nothing to install first.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <p class="opr-label">What you do not need</p>
+               <div class="oreqgrid" style="grid-template-columns: 1fr">
+                  <div class="oreqcard">
+                     <span class="oreqicon omute"
+                        ><svg
+                           width="22"
+                           height="22"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                        >
+                           <path d="M5 12h14" /></svg
+                     ></span>
+                     <div>
+                        <span class="oreqlabel">No licence key or account</span>
+                        <p class="oreqcopy">
+                           Nothing to activate, nothing to register, nothing
+                           that can expire on you.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="oreqcard">
+                     <span class="oreqicon omute"
+                        ><svg
+                           width="22"
+                           height="22"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                        >
+                           <path d="M5 12h14" /></svg
+                     ></span>
+                     <div>
+                        <span class="oreqlabel">No configuration</span>
+                        <p class="oreqcopy">
+                           No settings page, no wizard and no access group to
+                           define after install.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="oreqcard">
+                     <span class="oreqicon omute"
+                        ><svg
+                           width="22"
+                           height="22"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2.2"
+                           stroke-linecap="round"
+                        >
+                           <path d="M5 12h14" /></svg
+                     ></span>
+                     <div>
+                        <span class="oreqlabel">No training</span>
+                        <p class="oreqcopy">
+                           The menu your team already uses does not change, so
+                           there is nothing to announce.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================ 06 · RELEASES =========================== -->
+   <div class="osecband">
+      <div class="owrap">
+         <div class="okick" id="ofs-releases">
+            <span class="okick-n">06<i>/06</i></span
+            ><span class="okick-l">Releases</span><span class="okick-r"></span>
+         </div>
+      </div>
+   </div>
+   <section class="osec">
+      <div class="owrap">
+         <h2 class="oh2" style="margin-bottom: 8px">Public release history</h2>
+         <p class="olead omuted" style="max-width: 760px; margin-bottom: 24px">
+            Every published version is listed here with what changed in it. This
+            list is updated with each release, so you can see for yourself
+            whether the module is maintained.
+         </p>
+
+         <div class="orel">
+            <div class="orel-head">
+               <span class="orel-v">17.0.1.0.0</span
+               ><span class="obadge ob-new">FIRST RELEASE</span>
+            </div>
+            <ul>
+               <li>
+                  <b class="ostrong">[NEW]</b> Optional list-view columns are
+                  saved to the database on your own user record.
+               </li>
+               <li>
+                  <b class="ostrong">[NEW]</b> Saved columns are restored
+                  automatically when the Odoo web client loads.
+               </li>
+               <li>
+                  <b class="ostrong">[NEW]</b> Cached column choices are cleared
+                  at log out, for shared computers.
+               </li>
+               <li>
+                  <b class="ostrong">[IMP]</b> Odoo's standard browser storage
+                  keeps being written, so nothing else changes.
+               </li>
+            </ul>
+         </div>
+         <p class="oxs omuted" style="margin-top: 16px">
+            Found something that does not match this page? Write to
+            <a href="mailto:odoo@doodex.net">odoo@doodex.net</a> &mdash;
+            corrections to the description matter to us as much as fixes to the
+            code.
+         </p>
+      </div>
+   </section>
+
+   <!-- ====================== WORKS GREAT WITH (cross-sell) ================== -->
+   <section class="oxband">
+      <div class="owrap">
+         <p class="oxeyebrow">Works great with</p>
+         <h2 class="oh2 oxtitle">Other Doodex modules, built the same way</h2>
+         <p class="olead omuted oxlead">
+            Different problems, same approach: narrow scope, a one-time price
+            and the limits stated up front. Each one installs on its own.
+         </p>
+         <div class="oxchips">
+            <span class="oxchip">Narrow scope</span>
+            <span class="oxchip">One-time price</span>
+            <span class="oxchip">Limits stated up front</span>
+         </div>
+         <div class="oxsell">
+            <div class="oxcard oxcard-dark">
+               <div class="oxcard-top">
+                  <img
+                     class="oxicon"
+                     src="./assets/icons/x-growth-suite.png"
+                     alt="Doodex Growth Suite module icon"
+                  />
+                  <span class="oxprice">$349 once</span>
+               </div>
+               <h3>Doodex Growth Suite</h3>
+               <p>
+                  Five CRM and marketing modules that share one another's data:
+                  BizScan AI, Campaign Manager, Smart Dashboards, User Roles and
+                  Email Sync+. Sold as one suite.
+               </p>
+               <a
+                  class="oxbtn oxbtn-solid"
+                  href="https://apps.odoo.com/apps/modules/17.0/marketing_crm_automation_dashboard_campaign_doodex"
+                  >Open on the Apps Store &rarr;</a
+               >
+            </div>
+
+            <div class="oxcard">
+               <div class="oxcard-top">
+                  <img
+                     class="oxicon"
+                     src="./assets/icons/x-flow-reader.png"
+                     alt="Flow Survey Reader module icon"
+                  />
+                  <span class="oxprice">Free</span>
+               </div>
+               <h3>Flow Survey Reader</h3>
+               <p>
+                  Publish conditional surveys and forms straight from Odoo and
+                  keep every answer in your own database.
+               </p>
+               <a
+                  class="oxbtn"
+                  href="https://apps.odoo.com/apps/modules/17.0/flow_survey_reader"
+                  >Open on the Apps Store &rarr;</a
+               >
+            </div>
+
+            <div class="oxcard">
+               <div class="oxcard-top">
+                  <img
+                     class="oxicon"
+                     src="./assets/icons/x-flow-builder.png"
+                     alt="Flow Survey Builder module icon"
+                  />
+                  <span class="oxprice">$199 once</span>
+               </div>
+               <h3>Flow Survey Builder</h3>
+               <p>
+                  The drag-and-drop editor for those surveys: 25 question types,
+                  slide branching and full theming.
+               </p>
+               <a
+                  class="oxbtn"
+                  href="https://apps.odoo.com/apps/modules/17.0/flow_survey"
+                  >Open on the Apps Store &rarr;</a
+               >
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ============================= FINAL CTA ============================== -->
+   <section class="osec">
+      <div class="owrap">
+         <div class="oqr oqr-end">
+            <div class="oqr-head">
+               <p class="oqr-eyebrow">Free, on every database you run</p>
+               <h2 class="oqr-title">
+                  Install it, and stop setting up the same columns twice
+               </h2>
+               <p class="oqr-sub">
+                  Optional Field Save is free and open source. If you want a
+                  hand installing it, or a look at what else is slowing your
+                  team down inside Odoo, the Doodex team is one scan away.
+               </p>
+            </div>
+            <div class="oqr-grid">
+               <div class="oqr-card oqr-lead">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="5" width="18" height="16" rx="2" />
+                           <path d="M16 3v4M8 3v4M3 11h18" /></svg
+                     ></span>
+                     <span class="oqr-tag oqr-tag-hot">30 minutes</span>
+                  </div>
+                  <h3 class="oqr-h">Book a live demo</h3>
+                  <p class="oqr-p">
+                     See it on a real Odoo 17 database and ask whatever you
+                     like.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-meeting.png"
+                        alt="QR code for https://hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-1 oqr-btn"
+                     >https://hub.doodex.net<wbr />/r/meeting</span
+                  >
+               </div>
+               <div class="oqr-card">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <rect x="3" y="5" width="18" height="14" rx="2" />
+                           <path d="m3 7 9 6 9-6" /></svg
+                     ></span>
+                     <span class="oqr-tag">Written reply</span>
+                  </div>
+                  <h3 class="oqr-h">Write to the team</h3>
+                  <p class="oqr-p">
+                     Questions, bug reports and porting requests all land here.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-contact.png"
+                        alt="QR code for https://doodex.net/contactus"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-2 oqr-btn"
+                     >https://doodex.net<wbr />/contactus</span
+                  >
+               </div>
+               <div class="oqr-card">
+                  <div class="oqr-top">
+                     <span class="oqr-ico"
+                        ><svg
+                           width="16"
+                           height="16"
+                           viewBox="0 0 24 24"
+                           fill="none"
+                           stroke="currentColor"
+                           stroke-width="2"
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                        >
+                           <path
+                              d="M21 12a9 9 0 0 1-13.1 8L3 21l1.1-4.7A9 9 0 1 1 21 12z"
+                           /></svg
+                     ></span>
+                     <span class="oqr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="oqr-h">Message us on WhatsApp</h3>
+                  <p class="oqr-p">
+                     Reach the Doodex team on +62 821-3120-5030.
+                  </p>
+                  <span class="oqr-code"
+                     ><img
+                        src="./assets/icons/qr-whatsapp.png"
+                        alt="QR code for https://hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="obtn obtn-2 oqr-btn"
+                     >https://hub.doodex.net<wbr />/r/whatsapp</span
+                  >
+               </div>
+            </div>
+            <p class="oqr-foot">
+               Optional Field Save &middot; optional_field_save 17.0.1.0.0
+               &middot; Odoo 17.0 &middot; AGPL-3 &middot; published by Doodex
+            </p>
+         </div>
+      </div>
+   </section>
+</div>

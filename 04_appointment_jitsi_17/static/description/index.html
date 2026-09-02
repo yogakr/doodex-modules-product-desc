@@ -1,0 +1,3890 @@
+<!-- =========================================================================
+  Appointment Jitsi — Odoo Apps Store listing description
+  Odoo 17.0 Enterprise · module version 17.0.1.1.0 · Free, LGPL-3 · Doodex
+
+  PASTE TARGET: the "Description" field of the Odoo Apps Store upload for
+  appointment_jitsi 17.0.1.1.0. This same file is the module's
+  static/description/index.html — one source, two destinations.
+
+  RULES BAKED IN
+   • Zero <script> tags of our own. The store sanitizer strips them and this
+     page needs none: it is one continuous scroll, the section nav is a plain
+     jump menu, and the FAQ uses native <details>/<summary>.
+   • LINKS ARE CONSTRAINED BY THE VENDOR GUIDELINES. Only resources from this
+     static/description folder, canonical YouTube links, Microsoft Teams links,
+     mailto: and skype: survive — every other external link is invalidated. So
+     contact CTAs use mailto:, and the booking / WhatsApp CTAs carry NO href at
+     all: their destination is printed beside them as plain text and encoded in
+     the QR image, neither of which the sanitizer touches. The three "Works
+     great with" buttons now carry full apps.odoo.com module URLs — a client
+     instruction of 2026-09-01, replacing the earlier href="". These point at
+     Odoo's own store, so they are not third-party external links, but the
+     guidelines do not name apps.odoo.com explicitly: CHECK IN THE STORE
+     PREVIEW that all three are still clickable after publishing. If the
+     sanitizer strips them the buttons become dead text with no printed
+     fallback, since the supplied design prints no address beside them. That
+     section is built by build_cta.py and is authored with INLINE LONGHAND
+     styles only, because the store's html_sanitize() drops
+     grid/flex/box-shadow/rgba/@media and may delete this <style> block outright.
+     Never point one of those hrefs at a host outside odoo.com.
+   • The nav bar is deliberately NOT sticky, and nothing here targets html or
+     :root. A pinned bar is a widget riding over the store's own header, and
+     styling the document root is styling an element this fragment does not own.
+   • No inline SVG. Every icon, chevron and QR code is a PNG in
+     ./assets/icons, drawn at six times its display size so it stays sharp on
+     retina screens. Because each PNG's intrinsic size is therefore wrong on
+     purpose, icons are sized by a CSS class (.ajic-14 … .ajic-30), never by
+     width/height attributes — those are presentational hints and lose to any
+     stylesheet rule, including the store's own.
+   • Every GIF and screenshot referenced here is currently a labelled
+     PLACEHOLDER carrying its own filename and shot brief in the pixels.
+     Replace the file, keep the filename — no HTML edit needed.
+     ./assets/ASSET-BRIEF.md lists every slot and what it must show.
+   • Upload the whole ./assets folder into the module's static/description
+     folder next to index.html, keeping the sub-folder names. Nothing on this
+     page loads an image from anywhere else.
+
+  DESIGN RECORD (for the next listing — see odoo-store-layouts anti-repetition)
+   Archetype B — long-form scroll with numbered section bands.
+   Hero H-2 (text/visual split) · rhythm R-3 (violet interludes on white) ·
+   features F-2 (text+image zigzag) · accent A-2 (punctuated).
+   NOTE: the archetype deliberately repeats Flow Survey Builder at the client's
+   request. All three differentiation axes therefore diverge: FSB used hero H-1
+   centred, rhythm R-2 soft alternation, and a card-grid features pattern.
+========================================================================== -->
+<div class="ajb">
+   <style>
+      .ajb {
+         --violet: #270140;
+         --violet-2: #3a1a5a;
+         --coral: #fa7268;
+         --coral-dk: #e85c52;
+         --ink: #0a0a0a;
+         --ink-2: #171717;
+         --ink-3: #525252;
+         --ink-4: #737373;
+         --bg: #ffffff;
+         --surface: #faf7fc;
+         --surface-2: #f4eef8;
+         --line: #ece4f3;
+         --success: #16a34a;
+         --danger: #dc2626;
+         --warm: #fff5f2;
+         --r-sm: 6px;
+         --r-md: 10px;
+         --r-lg: 14px;
+         --r-xl: 20px;
+         --r-full: 9999px;
+         --xs: 0 0 0 1px rgba(39, 1, 64, 0.06);
+         --sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 1, 64, 0.08);
+         --md:
+            0 4px 14px rgba(39, 1, 64, 0.08), 0 0 0 1px rgba(39, 1, 64, 0.06);
+         --lg:
+            0 12px 32px rgba(39, 1, 64, 0.1), 0 0 0 1px rgba(39, 1, 64, 0.06);
+         --cta: 0 8px 22px rgba(250, 114, 104, 0.32);
+      }
+      .ajb * {
+         box-sizing: border-box;
+      }
+      .ajb {
+         background: var(--bg);
+         color: var(--ink-3);
+         font-family:
+            "Inter",
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
+         font-size: 16px;
+         line-height: 1.65;
+         font-feature-settings: "cv11", "ss01";
+         -webkit-font-smoothing: antialiased;
+      }
+      .ajb h1,
+      .ajb h2,
+      .ajb h3,
+      .ajb h4 {
+         color: var(--violet);
+         letter-spacing: -0.015em;
+         margin: 0;
+      }
+      .ajb p {
+         margin: 0 0 14px;
+      }
+      .ajb a {
+         color: var(--coral-dk);
+         overflow-wrap: anywhere;
+      }
+      /* Naked URLs are printed as visible text all over this page as a sanitizer
+   fallback, so long paths must be allowed to break instead of pushing the
+   page wide. */
+      .ajb,
+      .ajb p,
+      .ajb td,
+      .ajb li,
+      .ajb summary {
+         overflow-wrap: break-word;
+      }
+      .ajb img {
+         max-width: 100%;
+      }
+      /* Field names, model names and room addresses are long unbreakable strings. In a
+   CSS grid, a child defaults to min-width:auto and such a string then widens its
+   whole column — which is how a 360px phone ended up with 404px of content.
+   Every grid child below is therefore pinned to min-width:0, and code is allowed
+   to break anywhere. */
+      .ajb code {
+         font-family:
+            ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
+            monospace;
+         font-size: 0.9em;
+         background: var(--surface-2);
+         color: var(--violet);
+         padding: 1px 5px;
+         border-radius: 4px;
+         overflow-wrap: anywhere;
+         word-break: break-word;
+      }
+      .ajhero > *,
+      .ajfl-i > *,
+      .ajfl-b,
+      .ajuc-i,
+      .ajstep,
+      .ajstat,
+      .ajreq-i,
+      .ajreq-i > div,
+      .ajreb .r > *,
+      .ajcost-r,
+      .ajfeat-i {
+         min-width: 0;
+      }
+      .ajmut {
+         color: var(--ink-4);
+      }
+      .ajctr {
+         text-align: center;
+      }
+      .ajwrap {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 0 24px;
+      }
+      .ajnarrow {
+         max-width: 820px;
+         margin: 0 auto;
+      }
+      .ajsec {
+         padding: 56px 0;
+      }
+      .ajsec-t {
+         padding: 32px 0;
+      }
+      .ajsec-alt {
+         background: var(--surface);
+      }
+      .ajhr {
+         height: 1px;
+         background: var(--line);
+         border: 0;
+         margin: 0;
+      }
+
+      /* type scale */
+      .ajh1 {
+         font-size: 44px;
+         font-weight: 800;
+         line-height: 1.08;
+      }
+      .ajh2 {
+         font-size: 27px;
+         font-weight: 800;
+         line-height: 1.22;
+      }
+      .ajh3 {
+         font-size: 19px;
+         font-weight: 700;
+         line-height: 1.35;
+      }
+      .ajh4 {
+         font-size: 15px;
+         font-weight: 700;
+         color: var(--ink-2);
+      }
+      .ajlead {
+         font-size: 18.5px;
+         line-height: 1.6;
+         color: var(--ink-3);
+      }
+      .ajsm {
+         font-size: 13.5px;
+      }
+      .ajxs {
+         font-size: 12.5px;
+      }
+      .ajeyebrow {
+         display: inline-block;
+         font-size: 12px;
+         font-weight: 700;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--coral-dk);
+         margin: 0 0 14px;
+      }
+      .ajmark {
+         color: var(--coral-dk);
+         font-weight: 700;
+      }
+
+      /* icons: PNGs drawn at 6x, sized only by these classes */
+      .ajic {
+         display: inline-block;
+         vertical-align: middle;
+         flex: none;
+      }
+      .ajic-14 {
+         width: 14px;
+         height: 14px;
+      }
+      .ajic-16 {
+         width: 16px;
+         height: 16px;
+      }
+      .ajic-18 {
+         width: 18px;
+         height: 18px;
+      }
+      .ajic-20 {
+         width: 20px;
+         height: 20px;
+      }
+      .ajic-22 {
+         width: 22px;
+         height: 22px;
+      }
+      .ajic-26 {
+         width: 26px;
+         height: 26px;
+      }
+      .ajic-30 {
+         width: 30px;
+         height: 30px;
+      }
+
+      /* buttons */
+      .ajbtn {
+         display: inline-flex;
+         align-items: center;
+         gap: 8px;
+         font-weight: 700;
+         font-size: 15px;
+         text-decoration: none;
+         padding: 13px 24px;
+         border-radius: var(--r-md);
+      }
+      .ajbtn-1 {
+         background: var(--coral);
+         color: #fff !important;
+         box-shadow: var(--cta);
+      }
+      .ajbtn-2 {
+         background: #fff;
+         color: var(--violet) !important;
+         box-shadow: 0 0 0 1.5px var(--violet);
+      }
+      .ajbtn-row {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 12px;
+      }
+      .ajchip {
+         display: inline-flex;
+         align-items: center;
+         gap: 7px;
+         font-size: 13px;
+         font-weight: 600;
+         color: var(--violet);
+         background: var(--surface-2);
+         padding: 7px 14px;
+         border-radius: var(--r-full);
+      }
+      .ajchiprow {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 8px;
+      }
+      .ajcard {
+         background: #fff;
+         border-radius: var(--r-lg);
+         padding: 22px;
+         box-shadow: var(--sm);
+      }
+
+      /* jump nav — in normal flow on purpose, see the header comment */
+      .ajnav {
+         background: #fff;
+         border-bottom: 1px solid var(--line);
+      }
+      .ajnav-in {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 10px 24px;
+         display: grid;
+         grid-template-columns: 1fr auto 1fr;
+         align-items: center;
+         gap: 12px;
+      }
+      .ajb .ajnav-brand {
+         display: inline-flex;
+         align-items: center;
+         gap: 7px;
+         font-weight: 800;
+         color: var(--violet);
+         font-size: 15px;
+         letter-spacing: -0.01em;
+         text-decoration: none;
+      }
+      .ajb .ajnav-brand span {
+         color: var(--coral-dk);
+      }
+      .ajnav-logo {
+         display: block;
+         width: 26px;
+         height: 26px;
+         border-radius: 7px;
+      }
+      .ajtabs {
+         justify-self: center;
+         display: inline-flex;
+         gap: 2px;
+         background: var(--surface);
+         border: 1px solid var(--line);
+         border-radius: var(--r-full);
+         padding: 4px;
+      }
+      .ajtabs a {
+         text-decoration: none;
+         color: var(--ink-2);
+         font-size: 13.5px;
+         font-weight: 600;
+         padding: 8px 14px;
+         border-radius: var(--r-full);
+         white-space: nowrap;
+      }
+      .ajtabs a:hover {
+         background: #fff;
+         color: var(--violet);
+         box-shadow: var(--xs);
+      }
+      .ajnav-cta {
+         justify-self: end;
+      }
+      .ajnav-cta a {
+         font-size: 13.5px;
+         padding: 9px 17px;
+      }
+      @media (max-width: 960px) {
+         .ajnav-in {
+            grid-template-columns: 1fr;
+            justify-items: center;
+         }
+         .ajnav-cta {
+            justify-self: center;
+         }
+         .ajtabs {
+            flex-wrap: wrap;
+            justify-content: center;
+         }
+      }
+
+      /* numbered section band — slim violet rail, coral numeral.
+   Deliberately different from the light band + big plum numeral used on the
+   previous Doodex listing, since the archetype itself repeats. */
+      .ajband {
+         background: var(--violet);
+      }
+      .ajband-in {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 13px 24px;
+         display: flex;
+         align-items: center;
+         gap: 16px;
+         scroll-margin-top: 24px;
+      }
+      .ajband-n {
+         font-size: 13px;
+         font-weight: 800;
+         color: var(--coral);
+         letter-spacing: 0.06em;
+         font-variant-numeric: tabular-nums;
+         flex: none;
+      }
+      .ajband-l {
+         font-size: 12.5px;
+         font-weight: 800;
+         letter-spacing: 0.16em;
+         text-transform: uppercase;
+         color: #fff;
+         flex: none;
+      }
+      .ajband-r {
+         flex: 1;
+         height: 1px;
+         background: rgba(255, 255, 255, 0.2);
+      }
+      .ajband-x {
+         font-size: 12px;
+         color: rgba(255, 255, 255, 0.55);
+         flex: none;
+      }
+      @media (max-width: 700px) {
+         .ajband-x {
+            display: none;
+         }
+      }
+
+      /* Trust bar — solid violet contrast band, per the Doodex design system: on a
+   violet surface the text is white and coral is the accent. Sits between the
+   white nav and the white hero, which is also the first beat of the R-3
+   violet-interlude rhythm this page uses. No hairline border: the colour change
+   is the separation. Solid fill only — never a gradient. */
+      .ajtrust {
+         background: var(--violet);
+      }
+      .ajtrust-in {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 14px 24px;
+         display: flex;
+         flex-wrap: wrap;
+         align-items: center;
+         gap: 10px 26px;
+      }
+      .ajtrust-i {
+         display: inline-flex;
+         align-items: center;
+         gap: 8px;
+         font-size: 12.5px;
+         font-weight: 600;
+         color: #fff;
+      }
+
+      /* HERO — variant H-2, text/visual split */
+      .ajhero {
+         display: grid;
+         grid-template-columns: 1.02fr 0.98fr;
+         gap: 44px;
+         align-items: center;
+      }
+      .ajhero-shot {
+         border-radius: var(--r-lg);
+         box-shadow: var(--lg);
+         overflow: hidden;
+      }
+      .ajhero-shot img {
+         display: block;
+         width: 100%;
+         height: auto;
+      }
+      @media (max-width: 900px) {
+         .ajhero {
+            grid-template-columns: 1fr;
+            gap: 30px;
+         }
+         .ajh1 {
+            font-size: 34px;
+         }
+      }
+
+      /* violet interlude — the R-3 rhythm marker */
+      .ajinter {
+         background: var(--violet);
+         border-radius: var(--r-xl);
+         padding: 42px 40px;
+         text-align: center;
+      }
+      .ajinter .big {
+         font-size: 32px;
+         font-weight: 800;
+         color: #fff;
+         letter-spacing: -0.02em;
+         line-height: 1.2;
+         margin: 0 0 10px;
+      }
+      .ajinter .big em {
+         font-style: normal;
+         color: var(--coral);
+      }
+      .ajinter .sub {
+         color: rgba(255, 255, 255, 0.78);
+         font-size: 15.5px;
+         margin: 0;
+         max-width: 660px;
+         margin-left: auto;
+         margin-right: auto;
+      }
+      @media (max-width: 700px) {
+         .ajinter {
+            padding: 32px 22px;
+         }
+         .ajinter .big {
+            font-size: 24px;
+         }
+      }
+      /* The interlude now closes the Overview band, so the next thing down is the
+   full-bleed violet band of section 02. Two violet shapes 32px apart read as
+   one crowded mass; this restores the section rhythm between them. */
+      .ajsec-t.ajband-tail {
+         padding-bottom: 56px;
+      }
+
+      /* how it works — 3 numbered steps */
+      .ajsteps {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 0;
+         border: 1px solid var(--line);
+         border-radius: var(--r-lg);
+         overflow: hidden;
+         background: #fff;
+      }
+      .ajstep {
+         padding: 24px 22px;
+         border-left: 1px solid var(--line);
+      }
+      .ajstep:first-child {
+         border-left: none;
+      }
+      .ajstep-n {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         width: 26px;
+         height: 26px;
+         border-radius: 8px;
+         background: var(--violet);
+         color: #fff;
+         font-size: 12.5px;
+         font-weight: 800;
+         margin-bottom: 12px;
+      }
+      .ajstep h3 {
+         font-size: 16px;
+         margin: 0 0 6px;
+      }
+      .ajstep p {
+         font-size: 13.5px;
+         color: var(--ink-4);
+         margin: 0;
+      }
+      @media (max-width: 820px) {
+         .ajsteps {
+            grid-template-columns: 1fr;
+         }
+         .ajstep {
+            border-left: none;
+            border-top: 1px solid var(--line);
+         }
+         .ajstep:first-child {
+            border-top: none;
+         }
+      }
+
+      /* stat row */
+      .ajstats {
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         text-align: center;
+         margin-top: 28px;
+      }
+      .ajstat {
+         padding: 18px 12px;
+         border-left: 1px solid var(--line);
+      }
+      .ajstat:first-child {
+         border-left: none;
+      }
+      .ajstat .n {
+         font-size: 32px;
+         font-weight: 800;
+         color: var(--violet);
+         letter-spacing: -0.03em;
+         line-height: 1.1;
+         font-variant-numeric: tabular-nums;
+      }
+      .ajstat .l {
+         font-size: 12.5px;
+         color: var(--ink-4);
+         line-height: 1.4;
+      }
+      @media (max-width: 640px) {
+         .ajstats {
+            grid-template-columns: 1fr 1fr;
+         }
+         .ajstat {
+            border-left: none;
+            border-top: 1px solid var(--line);
+         }
+         .ajstat:nth-child(-n + 2) {
+            border-top: none;
+         }
+      }
+
+      /* USE CASES — copy-led, no media. An icon tile carries the visual weight and the
+   text does the selling. Deliberately NOT the white shadowed card used for
+   cross-sell and services further down, and NOT the hairline icon-rows used in
+   Features: a tinted panel with a solid violet tile gives this band its own
+   silhouette, so the page still varies section to section. */
+      .ajuc {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 18px;
+      }
+      .ajuc-i {
+         background: var(--surface);
+         border-radius: var(--r-lg);
+         padding: 26px 26px 22px;
+         box-shadow: var(--xs);
+         display: flex;
+         flex-direction: column;
+      }
+      .ajuc-top {
+         display: flex;
+         align-items: center;
+         gap: 13px;
+         margin-bottom: 15px;
+      }
+      .ajuc-ico {
+         width: 42px;
+         height: 42px;
+         border-radius: 12px;
+         background: var(--violet);
+         flex: none;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+      }
+      .ajuc-w {
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         text-transform: uppercase;
+         color: var(--coral-dk);
+         line-height: 1.35;
+      }
+      .ajuc-i h3 {
+         font-size: 18.5px;
+         margin: 0 0 9px;
+         line-height: 1.3;
+      }
+      .ajuc-i p {
+         font-size: 14.5px;
+         color: var(--ink-3);
+         margin: 0 0 16px;
+      }
+      .ajuc-f {
+         margin-top: auto;
+         display: flex;
+         flex-wrap: wrap;
+         gap: 7px;
+         align-items: center;
+      }
+      .ajuc-lbl {
+         font-size: 11px;
+         font-weight: 700;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         color: var(--ink-4);
+         margin-right: 2px;
+      }
+      .ajuc-app {
+         font-size: 11.5px;
+         font-weight: 700;
+         color: var(--violet);
+         background: #fff;
+         padding: 5px 11px;
+         border-radius: var(--r-full);
+         box-shadow: var(--xs);
+      }
+      /* the sixth panel closes the band, so it inverts: violet ground, coral accent */
+      .ajuc-end {
+         background: var(--violet);
+         box-shadow: none;
+      }
+      .ajuc-end .ajuc-ico {
+         background: rgba(255, 255, 255, 0.12);
+      }
+      .ajuc-end .ajuc-w {
+         color: var(--coral);
+      }
+      .ajuc-end h3 {
+         color: #fff;
+      }
+      .ajuc-end p {
+         color: rgba(255, 255, 255, 0.78);
+      }
+      .ajb .ajuc-end .ajuc-cta {
+         font-size: 13px;
+         font-weight: 700;
+         color: var(--coral);
+         text-decoration: none;
+      }
+      @media (max-width: 820px) {
+         .ajuc {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* FEATURES — copy-first. No media in this band at all: each feature is a ruled
+   row with a numbered violet tile, so the section reads as a spec sheet rather
+   than a card grid. Deliberately unlike Use Cases (tinted two-column panels),
+   Requirements (small white cards) and "Under the bonnet" (hairline icon rows) —
+   four sections on this page, four silhouettes. */
+      .ajfl,
+      .ajfl-head {
+         max-width: 880px;
+         margin: 0 auto;
+      } /* shared left edge */
+      .ajfl-i {
+         display: grid;
+         grid-template-columns: 64px 1fr;
+         gap: 26px;
+         padding: 30px 0;
+         border-top: 1px solid var(--line);
+      }
+      .ajfl-i:first-child {
+         border-top: none;
+         padding-top: 4px;
+      }
+      .ajfl-rail {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         gap: 9px;
+      }
+      .ajfl-ico {
+         width: 52px;
+         height: 52px;
+         border-radius: 14px;
+         background: var(--violet);
+         flex: none;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+      }
+      .ajfl-n {
+         font-size: 11.5px;
+         font-weight: 800;
+         letter-spacing: 0.11em;
+         color: var(--ink-4);
+         font-variant-numeric: tabular-nums;
+      }
+      .ajfl-b {
+         min-width: 0;
+      }
+      .ajfl-b h3 {
+         font-size: 21px;
+         margin: 3px 0 9px;
+         line-height: 1.3;
+      }
+      .ajfl-b p {
+         font-size: 15px;
+         margin: 0 0 12px;
+      }
+      .ajfl-b ul {
+         margin: 0;
+         padding-left: 0;
+         list-style: none;
+      }
+      .ajfl-b li {
+         position: relative;
+         padding-left: 22px;
+         font-size: 13.5px;
+         color: var(--ink-4);
+         margin: 7px 0;
+      }
+      .ajfl-b li:before {
+         content: "";
+         position: absolute;
+         left: 2px;
+         top: 8px;
+         width: 8px;
+         height: 8px;
+         background: var(--coral);
+         transform: rotate(45deg);
+         border-radius: 2px;
+      }
+      .ajfl-note {
+         font-size: 12.5px;
+         line-height: 1.6;
+         color: var(--ink-4);
+         background: var(--surface-2);
+         border-radius: var(--r-md);
+         padding: 13px 15px;
+         margin: 14px 0 0;
+      }
+      .ajfl-note b {
+         color: var(--violet);
+      }
+      @media (max-width: 620px) {
+         .ajfl-i {
+            grid-template-columns: 1fr;
+            gap: 14px;
+            padding: 24px 0;
+         }
+         .ajfl-rail {
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+         }
+      }
+
+      /* dense feature rows */
+      .ajfeat {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 0 44px;
+      }
+      .ajfeat-i {
+         position: relative;
+         padding: 14px 0 14px 28px;
+         border-top: 1px solid var(--line);
+      }
+      .ajfeat-i:before {
+         content: "";
+         position: absolute;
+         left: 3px;
+         top: 21px;
+         width: 9px;
+         height: 9px;
+         background: var(--coral);
+         transform: rotate(45deg);
+         border-radius: 2px;
+      }
+      .ajfeat-i h4 {
+         font-size: 14.5px;
+         color: var(--ink-2);
+         margin: 0 0 3px;
+      }
+      .ajfeat-i p {
+         margin: 0;
+         font-size: 12.5px;
+         color: var(--ink-4);
+         line-height: 1.55;
+      }
+      @media (max-width: 820px) {
+         .ajfeat {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* requirements grid */
+      .ajreq {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 14px;
+      }
+      .ajreq-i {
+         background: #fff;
+         border-radius: var(--r-md);
+         padding: 16px 18px;
+         box-shadow: var(--xs);
+         display: flex;
+         gap: 12px;
+         align-items: flex-start;
+      }
+      .ajreq-i .t {
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         color: var(--ink-4);
+         margin: 0 0 3px;
+      }
+      .ajreq-i .v {
+         font-size: 13.5px;
+         font-weight: 600;
+         color: var(--violet);
+         margin: 0;
+         line-height: 1.45;
+      }
+      @media (max-width: 860px) {
+         .ajreq {
+            grid-template-columns: 1fr 1fr;
+         }
+      }
+      @media (max-width: 560px) {
+         .ajreq {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* rebuttal rows */
+      .ajreb .r {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 16px 44px;
+         padding: 18px 0;
+         border-top: 1px solid var(--line);
+      }
+      .ajreb .r:last-child {
+         border-bottom: 1px solid var(--line);
+      }
+      .ajreb b {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         font-size: 14.5px;
+         margin-bottom: 5px;
+      }
+      .ajreb .no b {
+         color: var(--ink-3);
+      }
+      .ajreb .yes b {
+         color: var(--coral-dk);
+      }
+      .ajreb p {
+         margin: 0;
+         font-size: 13.5px;
+      }
+      .ajreb .no p {
+         color: var(--ink-4);
+      }
+      .ajreb .yes p {
+         color: var(--ink-2);
+      }
+      @media (max-width: 820px) {
+         .ajreb .r {
+            grid-template-columns: 1fr;
+            gap: 14px;
+         }
+      }
+
+      /* comparison table */
+      .ajtblw {
+         overflow-x: auto;
+      }
+      .ajtbl {
+         width: 100%;
+         border-collapse: collapse;
+         font-size: 13.5px;
+         min-width: 620px;
+         background: #fff;
+      }
+      .ajtbl th,
+      .ajtbl td {
+         padding: 12px 14px;
+         text-align: left;
+         border-bottom: 1px solid var(--line);
+         vertical-align: top;
+      }
+      .ajtbl thead th {
+         background: var(--violet);
+         color: #fff;
+         font-size: 12px;
+         font-weight: 800;
+         letter-spacing: 0.05em;
+         text-transform: uppercase;
+         border-bottom: none;
+      }
+      .ajtbl thead th.ours {
+         background: var(--violet-2);
+         color: #fff;
+      }
+      .ajtbl td.ours {
+         background: var(--warm);
+         color: var(--violet);
+         font-weight: 600;
+      }
+      .ajtbl tbody tr:nth-child(even) td {
+         background: var(--surface);
+      }
+      .ajtbl tbody tr:nth-child(even) td.ours {
+         background: #ffeae4;
+      }
+      .ajtbl td b {
+         color: var(--violet);
+      }
+
+      /* cost bars */
+      .ajcost {
+         max-width: 620px;
+         margin: 26px auto 0;
+      }
+      .ajcost-r {
+         margin-bottom: 18px;
+      }
+      .ajcost-r:last-child {
+         margin-bottom: 0;
+      }
+      .ajcost-t {
+         display: flex;
+         justify-content: space-between;
+         gap: 12px;
+         font-size: 12.5px;
+         margin-bottom: 6px;
+      }
+      .ajcost-t b {
+         color: var(--violet);
+      }
+      .ajcost-t span {
+         color: var(--ink-4);
+      }
+      .ajcost-k {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+      }
+      .ajcost-w {
+         flex: 1;
+         background: var(--surface-2);
+         border-radius: 6px;
+      }
+      .ajcost-b {
+         height: 26px;
+         border-radius: 6px;
+      }
+      .ajcost-b.them {
+         background: var(--coral);
+      }
+      .ajcost-b.ours {
+         background: var(--success);
+      }
+      .ajcost-a {
+         font-size: 14px;
+         font-weight: 800;
+         color: var(--violet);
+         white-space: nowrap;
+      }
+
+      /* QR CTA — the naked-link pattern */
+      .ajqr {
+         background: var(--violet);
+         border-radius: var(--r-xl);
+         padding: 28px 30px 24px;
+      }
+      .ajqr-h {
+         max-width: 640px;
+      }
+      .ajqr .ajqr-eye {
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--coral);
+         margin: 0 0 8px;
+      }
+      .ajqr h2.ajqr-t {
+         color: #fff;
+         font-size: 23px;
+         font-weight: 800;
+         letter-spacing: -0.015em;
+         margin: 0 0 8px;
+      }
+      .ajqr .ajqr-s {
+         color: rgba(255, 255, 255, 0.76);
+         font-size: 14.5px;
+         line-height: 1.55;
+         margin: 0;
+      }
+      .ajqr-g {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 14px;
+         margin: 24px 0 0;
+      }
+      .ajqr-g > * {
+         min-width: 0;
+      }
+      .ajqr-c {
+         background: #fff;
+         border-radius: var(--r-lg);
+         padding: 16px;
+         display: flex;
+         flex-direction: column;
+         gap: 9px;
+      }
+      .ajqr-lead {
+         box-shadow: 0 0 0 2px var(--coral);
+      }
+      .ajqr-top {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 10px;
+      }
+      .ajqr-ico {
+         width: 30px;
+         height: 30px;
+         border-radius: 9px;
+         background: var(--violet);
+         flex: none;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+      }
+      .ajqr-tag {
+         font-size: 10px;
+         font-weight: 800;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         background: var(--surface-2);
+         color: var(--violet);
+         padding: 4px 9px;
+         border-radius: var(--r-full);
+      }
+      .ajqr-tag.hot {
+         background: var(--coral);
+         color: #fff;
+      }
+      .ajqr .ajqr-ch {
+         font-size: 15.5px;
+         color: var(--violet);
+         margin: 1px 0 0;
+      }
+      .ajqr .ajqr-cp {
+         font-size: 12.5px;
+         line-height: 1.5;
+         color: var(--ink-4);
+         margin: 0;
+      }
+      .ajqr-code {
+         display: block;
+         background: var(--surface);
+         border-radius: var(--r-md);
+         padding: 10px;
+         margin-top: auto;
+      }
+      .ajqr-code img {
+         display: block;
+         width: 98px;
+         max-width: 100%;
+         height: auto;
+         margin: 0 auto;
+      }
+      .ajqr-b {
+         width: 100%;
+         justify-content: center;
+         padding: 10px;
+         font-size: 13px;
+         text-align: center;
+      }
+      .ajqr .ajqr-f {
+         color: rgba(255, 255, 255, 0.52);
+         font-size: 12px;
+         margin: 16px 0 0;
+      }
+      .ajqr-end {
+         padding: 36px 30px 28px;
+      }
+      .ajqr-end .ajqr-h {
+         max-width: 660px;
+         margin: 0 auto;
+         text-align: center;
+      }
+      .ajqr-end h2.ajqr-t {
+         font-size: 27px;
+      }
+      .ajqr-end .ajqr-f {
+         text-align: center;
+      }
+      @media (max-width: 860px) {
+         .ajqr-g {
+            grid-template-columns: 1fr;
+         }
+         .ajqr {
+            padding: 26px 20px 22px;
+         }
+      }
+
+      /* FAQ — native details, no JS */
+      .ajfaq {
+         max-width: 820px;
+         margin: 0 auto;
+      }
+      .ajfaq details {
+         border-top: 1px solid var(--line);
+      }
+      .ajfaq details:last-of-type {
+         border-bottom: 1px solid var(--line);
+      }
+      .ajfaq summary {
+         cursor: pointer;
+         padding: 16px 40px 16px 0;
+         font-size: 15.5px;
+         font-weight: 700;
+         color: var(--violet);
+         position: relative;
+         list-style: none;
+      }
+      .ajfaq summary::-webkit-details-marker {
+         display: none;
+      }
+      .ajfaq summary:after {
+         content: "+";
+         position: absolute;
+         right: 6px;
+         top: 15px;
+         font-size: 20px;
+         font-weight: 700;
+         color: var(--coral-dk);
+         line-height: 1;
+      }
+      .ajfaq details[open] summary:after {
+         content: "\2013";
+      }
+      .ajfaq .a {
+         padding: 0 8px 18px 0;
+         font-size: 14.5px;
+         color: var(--ink-3);
+      }
+      .ajfaq .a p:last-child {
+         margin-bottom: 0;
+      }
+
+      /* release timeline */
+      .ajrel {
+         max-width: 860px;
+         margin: 0 auto;
+      }
+      .ajrel-v {
+         border-left: 2px solid var(--line);
+         padding: 0 0 26px 24px;
+         position: relative;
+      }
+      .ajrel-v:last-child {
+         padding-bottom: 0;
+      }
+      .ajrel-v:before {
+         content: "";
+         position: absolute;
+         left: -7px;
+         top: 5px;
+         width: 12px;
+         height: 12px;
+         border-radius: 50%;
+         background: var(--coral);
+         box-shadow: 0 0 0 3px #fff;
+      }
+      .ajrel-v.old:before {
+         background: var(--line);
+      }
+      .ajrel-h {
+         display: flex;
+         flex-wrap: wrap;
+         align-items: baseline;
+         gap: 10px;
+         margin-bottom: 10px;
+      }
+      .ajrel-n {
+         font-size: 17px;
+         font-weight: 800;
+         color: var(--violet);
+         font-variant-numeric: tabular-nums;
+      }
+      .ajrel-d {
+         font-size: 12.5px;
+         color: var(--ink-4);
+      }
+      .ajrel-l {
+         list-style: none;
+         padding: 0;
+         margin: 0;
+      }
+      .ajrel-l li {
+         font-size: 13.5px;
+         color: var(--ink-3);
+         margin: 8px 0;
+         display: flex;
+         gap: 10px;
+         align-items: flex-start;
+      }
+      .ajbadge {
+         font-size: 10px;
+         font-weight: 800;
+         letter-spacing: 0.06em;
+         padding: 3px 7px;
+         border-radius: 4px;
+         flex: none;
+         margin-top: 2px;
+      }
+      .ajbadge.new {
+         background: #e8f7ee;
+         color: var(--success);
+      }
+      .ajbadge.fix {
+         background: #fdeaea;
+         color: var(--danger);
+      }
+      .ajbadge.imp {
+         background: var(--surface-2);
+         color: var(--violet);
+      }
+      .ajbadge.plan {
+         background: #f5f5f5;
+         color: var(--ink-4);
+      }
+
+      /* cross-sell row (build_cta.py) */
+      @media (max-width: 900px) {
+         .ajxs-row .ajxs-col {
+            width: 100% !important;
+            min-width: 0 !important;
+            margin-right: 0 !important;
+         }
+      }
+   </style>
+
+   <!-- ================= JUMP NAV (not sticky, on purpose) ================= -->
+   <div class="ajnav">
+      <div class="ajnav-in">
+         <a class="ajnav-brand" href="#overview"
+            ><img
+               class="ajnav-logo"
+               src="./assets/brand/nav-icon.png"
+               alt="Appointment Jitsi"
+            />Appointment <span>Jitsi</span></a
+         >
+         <nav class="ajtabs">
+            <a href="#overview">Overview</a>
+            <a href="#usecases">Use cases</a>
+            <a href="#features">Features</a>
+            <a href="#why">Why</a>
+            <a href="#faqs">FAQs</a>
+            <a href="#releases">Releases</a>
+         </nav>
+         <div class="ajnav-cta">
+            <a class="ajbtn ajbtn-1" href="#talk">Talk to Doodex</a>
+         </div>
+      </div>
+   </div>
+
+   <!-- ================= TRUST BAR (factual chips, no superlatives) ================= -->
+   <div class="ajtrust">
+      <div class="ajtrust-in">
+         <span class="ajtrust-i"
+            ><img
+               class="ajic ajic-16"
+               src="./assets/icons/ic-check-c.png"
+               alt=""
+            />Odoo 17.0 Enterprise</span
+         >
+         <span class="ajtrust-i"
+            ><img
+               class="ajic ajic-16"
+               src="./assets/icons/ic-tag-c.png"
+               alt=""
+            />Free &middot; LGPL-3</span
+         >
+         <span class="ajtrust-i"
+            ><img
+               class="ajic ajic-16"
+               src="./assets/icons/ic-code-c.png"
+               alt=""
+            />13 automated tests, all passing</span
+         >
+         <span class="ajtrust-i"
+            ><img
+               class="ajic ajic-16"
+               src="./assets/icons/ic-database-c.png"
+               alt=""
+            />2 fields added, 0 new models</span
+         >
+         <span class="ajtrust-i"
+            ><img
+               class="ajic ajic-16"
+               src="./assets/icons/ic-support-c.png"
+               alt=""
+            />Published and supported by Doodex</span
+         >
+      </div>
+   </div>
+
+   <!-- ================= HERO — variant H-2, text / visual split ================= -->
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajhero">
+            <div class="ajhero-txt">
+               <p class="ajeyebrow">
+                  Odoo Jitsi integration &middot; Calendar &amp; Appointment
+                  &middot; v17.0.1.1.0
+               </p>
+               <h1 class="ajh1" style="margin-bottom: 18px">
+                  Every Odoo appointment gets its own Jitsi&nbsp;Meet room.
+               </h1>
+               <p class="ajlead">
+                  Your team meets in Jitsi, but Odoo keeps sending Discuss links
+                  &mdash; so someone pastes the real one in by hand. Tick one
+                  box and every Odoo appointment and calendar event arrives with
+                  <span class="ajmark">its own Jitsi Meet room</span>.
+               </p>
+               <div class="ajbtn-row" style="margin-top: 26px">
+                  <a class="ajbtn ajbtn-1" href="#features"
+                     >See the 8 features</a
+                  >
+                  <a class="ajbtn ajbtn-2" href="#why"
+                     >Why not Odoo's own call?</a
+                  >
+               </div>
+               <p class="ajxs ajmut" style="margin-top: 16px">
+                  Free, LGPL-3. No account, no key, no subscription to install
+                  it.
+               </p>
+            </div>
+            <div class="ajhero-shot">
+               <img
+                  src="./assets/gifs/hero-jitsi-journey.gif"
+                  alt="Recorded on a live Odoo 17: the Jitsi Configuration setting switched off, then ticked with Company set to Doodex, the meet.jit.si room address it generated, and that same room open on meet.jit.si showing the Odoo token as its name."
+                  width="968"
+                  height="310"
+                  style="max-width: 100%; height: auto"
+               />
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ================= BAND 01 — OVERVIEW ================= -->
+   <div class="ajband">
+      <div class="ajband-in" id="overview">
+         <span class="ajband-n">01<span style="opacity: 0.55">/06</span></span>
+         <span class="ajband-l">Overview</span>
+         <span class="ajband-r"></span>
+         <span class="ajband-x">What it changes in your Odoo</span>
+      </div>
+   </div>
+
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajnarrow ajctr" style="margin-bottom: 36px">
+            <p class="ajeyebrow">Three clicks, then never again</p>
+            <h2 class="ajh2" style="margin-bottom: 12px">
+               Set it up once. Every meeting after that is already a Jitsi room.
+            </h2>
+            <p class="ajlead">
+               There is nothing to learn and nothing to remember. The module
+               hooks into the fields Odoo already uses for video calls, so your
+               team keeps clicking the same Join button they click today &mdash;
+               it simply opens somewhere else.
+            </p>
+         </div>
+
+         <div class="ajsteps">
+            <div class="ajstep">
+               <span class="ajstep-n">1</span>
+               <h3>Tick the box</h3>
+               <p>
+                  Settings &rarr; Calendar. Switch on
+                  <b>Jitsi Configuration</b>, choose which company name the
+                  rooms are named after, and save.
+               </p>
+            </div>
+            <div class="ajstep">
+               <span class="ajstep-n">2</span>
+               <h3>Book as usual</h3>
+               <p>
+                  Create a meeting, or let a visitor book a slot on your
+                  website. Nothing about the booking flow changes for you or for
+                  them.
+               </p>
+            </div>
+            <div class="ajstep">
+               <span class="ajstep-n">3</span>
+               <h3>The room is already there</h3>
+               <p>
+                  A unique Jitsi Meet address lands in the event, on the Join
+                  button, and in the confirmation e-mail. Nobody pastes
+                  anything.
+               </p>
+            </div>
+         </div>
+
+         <div class="ajstats">
+            <div class="ajstat">
+               <div class="n">3</div>
+               <div class="l">clicks to configure,<br />once per database</div>
+            </div>
+            <div class="ajstat">
+               <div class="n">32</div>
+               <div class="l">
+                  character random token,<br />a new one per meeting
+               </div>
+            </div>
+            <div class="ajstat">
+               <div class="n">0</div>
+               <div class="l">
+                  new models, 0 new<br />access rules, 2 fields
+               </div>
+            </div>
+            <div class="ajstat">
+               <div class="n">&euro;0</div>
+               <div class="l">to buy, to renew,<br />and per user</div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- violet interlude — the R-3 rhythm marker -->
+   <!-- ============ INSTANT DEMO / CONTACT — closes the Overview band ==============
+  CTA MECHANICS. The store vendor guidelines invalidate every external link
+  except YouTube, Microsoft Teams, mailto: and skype:. So:
+    • the e-mail card carries a real  href="mailto:..."
+    • the booking and WhatsApp cards carry NO href — their URL is printed as
+      visible text and encoded in the QR PNG beside it
+  This is the naked-link pattern. Do not "helpfully" add an href here.
+================================================================================= -->
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajqr">
+            <div class="ajqr-h">
+               <p class="ajqr-eye">Before you install anything</p>
+               <h2 class="ajqr-t">
+                  Ask us whether it fits your Odoo &mdash; it takes one question
+               </h2>
+               <p class="ajqr-s">
+                  Not sure if your edition qualifies, or whether you should
+                  point the rooms at your own Jitsi server? Ask. A real person
+                  at Doodex answers, and the answer is free either way.
+               </p>
+            </div>
+            <div class="ajqr-g">
+               <div class="ajqr-c ajqr-lead">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-video-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag hot">30 minutes</span>
+                  </div>
+                  <h3 class="ajqr-ch">Book a live walkthrough</h3>
+                  <p class="ajqr-cp">
+                     We install it on a demo Odoo 17 in front of you and book a
+                     meeting end to end.
+                  </p>
+                  <a
+                     class="ajqr-code"
+                     aria-label="Book a live walkthrough with Doodex"
+                     ><img
+                        src="./assets/icons/qr-meeting.png"
+                        alt="QR code for hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-1 ajqr-b"
+                     >hub.doodex.net<wbr />/r/meeting</a
+                  >
+               </div>
+               <div class="ajqr-c">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-mail-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag">Written reply</span>
+                  </div>
+                  <h3 class="ajqr-ch">Send one question</h3>
+                  <p class="ajqr-cp">
+                     Put it in writing and we reply by e-mail, in English or
+                     French.
+                  </p>
+                  <a
+                     class="ajqr-code"
+                     href="mailto:odoo@doodex.net"
+                     aria-label="E-mail odoo@doodex.net"
+                     ><img
+                        src="./assets/icons/qr-mail.png"
+                        alt="QR code for odoo@doodex.net"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-2 ajqr-b" href="mailto:odoo@doodex.net"
+                     >odoo@doodex.net</a
+                  >
+               </div>
+               <div class="ajqr-c">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-phone-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="ajqr-ch">Message us on WhatsApp</h3>
+                  <p class="ajqr-cp">
+                     Reach the Odoo team at Doodex directly on +62
+                     821-3120-5030.
+                  </p>
+                  <a class="ajqr-code" aria-label="Message Doodex on WhatsApp"
+                     ><img
+                        src="./assets/icons/qr-whatsapp.png"
+                        alt="QR code for hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-2 ajqr-b"
+                     >hub.doodex.net<wbr />/r/whatsapp</a
+                  >
+               </div>
+            </div>
+            <p class="ajqr-f">
+               Scan a code with your phone, or type the address next to it
+               &mdash; both reach the same place.
+            </p>
+         </div>
+      </div>
+   </section>
+
+   <section class="ajsec-t ajband-tail">
+      <div class="ajwrap">
+         <div class="ajinter">
+            <p class="big">
+               One tick in Settings. <em>Every</em> meeting after it opens in
+               Jitsi.
+            </p>
+            <p class="sub">
+               No API key, no Jitsi account to register, no webhook, no cron
+               job. The link is built inside Odoo from a random token and stored
+               on the event like any other field.
+            </p>
+         </div>
+      </div>
+   </section>
+
+   <!-- ================= BAND 02 — USE CASES ================= -->
+   <div class="ajband">
+      <div class="ajband-in" id="usecases">
+         <span class="ajband-n">02<span style="opacity: 0.55">/06</span></span>
+         <span class="ajband-l">Use cases</span>
+         <span class="ajband-r"></span>
+         <span class="ajband-x">Five teams, one setting</span>
+      </div>
+   </div>
+
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajnarrow" style="margin-bottom: 32px">
+            <p class="ajeyebrow">Who this is for</p>
+            <h2 class="ajh2" style="margin-bottom: 12px">
+               Five places an Odoo booking becomes a video call
+            </h2>
+            <p>
+               Each one names the exact Odoo app it runs through, so you can
+               check whether your situation is actually covered rather than
+               taking our word for it.
+            </p>
+         </div>
+
+         <div class="ajuc">
+            <div class="ajuc-i">
+               <div class="ajuc-top">
+                  <span class="ajuc-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-spark-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajuc-w">Sales</span>
+               </div>
+               <h3>Discovery calls that start on time</h3>
+               <p>
+                  A prospect books a slot on your website and the room is in the
+                  confirmation e-mail before they close the tab. No
+                  &ldquo;sending the link shortly&rdquo;. On a first call,
+                  starting on time is most of the first impression.
+               </p>
+               <div class="ajuc-f">
+                  <span class="ajuc-lbl">Runs through</span
+                  ><span class="ajuc-app">Appointment</span
+                  ><span class="ajuc-app">CRM</span>
+               </div>
+            </div>
+
+            <div class="ajuc-i">
+               <div class="ajuc-top">
+                  <span class="ajuc-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-support-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajuc-w">Support</span>
+               </div>
+               <h3>Screen sharing with customers who have no login</h3>
+               <p>
+                  Your customer has no Odoo account and no interest in getting
+                  one. They tap the link in the e-mail and they are in the room
+                  &mdash; browser or phone app, their choice, nothing to
+                  install.
+               </p>
+               <div class="ajuc-f">
+                  <span class="ajuc-lbl">Runs through</span
+                  ><span class="ajuc-app">Calendar</span>
+               </div>
+            </div>
+
+            <div class="ajuc-i">
+               <div class="ajuc-top">
+                  <span class="ajuc-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-users-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajuc-w">Recruitment</span>
+               </div>
+               <h3>Interviews candidates can join from a train</h3>
+               <p>
+                  Candidates pick their own slot and join in the Jitsi Meet app
+                  on their phone. Nothing to install on your side, no account to
+                  create on theirs, and no reschedule because someone could not
+                  get in.
+               </p>
+               <div class="ajuc-f">
+                  <span class="ajuc-lbl">Runs through</span
+                  ><span class="ajuc-app">Appointment</span
+                  ><span class="ajuc-app">Recruitment</span>
+               </div>
+            </div>
+
+            <div class="ajuc-i">
+               <div class="ajuc-top">
+                  <span class="ajuc-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-clock-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajuc-w">Professional services</span>
+               </div>
+               <h3>Paid consultations, room included</h3>
+               <p>
+                  If you sell time &mdash; legal, accounting, coaching, medical
+                  follow-up &mdash; the room exists the moment the slot is paid
+                  for, and travels in the same e-mail as the receipt. One
+                  message, not three.
+               </p>
+               <div class="ajuc-f">
+                  <span class="ajuc-lbl">Runs through</span
+                  ><span class="ajuc-app">Appointment</span>
+               </div>
+            </div>
+
+            <div class="ajuc-i">
+               <div class="ajuc-top">
+                  <span class="ajuc-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-refresh-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajuc-w">Internal</span>
+               </div>
+               <h3>Recurring meetings without the recycled link</h3>
+               <p>
+                  Weekly stand-ups and monthly reviews get a fresh room every
+                  occurrence. Last month's link never lets a former participant
+                  wander into this month's call, and nobody has to remember to
+                  rotate it.
+               </p>
+               <div class="ajuc-f">
+                  <span class="ajuc-lbl">Runs through</span
+                  ><span class="ajuc-app">Calendar</span>
+               </div>
+            </div>
+
+            <div class="ajuc-i ajuc-end">
+               <div class="ajuc-top">
+                  <span class="ajuc-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-arrow-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajuc-w">Yours not listed?</span>
+               </div>
+               <h3>If it books through Odoo, it is covered</h3>
+               <p>
+                  Calendar and Appointment are the only two places this module
+                  touches &mdash; so if your meeting is created by either one,
+                  it gets a room. That is the whole rule. If you are not sure
+                  yours qualifies, ask before you install.
+               </p>
+               <div class="ajuc-f">
+                  <a class="ajuc-cta" href="#talk">Ask us first &rarr;</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ================= BAND 03 — FEATURES ================= -->
+   <div class="ajband">
+      <div class="ajband-in" id="features">
+         <span class="ajband-n">03<span style="opacity: 0.55">/06</span></span>
+         <span class="ajband-l">Features</span>
+         <span class="ajband-r"></span>
+         <span class="ajband-x">Eight features, in plain words</span>
+      </div>
+   </div>
+
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajfl-head" style="margin-bottom: 14px">
+            <p class="ajeyebrow">Everything it does</p>
+            <h2 class="ajh2" style="margin-bottom: 12px">
+               Eight things it actually does
+            </h2>
+            <p>
+               No screenshots in this section, on purpose &mdash; each feature
+               names the exact Odoo field, method or template behind it instead,
+               so you can check the claim against the source rather than against
+               a picture. The recording at the top of the page shows the setup
+               running end to end.
+            </p>
+         </div>
+
+         <!-- FEATURES: copy-first ruled list, no media in this band -->
+
+         <div class="ajfl">
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-sliders-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">01</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>One switch, in the settings page you already know</h3>
+                  <p>
+                     The module adds a <b>Jitsi Configuration</b> block to
+                     <b>Settings &rarr; Calendar</b>, right under the Google
+                     Calendar sync you have already seen. Two controls, no
+                     separate menu, no wizard.
+                  </p>
+                  <ul>
+                     <li>
+                        <b>Jitsi Configuration</b> &mdash; the master switch for
+                        the database
+                     </li>
+                     <li>
+                        <b>Company</b> &mdash; whose name appears in the room
+                        address
+                     </li>
+                     <li>
+                        The Company field only appears once the switch is on, so
+                        there is nothing to misconfigure
+                     </li>
+                     <li>
+                        Stored as standard Odoo system parameters, so it
+                        survives upgrades
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-link-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">02</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>A different room for every single meeting</h3>
+                  <p>
+                     Each event gets its own 32-character random token, and the
+                     room address is built from it. Two meetings never land in
+                     the same room, so last month's participants cannot wander
+                     into today's call.
+                  </p>
+                  <ul>
+                     <li>
+                        Format:
+                        <code
+                           >https://meet.jit.si/<wbr />&lt;Company&gt;/<wbr />&lt;Company&gt;-&lt;token&gt;</code
+                        >
+                     </li>
+                     <li>
+                        The token is a version-4 UUID in hexadecimal &mdash; 32
+                        characters, not guessable
+                     </li>
+                     <li>
+                        Company names with spaces or accents are made URL-safe
+                        automatically
+                     </li>
+                     <li>
+                        The address is stored in a real field,
+                        <code>jitsi_link</code>, so you can put it in a list
+                        view, a report or an automation
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-video-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">03</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>
+                     The Join button you already use &mdash; it just opens Jitsi
+                  </h3>
+                  <p>
+                     No new button, no new habit. Odoo's own video-call field is
+                     filled with the Jitsi room, so the standard Join action on
+                     the meeting form takes everyone straight there, in a new
+                     tab.
+                  </p>
+                  <ul>
+                     <li>
+                        Works from the meeting form, the calendar view and the
+                        invitation
+                     </li>
+                     <li>
+                        Guests do not need an Odoo account, and do not need an
+                        Odoo login screen
+                     </li>
+                     <li>
+                        Participants can open it in the Jitsi Meet app on iOS or
+                        Android instead of a browser
+                     </li>
+                     <li>
+                        The address is a plain URL &mdash; forward it in
+                        WhatsApp, in Slack, on paper
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-mail-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">04</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>The room address is in the e-mail Odoo already sends</h3>
+                  <p>
+                     This is the part people forget and the part that actually
+                     saves the meeting. The module extends two of Odoo's own
+                     e-mail templates with a <b>How to Join</b> block, so the
+                     room travels with the invitation instead of in a follow-up
+                     message nobody reads.
+                  </p>
+                  <ul>
+                     <li>
+                        Extends
+                        <code
+                           >appointment.<wbr />appointment_booked_<wbr />mail_template</code
+                        >
+                        &mdash; the booking confirmation
+                     </li>
+                     <li>
+                        Extends
+                        <code
+                           >calendar.<wbr />calendar_template_<wbr />meeting_update</code
+                        >
+                        &mdash; the meeting invitation and update
+                     </li>
+                     <li>
+                        Falls back to Odoo's standard video-call line if an
+                        event has no Jitsi room, so no e-mail ever goes out
+                        broken
+                     </li>
+                     <li>
+                        No new templates to maintain and nothing to re-brand:
+                        your existing e-mail layout is untouched
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-calendar-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">05</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>
+                     Website bookings are covered, not just internal meetings
+                  </h3>
+                  <p>
+                     When a visitor books a slot through Odoo Appointment on
+                     your public website, the event Odoo creates goes through
+                     exactly the same path. The room is ready before the
+                     confirmation page finishes loading.
+                  </p>
+                  <ul>
+                     <li>
+                        Works on every appointment type, resource or staff-based
+                     </li>
+                     <li>Works for paid appointments as well as free ones</li>
+                     <li>
+                        The visitor never sees Odoo &mdash; they see your
+                        booking page and then a Jitsi room
+                     </li>
+                     <li>Nothing to configure per appointment type</li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- three more features as dense rows, so the section does not become a fifth zigzag -->
+   <section class="ajsec ajsec-alt">
+      <div class="ajwrap">
+         <div class="ajfl-head" style="margin-bottom: 26px">
+            <p class="ajeyebrow">And three more</p>
+            <h2 class="ajh2" style="margin-bottom: 10px">
+               Control, exceptions and the way back out
+            </h2>
+            <p>
+               The three features nobody advertises and everybody eventually
+               needs.
+            </p>
+         </div>
+
+         <div class="ajfl">
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-code-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">06</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>An escape hatch for the meetings that need one</h3>
+                  <p>
+                     Every event carries an <code>is_jitsi</code> field, and two
+                     callable methods sit next to it:
+                     <code>generate_jitsi_link()</code> issues a room,
+                     <code>clear_jitsi_link()</code> drops the meeting back to
+                     Odoo's own video call. Wire either one to a server action
+                     or an automation rule and you have per-meeting exceptions
+                     without forking the module.
+                  </p>
+                  <p class="ajfl-note">
+                     <b>Be clear on what this is:</b> the module ships no
+                     checkbox for it on the meeting form. This is a hook for
+                     whoever administers your Odoo, not a control your end users
+                     will find. If you want it on the form, it is a one-line
+                     view change &mdash; ask us, or add the field yourself.
+                  </p>
+               </div>
+            </div>
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-refresh-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">07</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>Recurring meetings get one room each</h3>
+                  <p>
+                     Set a meeting to repeat weekly and every occurrence is
+                     issued its own token. Nobody joins the wrong week, and you
+                     do not have to remember to refresh anything between
+                     occurrences.
+                  </p>
+               </div>
+            </div>
+            <div class="ajfl-i">
+               <div class="ajfl-rail">
+                  <span class="ajfl-ico"
+                     ><img
+                        class="ajic ajic-22"
+                        src="./assets/icons/ic-shield-w.png"
+                        alt=""
+                  /></span>
+                  <span class="ajfl-n">08</span>
+               </div>
+               <div class="ajfl-b">
+                  <h3>Change your mind and nothing breaks</h3>
+                  <p>
+                     Untick the global switch and new meetings go back to Odoo's
+                     built-in video call, immediately, with no migration and no
+                     cleanup. Uninstall the module and Odoo removes the two
+                     fields it added &mdash; it added nothing else to remove.
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- the small print, stated up front rather than discovered later -->
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajnarrow" style="margin-bottom: 26px">
+            <p class="ajeyebrow">Under the bonnet</p>
+            <h2 class="ajh2" style="margin-bottom: 10px">
+               What it actually adds to your database
+            </h2>
+            <p>
+               Short list, on purpose. A module that touches little is a module
+               that breaks little on your next Odoo upgrade.
+            </p>
+         </div>
+
+         <div class="ajfeat">
+            <div class="ajfeat-i">
+               <h4>Two fields on <code>calendar.event</code></h4>
+               <p>
+                  <code>jitsi_link</code> (stored text, copied when you
+                  duplicate an event) and <code>is_jitsi</code> (boolean, off by
+                  default). That is the entire data footprint.
+               </p>
+            </div>
+            <div class="ajfeat-i">
+               <h4>Zero new models</h4>
+               <p>
+                  Everything is an inheritance of
+                  <code>calendar.event</code> and
+                  <code>res.config.settings</code>. No new tables, no new menus,
+                  no new security groups.
+               </p>
+            </div>
+            <div class="ajfeat-i">
+               <h4>Zero new access rules</h4>
+               <p>
+                  Whoever can see a meeting today can see its room address. Your
+                  existing Odoo permissions are the permissions.
+               </p>
+            </div>
+            <div class="ajfeat-i">
+               <h4>No API key and no outbound call</h4>
+               <p>
+                  A Jitsi room comes into existence when somebody opens its
+                  address. Odoo therefore only has to compose the address
+                  &mdash; there is no API to authenticate against, no key to
+                  rotate, no rate limit to hit and no service that can be down
+                  at the moment you save a meeting.
+               </p>
+            </div>
+            <div class="ajfeat-i">
+               <h4>Two methods you can call yourself</h4>
+               <p>
+                  <code>generate_jitsi_link()</code> issues a fresh room,
+                  <code>clear_jitsi_link()</code> drops back to Odoo's own. Wire
+                  either one to a server action or a scheduled action without
+                  writing a module.
+               </p>
+            </div>
+            <div class="ajfeat-i">
+               <h4>13 automated tests</h4>
+               <p>
+                  Shipped inside the module and runnable with Odoo's own test
+                  runner, against Odoo 17 Enterprise on PostgreSQL 15. You can
+                  verify the behaviour on this page yourself.
+               </p>
+            </div>
+            <div class="ajfeat-i">
+               <h4>LGPL-3, source included</h4>
+               <p>
+                  Roughly 150 lines of readable Python. Read it, fork it, extend
+                  it. There is no obfuscated blob and nothing phones home.
+               </p>
+            </div>
+            <div class="ajfeat-i">
+               <h4>English and French included</h4>
+               <p>
+                  The module ships an English README and a French LISEZMOI.
+                  Field labels follow your Odoo interface language.
+               </p>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- requirements: the faOtools "transparent documentation" move -->
+   <section class="ajsec ajsec-alt">
+      <div class="ajwrap">
+         <div class="ajnarrow ajctr" style="margin-bottom: 28px">
+            <p class="ajeyebrow">Requirements</p>
+            <h2 class="ajh2" style="margin-bottom: 10px">
+               Everything you need to know before you click install
+            </h2>
+            <p>
+               Including the two limits. We would rather you read them here than
+               discover them on Tuesday.
+            </p>
+         </div>
+
+         <div class="ajreq">
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-tag-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Version</p>
+                  <p class="v">Odoo 17.0 only. Module version 17.0.1.1.0.</p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-alert-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Edition</p>
+                  <p class="v">
+                     Enterprise required. It depends on Odoo's
+                     <code>appointment</code> app, which is not in Community.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-code-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Depends on</p>
+                  <p class="v">
+                     <code>base</code>, <code>calendar</code>,
+                     <code>appointment</code>. Nothing outside Odoo.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-tag-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Licence &amp; price</p>
+                  <p class="v">
+                     LGPL-3. Free, for any number of users and databases.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-install-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Install</p>
+                  <p class="v">
+                     Drop it in your addons path and install from Apps. No pip
+                     package, no system dependency.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-sliders-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Configuration</p>
+                  <p class="v">
+                     Two fields in Settings &rarr; Calendar. Nothing else.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-globe-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Video service</p>
+                  <p class="v">
+                     Rooms point at the public <code>meet.jit.si</code>. Jitsi
+                     Meet is free and open source.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-lock-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Moderator sign-in</p>
+                  <p class="v">
+                     On the public <code>meet.jit.si</code>, the meeting does
+                     not start until a signed-in moderator joins &mdash; free,
+                     one time, Google, GitHub or Facebook. Guests need no
+                     account but wait on a holding screen until that moderator
+                     arrives. On your own Jitsi server, nobody signs in.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-server-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Own Jitsi server &mdash; limit</p>
+                  <p class="v">
+                     The address is fixed to <code>meet.jit.si</code> in this
+                     version. Pointing it at your own Jitsi is a one-line
+                     change; it is on the roadmap and Doodex can do it for you.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-users-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Multi-company &mdash; limit</p>
+                  <p class="v">
+                     The Company used in the room name is one value for the
+                     whole database, not one per company. Per-company naming is
+                     on the roadmap.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-database-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Your data</p>
+                  <p class="v">
+                     Odoo stores only the room address. The video itself never
+                     passes through Odoo.
+                  </p>
+               </div>
+            </div>
+            <div class="ajreq-i">
+               <img
+                  class="ajic ajic-20"
+                  src="./assets/icons/ic-mobile-c.png"
+                  alt=""
+               />
+               <div>
+                  <p class="t">Mobile</p>
+                  <p class="v">
+                     Participants can join in the free Jitsi Meet app on iOS and
+                     Android, or in any modern browser.
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ================= BAND 04 — WHY ================= -->
+   <div class="ajband">
+      <div class="ajband-in" id="why">
+         <span class="ajband-n">04<span style="opacity: 0.55">/06</span></span>
+         <span class="ajband-l">Why</span>
+         <span class="ajband-r"></span>
+         <span class="ajband-x">The objection, answered head-on</span>
+      </div>
+   </div>
+
+   <!-- FRONTAL OBJECTION #1 — the one that kills the sale silently if ignored -->
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajnarrow">
+            <p class="ajeyebrow">The obvious question</p>
+            <h2 class="ajh2" style="margin-bottom: 14px">
+               &ldquo;Odoo 17 already has a video call. Why would I add
+               this?&rdquo;
+            </h2>
+            <p class="ajlead" style="margin-bottom: 8px">
+               Fair, and the honest answer is: if Odoo Discuss is where your
+               meetings already happen, you do not need this module. Install it
+               when the video tool your team actually uses is Jitsi &mdash;
+               because then Odoo is quietly working against you four times a
+               day.
+            </p>
+         </div>
+
+         <div class="ajreb ajnarrow" style="margin-top: 30px">
+            <div class="r">
+               <div class="no">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-cross-r.png"
+                        alt=""
+                     />Two video products, depending on where the meeting was
+                     booked</b
+                  >
+                  <p>
+                     Odoo sends a Discuss link. Your team sends a Jitsi link.
+                     Participants get both and pick wrong.
+                  </p>
+               </div>
+               <div class="yes">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-check-g.png"
+                        alt=""
+                     />One room, whatever created the meeting</b
+                  >
+                  <p>
+                     Website booking, internal calendar entry, recurring
+                     stand-up &mdash; all of them come out as Jitsi. One tool,
+                     one habit.
+                  </p>
+               </div>
+            </div>
+            <div class="r">
+               <div class="no">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-cross-r.png"
+                        alt=""
+                     />Guests join Odoo Discuss in a browser tab</b
+                  >
+                  <p>
+                     Your guest is not going to install the Odoo app to take one
+                     call, so they join in a mobile browser &mdash; and a client
+                     on a train notices.
+                  </p>
+               </div>
+               <div class="yes">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-check-g.png"
+                        alt=""
+                     />Guests join in the Jitsi Meet app</b
+                  >
+                  <p>
+                     Jitsi Meet is a free native app on iOS and Android. The
+                     link from your Odoo e-mail opens straight into it.
+                  </p>
+               </div>
+            </div>
+            <div class="r">
+               <div class="no">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-cross-r.png"
+                        alt=""
+                     />The video runs on your Odoo server, whether you planned
+                     that or not</b
+                  >
+                  <p>
+                     The call is tied to the machine running your ERP. Where the
+                     media goes is decided for you.
+                  </p>
+               </div>
+               <div class="yes">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-check-g.png"
+                        alt=""
+                     />The video runs wherever Jitsi runs</b
+                  >
+                  <p>
+                     Public <code>meet.jit.si</code> today. Your own Jitsi
+                     server, in your own country, once you point the address at
+                     it &mdash; a one-line change Doodex can make for you.
+                  </p>
+               </div>
+            </div>
+            <div class="r">
+               <div class="no">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-cross-r.png"
+                        alt=""
+                     />Somebody pastes the real link in by hand</b
+                  >
+                  <p>
+                     And they do it <em>after</em> Odoo already sent the
+                     confirmation e-mail, so the room lives in a second message
+                     the guest has to go find.
+                  </p>
+               </div>
+               <div class="yes">
+                  <b
+                     ><img
+                        class="ajic ajic-16"
+                        src="./assets/icons/ic-check-g.png"
+                        alt=""
+                     />Nobody pastes anything, ever</b
+                  >
+                  <p>
+                     The room is in the field, on the Join button and inside the
+                     confirmation e-mail before anyone thinks about it.
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- comparison table: three honest options, no competitor named, nothing disparaged -->
+   <section class="ajsec ajsec-alt">
+      <div class="ajwrap">
+         <div class="ajnarrow" style="margin-bottom: 26px">
+            <p class="ajeyebrow">Side by side</p>
+            <h2 class="ajh2" style="margin-bottom: 10px">
+               Your three real options
+            </h2>
+            <p>
+               These are the three things an Odoo team actually does about video
+               calls. Pick the column that describes you.
+            </p>
+         </div>
+         <div class="ajtblw">
+            <table class="ajtbl">
+               <thead>
+                  <tr>
+                     <th style="width: 23%"></th>
+                     <th class="ours" style="width: 29%">Appointment Jitsi</th>
+                     <th style="width: 24%">Odoo's built-in call</th>
+                     <th style="width: 24%">Pasting a link by hand</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><b>Where the call happens</b></td>
+                     <td class="ours">Jitsi Meet</td>
+                     <td>Odoo Discuss, on your Odoo server</td>
+                     <td>Wherever your team meets</td>
+                  </tr>
+                  <tr>
+                     <td><b>Work per meeting</b></td>
+                     <td class="ours"><b>None</b></td>
+                     <td>None</td>
+                     <td>About 30 seconds, every single time</td>
+                  </tr>
+                  <tr>
+                     <td><b>Room address in the confirmation e-mail</b></td>
+                     <td class="ours"><b>Yes</b></td>
+                     <td>Yes</td>
+                     <td>No &mdash; it needs a second message</td>
+                  </tr>
+                  <tr>
+                     <td><b>A different room per meeting</b></td>
+                     <td class="ours"><b>Yes, 32-character token</b></td>
+                     <td>Yes</td>
+                     <td>Only if somebody remembers</td>
+                  </tr>
+                  <tr>
+                     <td><b>Guest needs an account to join</b></td>
+                     <td class="ours"><b>No</b></td>
+                     <td>No</td>
+                     <td>Depends on the tool</td>
+                  </tr>
+                  <tr>
+                     <td><b>Native phone app for guests</b></td>
+                     <td class="ours"><b>Jitsi Meet, iOS and Android</b></td>
+                     <td>Mobile browser</td>
+                     <td>Depends on the tool</td>
+                  </tr>
+                  <tr>
+                     <td><b>Recurring meetings handled</b></td>
+                     <td class="ours"><b>One room per occurrence</b></td>
+                     <td>Yes</td>
+                     <td>Usually one room reused for months</td>
+                  </tr>
+                  <tr>
+                     <td><b>Can move to a server you control</b></td>
+                     <td class="ours">
+                        One-line change &middot; on the roadmap
+                     </td>
+                     <td>It is already your server</td>
+                     <td>Your choice</td>
+                  </tr>
+                  <tr>
+                     <td><b>Price</b></td>
+                     <td class="ours"><b>&euro;0, LGPL-3</b></td>
+                     <td>Included in Odoo</td>
+                     <td>&euro;0, plus the 30 seconds</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <p class="ajxs ajmut" style="margin-top: 14px">
+            Odoo's built-in call is a perfectly good product &mdash; this table
+            is about which room your invitations should point at, not about
+            which video tool is better.
+         </p>
+      </div>
+   </section>
+
+   <!-- cost bars: honest arithmetic, clearly labelled as an example -->
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajnarrow ajctr" style="margin-bottom: 8px">
+            <p class="ajeyebrow">The number</p>
+            <h2 class="ajh2" style="margin-bottom: 10px">
+               Thirty seconds a meeting, and you can do the sum yourself
+            </h2>
+            <p>
+               Pasting a room link into a meeting, then sending a follow-up
+               message so the guest actually has it, takes about half a minute.
+               Here is what that costs a year at three honest volumes. No hidden
+               assumptions &mdash; it is 30&nbsp;seconds &times; meetings
+               &times; 12.
+            </p>
+         </div>
+         <div class="ajcost">
+            <div class="ajcost-r">
+               <div class="ajcost-t">
+                  <b>20 meetings a month, done by hand</b
+                  ><span>every month, for ever</span>
+               </div>
+               <div class="ajcost-k">
+                  <div class="ajcost-w">
+                     <div class="ajcost-b them" style="width: 20%"></div>
+                  </div>
+                  <span class="ajcost-a">2 h / year</span>
+               </div>
+            </div>
+            <div class="ajcost-r">
+               <div class="ajcost-t">
+                  <b>50 meetings a month, done by hand</b
+                  ><span>every month, for ever</span>
+               </div>
+               <div class="ajcost-k">
+                  <div class="ajcost-w">
+                     <div class="ajcost-b them" style="width: 50%"></div>
+                  </div>
+                  <span class="ajcost-a">5 h / year</span>
+               </div>
+            </div>
+            <div class="ajcost-r">
+               <div class="ajcost-t">
+                  <b>100 meetings a month, done by hand</b
+                  ><span>every month, for ever</span>
+               </div>
+               <div class="ajcost-k">
+                  <div class="ajcost-w">
+                     <div class="ajcost-b them" style="width: 100%"></div>
+                  </div>
+                  <span class="ajcost-a">10 h / year</span>
+               </div>
+            </div>
+            <div class="ajcost-r">
+               <div class="ajcost-t">
+                  <b>Any volume, with Appointment Jitsi</b
+                  ><span>configured once, then nothing</span>
+               </div>
+               <div class="ajcost-k">
+                  <div class="ajcost-w">
+                     <div class="ajcost-b ours" style="width: 2%"></div>
+                  </div>
+                  <span class="ajcost-a">~1 min, once</span>
+               </div>
+            </div>
+         </div>
+         <p
+            class="ajxs ajmut ajctr"
+            style="
+               margin-top: 18px;
+               max-width: 640px;
+               margin-left: auto;
+               margin-right: auto;
+            "
+         >
+            The hours are the smaller half of it. The real cost of a hand-pasted
+            link is the call that starts five minutes late because the guest was
+            looking in the wrong e-mail.
+         </p>
+      </div>
+   </section>
+
+   <!-- QR CTA #2 of 3 -->
+   <section class="ajsec-t" id="talk">
+      <div class="ajwrap">
+         <div class="ajqr">
+            <div class="ajqr-h">
+               <p class="ajqr-eye">Still deciding</p>
+               <h2 class="ajqr-t">
+                  Two limits stand between this and perfect. Ask us about them.
+               </h2>
+               <p class="ajqr-s">
+                  Self-hosted Jitsi and per-company room names are the two
+                  things this version does not do. Both are small changes. If
+                  either one is a blocker for you, say so &mdash; it moves up
+                  the roadmap.
+               </p>
+            </div>
+            <div class="ajqr-g">
+               <div class="ajqr-c ajqr-lead">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-server-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag hot">Most asked</span>
+                  </div>
+                  <h3 class="ajqr-ch">Point it at our own Jitsi</h3>
+                  <p class="ajqr-cp">
+                     Book 30 minutes and we scope the change and the hosting on
+                     the call.
+                  </p>
+                  <a class="ajqr-code" aria-label="Book 30 minutes with Doodex"
+                     ><img
+                        src="./assets/icons/qr-meeting.png"
+                        alt="QR code for hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-1 ajqr-b"
+                     >hub.doodex.net<wbr />/r/meeting</a
+                  >
+               </div>
+               <div class="ajqr-c">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-code-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag">Written reply</span>
+                  </div>
+                  <h3 class="ajqr-ch">Report a bug or ask for a feature</h3>
+                  <p class="ajqr-cp">
+                     Include your Odoo version and the steps. Fixes appear in
+                     the Releases section below.
+                  </p>
+                  <a
+                     class="ajqr-code"
+                     href="mailto:odoo@doodex.net"
+                     aria-label="E-mail odoo@doodex.net"
+                     ><img
+                        src="./assets/icons/qr-mail.png"
+                        alt="QR code for odoo@doodex.net"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-2 ajqr-b" href="mailto:odoo@doodex.net"
+                     >odoo@doodex.net</a
+                  >
+               </div>
+               <div class="ajqr-c">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-eye-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag">Read first</span>
+                  </div>
+                  <h3 class="ajqr-ch">The write-up on our blog</h3>
+                  <p class="ajqr-cp">
+                     Why we built it, and the Odoo internals it hooks into.
+                  </p>
+                  <a
+                     class="ajqr-code"
+                     aria-label="Read the Appointment Jitsi write-up"
+                     ><img
+                        src="./assets/icons/qr-blog.png"
+                        alt="QR code for the Doodex blog article about Appointment Jitsi"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-2 ajqr-b"
+                     >doodex.net<wbr />/blog &middot; appointment-jitsi</a
+                  >
+               </div>
+            </div>
+            <p class="ajqr-f">
+               Scan a code with your phone, or type the address next to it
+               &mdash; both reach the same place.
+            </p>
+         </div>
+      </div>
+   </section>
+
+   <!-- ================= BAND 05 — FAQs ================= -->
+   <div class="ajband">
+      <div class="ajband-in" id="faqs">
+         <span class="ajband-n">05<span style="opacity: 0.55">/06</span></span>
+         <span class="ajband-l">FAQs</span>
+         <span class="ajband-r"></span>
+         <span class="ajband-x">Thirteen real questions</span>
+      </div>
+   </div>
+
+   <section class="ajsec ajsec-alt">
+      <div class="ajwrap">
+         <div class="ajnarrow" style="margin-bottom: 26px">
+            <p class="ajeyebrow">Questions we actually get</p>
+            <h2 class="ajh2" style="margin-bottom: 10px">
+               Thirteen questions, answered without hedging
+            </h2>
+            <p>Including the four whose honest answer is &ldquo;no&rdquo;.</p>
+         </div>
+
+         <div class="ajfaq">
+            <details open>
+               <summary>
+                  Do I need Odoo Enterprise, or will this run on Community?
+               </summary>
+               <div class="a">
+                  <p>
+                     <b>You need Enterprise.</b> The module depends on Odoo's
+                     <code>appointment</code> app, which ships only with Odoo
+                     Enterprise and Odoo Online. On Community, installation will
+                     fail with a missing-dependency error rather than
+                     half-working. If you are on Community and only need Jitsi
+                     rooms on ordinary Calendar meetings, write to us &mdash;
+                     that is a smaller module and we are interested in whether
+                     people want it.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Does it work on Odoo 18 or Odoo 19?</summary>
+               <div class="a">
+                  <p>
+                     <b>Not yet.</b> This is a 17.0 module and it is only
+                     published for 17.0. Odoo 18 and 19 are on the roadmap in
+                     the Releases section below, without a promised date,
+                     because we would rather ship late than list a version that
+                     does not exist. If you are on 18 or 19 and want this, tell
+                     us &mdash; demand is how we order the roadmap.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Do participants need a Jitsi account to join?</summary>
+               <div class="a">
+                  <p>
+                     <b>Your guests need no account</b> &mdash; they open the
+                     address in a browser or the Jitsi Meet app, type a display
+                     name, and they are in.
+                  </p>
+                  <p>
+                     <b
+                        >But on the public <code>meet.jit.si</code> there is one
+                        catch worth knowing up front:</b
+                     >
+                     the conference does not actually start until a signed-in
+                     moderator joins. A guest who clicks the link before anyone
+                     else sees a holding screen telling them so, and waits. The
+                     moderator sign-in is free and one time per browser (Google,
+                     GitHub or Facebook) &mdash; a policy Jitsi introduced in
+                     August 2023. In practice whoever hosts the meeting signs in
+                     once, and everybody else just clicks the link.
+                  </p>
+                  <p>
+                     <b
+                        >On a Jitsi server you run yourself, none of this
+                        applies</b
+                     >
+                     &mdash; no sign-in, no moderator gate, no third party in
+                     the middle. It is the strongest argument for self-hosting,
+                     and it is the first item on our roadmap.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  Can I point the rooms at my own Jitsi server instead of
+                  meet.jit.si?
+               </summary>
+               <div class="a">
+                  <p>
+                     <b>Not from Settings in this version.</b> The base address
+                     <code>https://meet.jit.si</code> is fixed in the code. It
+                     is a single line, so the change is genuinely small &mdash;
+                     it is on the roadmap as a proper setting, and in the
+                     meantime Doodex can make the change and set up the Jitsi
+                     server as a service. Book the 30 minutes above and we will
+                     tell you what it costs before you commit to anything.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  What happens to meetings that already exist when I install it?
+               </summary>
+               <div class="a">
+                  <p>
+                     They keep whatever video address they have now. The module
+                     does not go back and rewrite your history. To bring
+                     existing meetings across, call
+                     <code>generate_jitsi_link()</code> on them from a server
+                     action &mdash; select the records in the list view and run
+                     it. There is no per-meeting button for this out of the box;
+                     see the note on Feature 06.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  Can I keep some meetings on Odoo's built-in call?
+               </summary>
+               <div class="a">
+                  <p>
+                     <b>Yes, but not from the meeting form.</b> Each event has
+                     an <code>is_jitsi</code> field that overrides the global
+                     default, and <code>clear_jitsi_link()</code> puts a single
+                     meeting back on the standard Odoo Discuss link. Neither is
+                     exposed as a checkbox out of the box, so exceptions are set
+                     through a server action, an automation rule, or by adding
+                     the field to your own form view. If per-meeting control
+                     matters to you, say so &mdash; putting it on the form is a
+                     small change.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>How private is the room address?</summary>
+               <div class="a">
+                  <p>
+                     Each room name contains a fresh 32-character random token,
+                     so it is not something anyone can guess or enumerate. But
+                     treat it the way you treat any meeting link:
+                     <b>whoever holds the address can join the call.</b> If a
+                     meeting is sensitive, set a room password in Jitsi once you
+                     are inside, or enable the lobby &mdash; both are Jitsi
+                     features and neither needs Odoo. Inside Odoo, the address
+                     is visible to exactly the people who can already see the
+                     meeting.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Does it change the e-mails Odoo sends?</summary>
+               <div class="a">
+                  <p>
+                     <b>Yes, two of them.</b> It extends Odoo's own
+                     <code
+                        >appointment.<wbr />appointment_booked_<wbr />mail_template</code
+                     >
+                     (the booking confirmation) and
+                     <code
+                        >calendar.<wbr />calendar_template_<wbr />meeting_update</code
+                     >
+                     (the meeting invitation and update) with a
+                     <b>How to Join</b> block. Your layout, branding and wording
+                     are otherwise untouched, and if an event has no Jitsi room
+                     the block falls back to Odoo's standard video-call line.
+                     Note that these are overrides of core templates: if you
+                     have already customised those two templates yourself,
+                     review them after installing.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Does it work with recurring meetings?</summary>
+               <div class="a">
+                  <p>
+                     <b>Yes, and each occurrence gets its own room.</b> That is
+                     deliberate: a single reused room means last month's
+                     participants can walk into this month's call. If you would
+                     rather one room served a whole series, that is a small
+                     change &mdash; ask us.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  We run several companies in one database. Does that work?
+               </summary>
+               <div class="a">
+                  <p>
+                     <b>Partly, and here is the limit.</b> The
+                     <b>Company</b> whose name goes into the room address is a
+                     single setting for the whole database, not one per company.
+                     So the meetings work fine across companies, but every room
+                     is named after the one company you picked. Per-company
+                     naming is on the roadmap. If you need it now, say so and we
+                     will scope it.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  Where does our meeting data actually go? What about GDPR?
+               </summary>
+               <div class="a">
+                  <p>
+                     Odoo stores
+                     <b>only the text of the room address</b> &mdash; no
+                     recordings, no participant list, no video, no audio. The
+                     call itself never passes through your Odoo server at all:
+                     it flows through whichever Jitsi instance the address
+                     points at.
+                  </p>
+                  <p>
+                     Today that address points at the public
+                     <code>meet.jit.si</code>, operated by 8x8, so their terms
+                     and their data handling apply to the call. If your
+                     compliance position requires the video to stay inside your
+                     own infrastructure or a specific jurisdiction, self-host
+                     Jitsi &mdash; that is the whole reason self-hosting is the
+                     first item on our roadmap, and it is a service Doodex
+                     provides.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>What happens if I uninstall it?</summary>
+               <div class="a">
+                  <p>
+                     Odoo removes the two fields the module added,
+                     <code>jitsi_link</code> and <code>is_jitsi</code>, and the
+                     two e-mail template overrides revert to Odoo's originals.
+                     There are no new tables, no new access rules and no
+                     leftover menus, because the module never created any.
+                     Existing meetings keep whatever value is currently in
+                     Odoo's own <code>videocall_location</code> field &mdash; if
+                     that is a Jitsi address you no longer want, clear it or let
+                     Odoo recompute it.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>It is free. So what is in it for Doodex?</summary>
+               <div class="a">
+                  <p>
+                     Straight answer: this module is how you meet us. Doodex is
+                     an Odoo partner &mdash; we do implementation,
+                     customisation, migration and hosting, including Jitsi
+                     hosting. A free module that solves one problem properly is
+                     a better introduction than an advert. Install it, never
+                     contact us, and that is a perfectly good outcome; the
+                     licence is LGPL-3 precisely so that is a real option and
+                     not a trap.
+                  </p>
+               </div>
+            </details>
+         </div>
+      </div>
+   </section>
+
+   <!-- ================= BAND 06 — RELEASES ================= -->
+   <div class="ajband">
+      <div class="ajband-in" id="releases">
+         <span class="ajband-n">06<span style="opacity: 0.55">/06</span></span>
+         <span class="ajband-l">Releases</span>
+         <span class="ajband-r"></span>
+         <span class="ajband-x">Public changelog &amp; roadmap</span>
+      </div>
+   </div>
+
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajnarrow" style="margin-bottom: 30px">
+            <p class="ajeyebrow">Kept in public</p>
+            <h2 class="ajh2" style="margin-bottom: 10px">
+               Every version, dated, including the fixes we are not proud of
+            </h2>
+            <p>
+               The quiet question behind every free module is &ldquo;will this
+               still be maintained in a year?&rdquo;. A changelog is the only
+               honest answer to it, so this one stays on the page and gets a new
+               entry every time the module changes.
+            </p>
+         </div>
+
+         <div class="ajrel">
+            <div class="ajrel-v">
+               <div class="ajrel-h">
+                  <span class="ajrel-n">17.0.1.1.0</span
+                  ><span class="ajrel-d">Current release</span>
+               </div>
+               <ul class="ajrel-l">
+                  <li>
+                     <span class="ajbadge fix">FIX</span
+                     ><span
+                        >The room address now really appears in the confirmation
+                        e-mails. The template file was never registered in the
+                        module manifest, so Odoo had never loaded it and both
+                        e-mail overrides were silently dead. This was the
+                        module's headline feature and it had not worked since
+                        the first release.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge imp">IMP</span
+                     ><span
+                        >The per-event <code>is_jitsi</code> field is now
+                        honoured. Previously the global setting applied to every
+                        event in the database regardless of the field's value.
+                        Note that the field still has no checkbox on the meeting
+                        form &mdash; it is driven from a server action or an
+                        automation.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge fix">FIX</span
+                     ><span
+                        >Turning the global setting off now really turns Jitsi
+                        off. The stored value was being read as text, and any
+                        text counts as &ldquo;on&rdquo;, so unticking the box
+                        left the integration running.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge fix">FIX</span
+                     ><span
+                        >Recurring meetings now get their own room per
+                        occurrence. Odoo creates recurrences in a batch, and the
+                        batch path skipped room creation entirely.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge fix">FIX</span
+                     ><span
+                        >Company names containing a space or an accent now
+                        produce a valid address. <code>Doodex Group</code> used
+                        to put a literal space inside the URL.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge imp">IMP</span
+                     ><span
+                        >Removed the startup warning Odoo printed on every
+                        install about the module not creating records in
+                        batch.</span
+                     >
+                  </li>
+               </ul>
+            </div>
+
+            <div class="ajrel-v old">
+               <div class="ajrel-h">
+                  <span class="ajrel-n">17.0.1.0.0</span
+                  ><span class="ajrel-d">First release</span>
+               </div>
+               <ul class="ajrel-l">
+                  <li>
+                     <span class="ajbadge new">NEW</span
+                     ><span
+                        >The <code>jitsi_link</code> field on
+                        <code>calendar.event</code>, computed from the event's
+                        access token.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge new">NEW</span
+                     ><span
+                        ><b>Jitsi Configuration</b> in Settings &rarr; Calendar:
+                        the global switch and the Company field.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge new">NEW</span
+                     ><span
+                        >Odoo's Join action redirected to the Jitsi room.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge new">NEW</span
+                     ><span
+                        ><code>generate_jitsi_link()</code> and
+                        <code>clear_jitsi_link()</code> for server actions and
+                        automations.</span
+                     >
+                  </li>
+               </ul>
+            </div>
+
+            <div class="ajrel-v old">
+               <div class="ajrel-h">
+                  <span class="ajrel-n">Roadmap</span
+                  ><span class="ajrel-d"
+                     >Planned &mdash; not shipped, no promised date</span
+                  >
+               </div>
+               <ul class="ajrel-l">
+                  <li>
+                     <span class="ajbadge plan">PLAN</span
+                     ><span
+                        ><b>Your own Jitsi server, as a setting.</b> The most
+                        requested item, and the smallest change. Ranked
+                        first.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge plan">PLAN</span
+                     ><span
+                        ><b>Per-company room names</b> for multi-company
+                        databases.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge plan">PLAN</span
+                     ><span
+                        ><b>The per-event toggle on the meeting form.</b> The
+                        <code>is_jitsi</code> field works but ships with no
+                        checkbox, so exceptions need a server action today.
+                        Putting it on the form is the smallest item on this
+                        list.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge plan">PLAN</span
+                     ><span
+                        ><b>Odoo 18 and Odoo 19.</b> Ordered by how many people
+                        ask.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge plan">PLAN</span
+                     ><span
+                        ><b>Room options carried from Odoo</b> &mdash; lobby on,
+                        start muted, a password per meeting.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="ajbadge plan">PLAN</span
+                     ><span
+                        ><b>Jitsi embedded inside Odoo</b>, so the call opens in
+                        a form view instead of a new tab. The groundwork exists
+                        in the repository but it is switched off and
+                        unsupported, so it is listed here rather than as a
+                        feature.</span
+                     >
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <p class="ajxs ajmut ajctr" style="margin-top: 26px">
+            Want one of these sooner? Tell us at
+            <a href="mailto:odoo@doodex.net">odoo@doodex.net</a>. Requests
+            genuinely reorder this list.
+         </p>
+      </div>
+   </section>
+
+   <!-- ============ WORKS GREAT WITH (cross-sell) ====================
+  Built by build_cta.py from PROMPT-works-great-with.md. INLINE LONGHAND
+  STYLES ONLY - the store's html_sanitize() drops box-shadow, rgba(),
+  display:grid, gap, every flex* property, @media, ::before and more, and
+  may delete the <style> block outright. Do not "tidy" these into the
+  stylesheet and do not shorten a longhand property.
+  Buttons link to each module's own apps.odoo.com page by client
+  instruction (2026-09-01). These are Odoo's own store URLs, not third-party
+  external links; verify in the store preview that they survive
+  html_sanitize() and stay clickable. Never point one at a non-odoo.com host.
+  The blurb min-height is MEASURED in the preview - re-measure it in
+  build_cta.py if any blurb changes, or a button drops out of line.
+=============================================================== -->
+   <section
+      style="background-color: #faf7fc; padding-top: 56px; padding-bottom: 56px"
+   >
+      <div style="padding-left: 24px; padding-right: 24px">
+         <div style="max-width: 1032px; margin-left: auto; margin-right: auto">
+            <p
+               style="
+                  margin: 0 0 14px;
+                  text-align: center;
+                  font-size: 12px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: #e85c52;
+               "
+            >
+               Works great with
+            </p>
+            <h2
+               style="
+                  margin: 0 auto 12px;
+                  max-width: 760px;
+                  text-align: center;
+                  font-size: 27px;
+                  font-weight: 800;
+                  line-height: 1.22;
+                  color: #270140;
+                  letter-spacing: -0.015em;
+               "
+            >
+               Other Doodex modules, built the same way
+            </h2>
+            <p
+               style="
+                  margin: 0 auto 22px;
+                  max-width: 760px;
+                  text-align: center;
+                  font-size: 18.5px;
+                  line-height: 1.6;
+                  color: #525252;
+               "
+            >
+               Different problems, same approach: narrow scope, a one-time price
+               and the limits stated up front. Each one installs on its own.
+            </p>
+            <p style="margin: 0 0 30px; text-align: center">
+               <span
+                  style="
+                     display: inline-block;
+                     vertical-align: middle;
+                     background-color: #ffffff;
+                     color: #270140;
+                     border-width: 1px;
+                     border-style: solid;
+                     border-color: #ece4f3;
+                     border-radius: 9999px;
+                     padding: 8px 17px;
+                     font-size: 13px;
+                     font-weight: 600;
+                     margin-left: 5px;
+                     margin-right: 5px;
+                     margin-bottom: 8px;
+                  "
+                  >Narrow scope</span
+               ><span
+                  style="
+                     display: inline-block;
+                     vertical-align: middle;
+                     background-color: #ffffff;
+                     color: #270140;
+                     border-width: 1px;
+                     border-style: solid;
+                     border-color: #ece4f3;
+                     border-radius: 9999px;
+                     padding: 8px 17px;
+                     font-size: 13px;
+                     font-weight: 600;
+                     margin-left: 5px;
+                     margin-right: 5px;
+                     margin-bottom: 8px;
+                  "
+                  >One-time price</span
+               ><span
+                  style="
+                     display: inline-block;
+                     vertical-align: middle;
+                     background-color: #ffffff;
+                     color: #270140;
+                     border-width: 1px;
+                     border-style: solid;
+                     border-color: #ece4f3;
+                     border-radius: 9999px;
+                     padding: 8px 17px;
+                     font-size: 13px;
+                     font-weight: 600;
+                     margin-left: 5px;
+                     margin-right: 5px;
+                     margin-bottom: 8px;
+                  "
+                  >Limits stated up front</span
+               >
+            </p>
+            <div class="ajxs-row" style="font-size: 0">
+               <div
+                  class="ajxs-col"
+                  style="
+                     display: inline-block;
+                     vertical-align: top;
+                     width: 31.78%;
+                     min-width: 300px;
+                     margin-bottom: 18px;
+                     margin-right: 2.3256%;
+                  "
+               >
+                  <div
+                     style="
+                        background-color: #270140;
+                        border-width: 1px;
+                        border-style: solid;
+                        border-color: #270140;
+                        border-radius: 14px;
+                        padding: 24px 22px 24px;
+                     "
+                  >
+                     <div
+                        style="display: table; width: 100%; margin-bottom: 16px"
+                     >
+                        <div
+                           style="
+                              display: table-cell;
+                              vertical-align: middle;
+                              width: 44px;
+                           "
+                        >
+                           <img
+                              src="./assets/logos/growth-suite.png"
+                              alt="Doodex Growth Suite"
+                              width="44"
+                              height="44"
+                              style="
+                                 display: block;
+                                 width: 44px;
+                                 height: 44px;
+                                 border-radius: 10px;
+                              "
+                           />
+                        </div>
+                        <div
+                           style="
+                              display: table-cell;
+                              vertical-align: middle;
+                              text-align: right;
+                           "
+                        >
+                           <span
+                              style="
+                                 display: inline-block;
+                                 vertical-align: middle;
+                                 background-color: #3a1a5a;
+                                 color: #ffffff;
+                                 font-size: 10.5px;
+                                 font-weight: 800;
+                                 line-height: 1.35;
+                                 letter-spacing: 0.07em;
+                                 text-transform: uppercase;
+                                 padding: 5px 11px;
+                                 border-radius: 9999px;
+                                 white-space: nowrap;
+                              "
+                              >$349 once</span
+                           >
+                        </div>
+                     </div>
+                     <p
+                        style="
+                           margin: 0 0 8px;
+                           font-size: 17px;
+                           font-weight: 700;
+                           color: #ffffff;
+                           line-height: 1.3;
+                        "
+                     >
+                        Doodex Growth Suite
+                     </p>
+                     <p
+                        style="
+                           margin: 0 0 20px;
+                           padding-right: 1px;
+                           font-size: 14px;
+                           line-height: 1.65;
+                           color: #cdb9dc;
+                           min-height: 116px;
+                        "
+                     >
+                        Five CRM and marketing modules that <b>do</b> share one
+                        another's data: BizScan AI, Campaign Manager, Smart
+                        Dashboards, User Roles and Email Sync+. Sold as one
+                        suite.
+                     </p>
+                     <a
+                        href="https://apps.odoo.com/apps/modules/17.0/marketing_crm_automation_dashboard_campaign_doodex"
+                        style="
+                           display: inline-block;
+                           background-color: #fa7268;
+                           color: #ffffff;
+                           border-width: 0;
+                           border-style: solid;
+                           border-color: #fa7268;
+                           border-radius: 10px;
+                           padding: 13px 18px;
+                           font-size: 13px;
+                           font-weight: 700;
+                           text-decoration: none;
+                           line-height: 1.2;
+                        "
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+               </div>
+               <div
+                  class="ajxs-col"
+                  style="
+                     display: inline-block;
+                     vertical-align: top;
+                     width: 31.78%;
+                     min-width: 300px;
+                     margin-bottom: 18px;
+                     margin-right: 2.3256%;
+                  "
+               >
+                  <div
+                     style="
+                        background-color: #ffffff;
+                        border-width: 1px;
+                        border-style: solid;
+                        border-color: #ece4f3;
+                        border-radius: 14px;
+                        padding: 24px 22px 24px;
+                     "
+                  >
+                     <div
+                        style="display: table; width: 100%; margin-bottom: 16px"
+                     >
+                        <div
+                           style="
+                              display: table-cell;
+                              vertical-align: middle;
+                              width: 44px;
+                           "
+                        >
+                           <img
+                              src="./assets/logos/flow-survey-reader.png"
+                              alt="Flow Survey Reader"
+                              width="44"
+                              height="44"
+                              style="
+                                 display: block;
+                                 width: 44px;
+                                 height: 44px;
+                                 border-radius: 10px;
+                              "
+                           />
+                        </div>
+                        <div
+                           style="
+                              display: table-cell;
+                              vertical-align: middle;
+                              text-align: right;
+                           "
+                        >
+                           <span
+                              style="
+                                 display: inline-block;
+                                 vertical-align: middle;
+                                 background-color: #f4eef8;
+                                 color: #270140;
+                                 font-size: 10.5px;
+                                 font-weight: 800;
+                                 line-height: 1.35;
+                                 letter-spacing: 0.07em;
+                                 text-transform: uppercase;
+                                 padding: 5px 11px;
+                                 border-radius: 9999px;
+                                 white-space: nowrap;
+                              "
+                              >Free</span
+                           >
+                        </div>
+                     </div>
+                     <p
+                        style="
+                           margin: 0 0 8px;
+                           font-size: 17px;
+                           font-weight: 700;
+                           color: #270140;
+                           line-height: 1.3;
+                        "
+                     >
+                        Flow Survey Reader
+                     </p>
+                     <p
+                        style="
+                           margin: 0 0 20px;
+                           padding-right: 1px;
+                           font-size: 14px;
+                           line-height: 1.65;
+                           color: #525252;
+                           min-height: 116px;
+                        "
+                     >
+                        Publish conditional surveys and forms straight from Odoo
+                        and keep every answer in your own database.
+                     </p>
+                     <a
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey_reader"
+                        style="
+                           display: inline-block;
+                           background-color: #ffffff;
+                           color: #270140;
+                           border-width: 1.5px;
+                           border-style: solid;
+                           border-color: #270140;
+                           border-radius: 10px;
+                           padding: 12px 17px;
+                           font-size: 13px;
+                           font-weight: 700;
+                           text-decoration: none;
+                           line-height: 1.2;
+                        "
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+               </div>
+               <div
+                  class="ajxs-col"
+                  style="
+                     display: inline-block;
+                     vertical-align: top;
+                     width: 31.78%;
+                     min-width: 300px;
+                     margin-bottom: 18px;
+                  "
+               >
+                  <div
+                     style="
+                        background-color: #ffffff;
+                        border-width: 1px;
+                        border-style: solid;
+                        border-color: #ece4f3;
+                        border-radius: 14px;
+                        padding: 24px 22px 24px;
+                     "
+                  >
+                     <div
+                        style="display: table; width: 100%; margin-bottom: 16px"
+                     >
+                        <div
+                           style="
+                              display: table-cell;
+                              vertical-align: middle;
+                              width: 44px;
+                           "
+                        >
+                           <img
+                              src="./assets/logos/flow-survey-builder.png"
+                              alt="Flow Survey Builder"
+                              width="44"
+                              height="44"
+                              style="
+                                 display: block;
+                                 width: 44px;
+                                 height: 44px;
+                                 border-radius: 10px;
+                              "
+                           />
+                        </div>
+                        <div
+                           style="
+                              display: table-cell;
+                              vertical-align: middle;
+                              text-align: right;
+                           "
+                        >
+                           <span
+                              style="
+                                 display: inline-block;
+                                 vertical-align: middle;
+                                 background-color: #f4eef8;
+                                 color: #270140;
+                                 font-size: 10.5px;
+                                 font-weight: 800;
+                                 line-height: 1.35;
+                                 letter-spacing: 0.07em;
+                                 text-transform: uppercase;
+                                 padding: 5px 11px;
+                                 border-radius: 9999px;
+                                 white-space: nowrap;
+                              "
+                              >$199 once</span
+                           >
+                        </div>
+                     </div>
+                     <p
+                        style="
+                           margin: 0 0 8px;
+                           font-size: 17px;
+                           font-weight: 700;
+                           color: #270140;
+                           line-height: 1.3;
+                        "
+                     >
+                        Flow Survey Builder
+                     </p>
+                     <p
+                        style="
+                           margin: 0 0 20px;
+                           padding-right: 1px;
+                           font-size: 14px;
+                           line-height: 1.65;
+                           color: #525252;
+                           min-height: 116px;
+                        "
+                     >
+                        The drag-and-drop editor for those surveys: 25 question
+                        types, slide branching and full theming.
+                     </p>
+                     <a
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey"
+                        style="
+                           display: inline-block;
+                           background-color: #ffffff;
+                           color: #270140;
+                           border-width: 1.5px;
+                           border-style: solid;
+                           border-color: #270140;
+                           border-radius: 10px;
+                           padding: 12px 17px;
+                           font-size: 13px;
+                           font-weight: 700;
+                           text-decoration: none;
+                           line-height: 1.2;
+                        "
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- ================= FINAL MULTI-CHANNEL CTA (#3 of 3) ================= -->
+   <section class="ajsec">
+      <div class="ajwrap">
+         <div class="ajqr ajqr-end">
+            <div class="ajqr-h">
+               <p class="ajqr-eye">Last thing</p>
+               <h2 class="ajqr-t">
+                  Install it, or ask us first. Both are free.
+               </h2>
+               <p class="ajqr-s">
+                  Download it from this page and switch it on yourself &mdash;
+                  it takes about a minute and needs nothing from us. Or spend 30
+                  minutes with a Doodex engineer first and find out whether it
+                  fits your Odoo before you touch your database.
+               </p>
+            </div>
+            <div class="ajqr-g">
+               <div class="ajqr-c ajqr-lead">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-video-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag hot">30 minutes</span>
+                  </div>
+                  <h3 class="ajqr-ch">Book a walkthrough</h3>
+                  <p class="ajqr-cp">
+                     On your Odoo or on our demo. We book a real appointment and
+                     join the room together.
+                  </p>
+                  <a
+                     class="ajqr-code"
+                     aria-label="Book a walkthrough with Doodex"
+                     ><img
+                        src="./assets/icons/qr-meeting.png"
+                        alt="QR code for hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-1 ajqr-b"
+                     >hub.doodex.net<wbr />/r/meeting</a
+                  >
+               </div>
+               <div class="ajqr-c">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-mail-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag">English or French</span>
+                  </div>
+                  <h3 class="ajqr-ch">E-mail the team</h3>
+                  <p class="ajqr-cp">
+                     Support, bug reports, feature requests and quotes all
+                     arrive here.
+                  </p>
+                  <a
+                     class="ajqr-code"
+                     href="mailto:odoo@doodex.net"
+                     aria-label="E-mail odoo@doodex.net"
+                     ><img
+                        src="./assets/icons/qr-mail.png"
+                        alt="QR code for odoo@doodex.net"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-2 ajqr-b" href="mailto:odoo@doodex.net"
+                     >odoo@doodex.net</a
+                  >
+               </div>
+               <div class="ajqr-c">
+                  <div class="ajqr-top">
+                     <span class="ajqr-ico"
+                        ><img
+                           class="ajic ajic-18"
+                           src="./assets/icons/ic-phone-w.png"
+                           alt=""
+                     /></span>
+                     <span class="ajqr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="ajqr-ch">WhatsApp</h3>
+                  <p class="ajqr-cp">
+                     +62 821-3120-5030. Short questions get short answers,
+                     quickly.
+                  </p>
+                  <a class="ajqr-code" aria-label="Message Doodex on WhatsApp"
+                     ><img
+                        src="./assets/icons/qr-whatsapp.png"
+                        alt="QR code for hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a class="ajbtn ajbtn-2 ajqr-b"
+                     >hub.doodex.net<wbr />/r/whatsapp</a
+                  >
+               </div>
+            </div>
+            <p class="ajqr-f">
+               Scan a code with your phone, or type the address next to it
+               &mdash; both reach the same place.
+            </p>
+         </div>
+      </div>
+   </section>
+</div>

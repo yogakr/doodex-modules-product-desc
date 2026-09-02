@@ -1,0 +1,3195 @@
+<!-- =========================================================================
+  Personal Email Usage — Odoo Apps Store listing description
+  Odoo 17.0 • module version 17.0.1.0.0 • Free • LGPL-3 • Doodex
+
+  PASTE TARGET
+    The "Description" field / static/description/index.html of the Odoo Apps
+    Store upload for personal_email_usage 17.0.1.0.0.
+
+  DIRECTORY (vendor guideline)
+    static/description/index.html   <- this file
+    static/description/icon.png     <- module icon, referenced by the store
+    static/description/banner.png   <- declared in __manifest__.py 'images'
+    static/description/assets/      <- every GIF, screenshot and QR on this page
+    Upload the whole static/description folder. Nothing here loads an image
+    from anywhere outside it.
+
+  RULES BAKED IN (apps.odoo.com/apps/vendor-guidelines)
+   • Zero <script> of our own. The store sanitizer strips them and this page
+     needs none: one continuous scroll, a plain jump menu, nothing hidden
+     behind JS.
+   • LINKS ARE CONSTRAINED. Only static/description resources, canonical
+     YouTube links, Microsoft Teams links, mailto: and skype: survive; every
+     other external href is invalidated. So contact buttons use mailto:, and
+     the booking / WhatsApp buttons carry NO href at all — their destination is
+     printed beside them as visible text and encoded in the QR image, neither
+     of which the sanitizer has a reason to touch. Do not paste an http(s) URL
+     back into an href on this page.
+   • Everything is namespaced under .peu — no rule targets html, :root or body,
+     and nothing is position:fixed or sticky. A pinned bar would float over the
+     store's own header and reads as a widget. Do not add one.
+   • No emoji and no icon webfont: the store ships neither. Marks are
+     typographic (✓ ✕) and shapes are CSS.
+   • English only, per the guidelines. No promotions, no other app store, no
+     price claim — this module is free under LGPL-3.
+
+  PLACEHOLDER ASSETS
+    Every .gif and every ss-*.png in ./assets is a labelled PLACEHOLDER. Each
+    one states, on the image itself, what has to be recorded. Replace the file
+    in place and keep the filename — this HTML then needs no edit at all.
+    Keep each feature GIF under 300 KB.
+========================================================================== -->
+<div class="peu">
+   <style>
+      /* ------------------------------------------------------------------ tokens */
+      .peu {
+         --violet: #270140;
+         --violet-2: #3a1a5a;
+         --coral: #fa7268;
+         --coral-dk: #e85c52;
+         --ink: #0a0a0a;
+         --ink-2: #171717;
+         --ink-3: #525252;
+         --ink-4: #737373;
+         --bg: #ffffff;
+         --surface: #faf7fc;
+         --surface-2: #f4eef8;
+         --line: #ece4f3;
+         --success: #16a34a;
+         --danger: #dc2626;
+         --r-sm: 6px;
+         --r-md: 10px;
+         --r-lg: 14px;
+         --r-xl: 20px;
+         --r-full: 9999px;
+         --xs: 0 0 0 1px rgba(39, 1, 64, 0.06);
+         --sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 1, 64, 0.08);
+         --md:
+            0 4px 14px rgba(39, 1, 64, 0.08), 0 0 0 1px rgba(39, 1, 64, 0.06);
+         --cta: 0 8px 22px rgba(250, 114, 104, 0.32);
+      }
+      .peu * {
+         box-sizing: border-box;
+      }
+      .peu {
+         background: var(--bg);
+         color: var(--ink-3);
+         font-family:
+            "Inter",
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
+         font-size: 16px;
+         line-height: 1.65;
+         font-feature-settings: "cv11", "ss01";
+         -webkit-font-smoothing: antialiased;
+      }
+      .peu h1,
+      .peu h2,
+      .peu h3,
+      .peu h4 {
+         color: var(--violet);
+         letter-spacing: -0.015em;
+         margin: 0;
+         font-weight: 800;
+      }
+      .peu p {
+         margin: 0 0 14px;
+      }
+      .peu ul {
+         margin: 0;
+         padding: 0;
+         list-style: none;
+      }
+      .peu img {
+         max-width: 100%;
+         height: auto;
+      }
+      .peu a {
+         color: var(--coral-dk);
+         overflow-wrap: anywhere;
+      }
+      /* Naked URLs are printed as visible text next to every button, so the page
+   still tells you where to go if the sanitizer drops an href. */
+      .peu .wrap {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 0 24px;
+      }
+      .peu .narrow {
+         max-width: 820px;
+         margin-left: auto;
+         margin-right: auto;
+      }
+      .peu .sec {
+         padding: 56px 0;
+      }
+      .peu .sec-tight {
+         padding: 32px 0;
+      }
+      .peu .tinted {
+         background: var(--surface);
+         border-top: 1px solid var(--line);
+         border-bottom: 1px solid var(--line);
+      }
+      .peu .center {
+         text-align: center;
+      }
+      .peu .muted {
+         color: var(--ink-4);
+      }
+      .peu .mark {
+         color: var(--coral-dk);
+      }
+
+      /* --------------------------------------------------------------- typography */
+      .peu .h1 {
+         font-size: 46px;
+         line-height: 1.1;
+      }
+      .peu .h2 {
+         font-size: 27px;
+         line-height: 1.22;
+      }
+      .peu .h3 {
+         font-size: 18px;
+         line-height: 1.35;
+      }
+      .peu .eyebrow {
+         display: inline-block;
+         font-size: 11.5px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         text-transform: uppercase;
+         color: var(--coral-dk);
+         margin: 0 0 12px;
+      }
+      .peu .lead {
+         font-size: 18px;
+         line-height: 1.6;
+         color: var(--ink-3);
+      }
+      .peu .small {
+         font-size: 13px;
+         line-height: 1.55;
+      }
+      @media (max-width: 820px) {
+         .peu .h1 {
+            font-size: 34px;
+         }
+         .peu .h2 {
+            font-size: 23px;
+         }
+      }
+
+      /* ------------------------------------------------------------------ buttons */
+      .peu .btn {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         gap: 8px;
+         font-weight: 700;
+         font-size: 15px;
+         text-decoration: none;
+         padding: 13px 24px;
+         border-radius: var(--r-md);
+         border: 0;
+         cursor: default;
+      }
+      .peu a.btn {
+         cursor: pointer;
+      }
+      .peu .btn-1 {
+         background: var(--coral);
+         color: #fff;
+         box-shadow: var(--cta);
+      }
+      .peu .btn-2 {
+         background: #fff;
+         color: var(--violet);
+         box-shadow: 0 0 0 1.5px var(--violet);
+      }
+      .peu .btn-3 {
+         background: transparent;
+         color: #fff;
+         box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.45);
+      }
+
+      /* --------------------------------------------------------------- 01 trustbar */
+      .peu .trust {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 8px;
+         justify-content: center;
+      }
+      .peu .chip {
+         display: inline-flex;
+         align-items: center;
+         gap: 8px;
+         font-size: 13px;
+         font-weight: 600;
+         color: var(--violet);
+         background: var(--surface-2);
+         padding: 7px 15px;
+         border-radius: var(--r-full);
+      }
+      .peu .chip i {
+         width: 7px;
+         height: 7px;
+         background: var(--coral);
+         border-radius: 2px;
+         transform: rotate(45deg);
+         flex: none;
+         font-style: normal;
+      }
+
+      /* ------------------------------------------------------------------- 02 hero */
+      .peu .hero {
+         background: var(--violet);
+         border-radius: var(--r-xl);
+         padding: 52px 44px 46px;
+         margin-top: 8px;
+      }
+      .peu .hero h1 {
+         color: #fff;
+      }
+      .peu .hero .hmark {
+         color: var(--coral);
+      }
+      .peu .hero .sub {
+         color: rgba(255, 255, 255, 0.8);
+         font-size: 18px;
+         line-height: 1.6;
+         max-width: 660px;
+         margin: 16px 0 0;
+      }
+      .peu .hero .pain {
+         color: rgba(255, 255, 255, 0.62);
+         font-size: 15px;
+         max-width: 660px;
+         margin: 0 0 6px;
+      }
+      .peu .hero-cta {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 12px;
+         margin-top: 26px;
+      }
+      .peu .hero-foot {
+         color: rgba(255, 255, 255, 0.48);
+         font-size: 12.5px;
+         margin: 16px 0 0;
+      }
+      @media (max-width: 820px) {
+         .peu .hero {
+            padding: 34px 22px 30px;
+         }
+      }
+
+      /* ------------------------------------------------------------- 03 hero shot */
+      .peu .heroshot {
+         margin: 26px 0 0;
+         border-radius: var(--r-lg);
+         overflow: hidden;
+         box-shadow: var(--md);
+      }
+      .peu .heroshot img {
+         display: block;
+         width: 100%;
+      }
+      .peu figure {
+         margin: 0;
+      }
+      .peu figcaption {
+         font-size: 12.5px;
+         color: var(--ink-4);
+         margin-top: 10px;
+         text-align: center;
+      }
+
+      /* ------------------------------------------------------ 04 header + jump nav
+   Page header: logo + module title on the left, section links in the middle,
+   one contact action on the right. Deliberately NOT position:sticky — a pinned
+   bar floats over the store's own header and reads as a widget. */
+      .peu .peuhead {
+         background: var(--surface);
+         border-bottom: 1px solid var(--line);
+         padding: 12px 0;
+      }
+      .peu .peuhead-in {
+         max-width: 1080px;
+         margin: 0 auto;
+         padding: 0 24px;
+         display: grid;
+         grid-template-columns: auto 1fr auto;
+         align-items: center;
+         gap: 18px;
+      }
+      .peu .brand {
+         display: flex;
+         align-items: center;
+         gap: 11px;
+         text-decoration: none;
+         min-width: 0;
+      }
+      .peu .brand img {
+         width: 34px;
+         height: 34px;
+         flex: none;
+         border-radius: 8px;
+         display: block;
+      }
+      .peu .brand-n {
+         font-size: 16px;
+         font-weight: 800;
+         color: var(--violet);
+         letter-spacing: -0.015em;
+         white-space: nowrap;
+         line-height: 1.2;
+      }
+      .peu .jump {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 2px;
+         justify-content: center;
+         background: #fff;
+         border: 1px solid var(--line);
+         border-radius: var(--r-full);
+         padding: 4px;
+         justify-self: center;
+      }
+      .peu .jump a {
+         text-decoration: none;
+         color: var(--ink-2);
+         font-size: 13.5px;
+         font-weight: 600;
+         padding: 7px 14px;
+         border-radius: var(--r-full);
+         white-space: nowrap;
+      }
+      .peu .jump a:hover {
+         background: var(--surface-2);
+         color: var(--violet);
+      }
+      .peu .head-cta {
+         justify-self: end;
+      }
+      .peu .head-cta .btn {
+         padding: 10px 18px;
+         font-size: 13.5px;
+      }
+      @media (max-width: 980px) {
+         .peu .peuhead-in {
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+         }
+         .peu .jump {
+            grid-column: 1 / -1;
+            order: 3;
+            justify-self: stretch;
+            justify-content: flex-start;
+            overflow-x: auto;
+            border-radius: var(--r-md);
+         }
+      }
+      @media (max-width: 520px) {
+         .peu .head-cta {
+            display: none;
+         }
+         .peu .peuhead-in {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* ------------------------------------------------------------- section head */
+      .peu .kick {
+         display: flex;
+         align-items: center;
+         gap: 14px;
+         margin: 0 0 8px;
+      }
+      .peu .kick-n {
+         font-size: 12px;
+         font-weight: 800;
+         color: var(--coral-dk);
+         letter-spacing: 0.06em;
+      }
+      .peu .kick-l {
+         font-size: 11.5px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         text-transform: uppercase;
+         color: var(--ink-4);
+      }
+      .peu .kick-r {
+         flex: 1;
+         height: 1px;
+         background: var(--line);
+      }
+
+      /* ------------------------------------------------------ 05 before/after card */
+      .peu .bacard {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         border: 1px solid var(--line);
+         border-radius: var(--r-lg);
+         overflow: hidden;
+         box-shadow: var(--sm);
+         margin-top: 26px;
+      }
+      .peu .ba-col {
+         padding: 24px 26px;
+      }
+      .peu .ba-before {
+         background: var(--surface);
+      }
+      .peu .ba-after {
+         background: #fff5f2;
+         border-left: 1px solid var(--line);
+      }
+      .peu .ba-h {
+         font-size: 11.5px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         text-transform: uppercase;
+         margin: 0 0 14px;
+      }
+      .peu .ba-before .ba-h {
+         color: var(--danger);
+      }
+      .peu .ba-after .ba-h {
+         color: var(--success);
+      }
+      .peu .ba-item {
+         display: flex;
+         gap: 11px;
+         font-size: 14.5px;
+         margin: 12px 0;
+         line-height: 1.5;
+      }
+      .peu .ba-before .ba-item {
+         color: var(--ink-4);
+      }
+      .peu .ba-after .ba-item {
+         color: var(--violet);
+         font-weight: 500;
+      }
+      .peu .bx {
+         color: var(--danger);
+         font-weight: 800;
+         flex: none;
+      }
+      .peu .ck {
+         color: var(--success);
+         font-weight: 800;
+         flex: none;
+      }
+      @media (max-width: 820px) {
+         .peu .bacard {
+            grid-template-columns: 1fr;
+         }
+         .peu .ba-after {
+            border-left: 0;
+            border-top: 1px solid var(--line);
+         }
+      }
+
+      /* --------------------------------------------------------- 06 QR CTA block */
+      .peu .qrcta {
+         background: var(--violet);
+         border-radius: var(--r-xl);
+         padding: 28px 28px 22px;
+      }
+      .peu .qr-head {
+         max-width: 660px;
+      }
+      .peu .qrcta .qr-eyebrow {
+         font-size: 11.5px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         text-transform: uppercase;
+         color: var(--coral);
+         margin: 0 0 8px;
+      }
+      .peu .qrcta h2.qr-title {
+         color: #fff;
+         font-size: 24px;
+         margin: 0 0 8px;
+      }
+      .peu .qrcta .qr-sub {
+         color: rgba(255, 255, 255, 0.74);
+         font-size: 14.5px;
+         line-height: 1.55;
+         margin: 0;
+      }
+      .peu .qr-grid {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 14px;
+         margin: 22px 0 0;
+      }
+      .peu .qr-grid > * {
+         min-width: 0;
+      }
+      .peu .qr-card {
+         background: #fff;
+         border-radius: var(--r-lg);
+         padding: 16px;
+         display: flex;
+         flex-direction: column;
+         gap: 9px;
+      }
+      .peu .qr-lead {
+         box-shadow: 0 0 0 2px var(--coral);
+      }
+      .peu .qr-top {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 10px;
+      }
+      .peu .qr-ico {
+         width: 30px;
+         height: 30px;
+         border-radius: 9px;
+         background: var(--violet);
+         color: #fff;
+         flex: none;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 13px;
+         font-weight: 800;
+      }
+      .peu .qr-tag {
+         font-size: 10px;
+         font-weight: 800;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         background: var(--surface-2);
+         color: var(--violet);
+         padding: 4px 9px;
+         border-radius: var(--r-full);
+      }
+      .peu .qr-tag-hot {
+         background: var(--coral);
+         color: #fff;
+      }
+      .peu .qrcta .qr-h {
+         font-size: 15.5px;
+         color: var(--violet);
+         margin: 1px 0 0;
+      }
+      .peu .qrcta .qr-p {
+         font-size: 12.5px;
+         line-height: 1.5;
+         color: var(--ink-4);
+         margin: 0;
+      }
+      .peu .qr-code {
+         display: block;
+         background: var(--surface);
+         border-radius: var(--r-md);
+         padding: 10px;
+         margin-top: auto;
+      }
+      .peu .qr-code img {
+         display: block;
+         width: 98px;
+         max-width: 100%;
+         height: auto;
+         margin: 0 auto;
+      }
+      .peu .qr-btn {
+         width: 100%;
+         justify-content: center;
+         padding: 9px 10px;
+         font-size: 13px;
+         text-align: center;
+      }
+      .peu .qrcta .qr-foot {
+         color: rgba(255, 255, 255, 0.5);
+         font-size: 12px;
+         margin: 16px 0 0;
+      }
+      .peu .qrcta-end {
+         padding: 36px 28px 26px;
+      }
+      .peu .qrcta-end .qr-head {
+         margin-left: auto;
+         margin-right: auto;
+         text-align: center;
+      }
+      .peu .qrcta-end h2.qr-title {
+         font-size: 28px;
+      }
+      .peu .qrcta-end .qr-foot {
+         text-align: center;
+      }
+      @media (max-width: 820px) {
+         .peu .qr-grid {
+            grid-template-columns: 1fr;
+         }
+         .peu .qrcta {
+            padding: 26px 20px 22px;
+         }
+      }
+
+      .peu .tscroll {
+         overflow-x: auto;
+      }
+
+      /* --------------------------------------------------- 07 "why" consequence chain
+   Five steps on a rail: what one unfiltered email turns into. The rail is a
+   pseudo-element behind the tiles, which carry a solid white background so it
+   reads as a connector rather than a strikethrough. Collapses to icon rows on
+   narrow screens, where the rail is dropped entirely. */
+      .peu .chain {
+         position: relative;
+         display: grid;
+         grid-template-columns: repeat(5, 1fr);
+         margin-top: 34px;
+      }
+      .peu .chain:before {
+         content: "";
+         position: absolute;
+         top: 29px;
+         left: 10%;
+         right: 10%;
+         height: 2px;
+         background: var(--line);
+      }
+      .peu .cstep {
+         position: relative;
+         text-align: center;
+         padding: 0 12px;
+      }
+      .peu .cico {
+         width: 58px;
+         height: 58px;
+         margin: 0 auto 14px;
+         border-radius: 50%;
+         background: #fff;
+         box-shadow: 0 0 0 2px var(--line);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+      .peu .cstep.stop .cico {
+         box-shadow: 0 0 0 2px var(--coral);
+      }
+      .peu .cico img {
+         width: 30px;
+         height: 30px;
+         display: block;
+      }
+      .peu .cnum {
+         display: block;
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         color: var(--coral-dk);
+         margin-bottom: 5px;
+      }
+      .peu .cstep h3 {
+         font-size: 14.5px;
+         margin: 0 0 6px;
+      }
+      .peu .cstep p {
+         font-size: 12.5px;
+         color: var(--ink-4);
+         margin: 0;
+         line-height: 1.55;
+      }
+      .peu .cflag {
+         display: inline-block;
+         margin-top: 9px;
+         font-size: 10px;
+         font-weight: 800;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         background: var(--coral);
+         color: #fff;
+         padding: 4px 10px;
+         border-radius: var(--r-full);
+      }
+      @media (max-width: 900px) {
+         .peu .chain {
+            grid-template-columns: 1fr;
+            margin-top: 22px;
+         }
+         .peu .chain:before {
+            display: none;
+         }
+         /* Exactly two grid children here — the icon and .ctxt. Without the .ctxt
+     wrapper the number, heading, copy and flag would flow into alternating
+     columns instead of stacking. */
+         .peu .cstep {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            text-align: left;
+            padding: 18px 0;
+            border-top: 1px solid var(--line);
+            align-items: start;
+         }
+         .peu .cico {
+            margin: 0;
+            width: 50px;
+            height: 50px;
+         }
+         .peu .cico img {
+            width: 26px;
+            height: 26px;
+         }
+         .peu .cstep h3 {
+            margin-top: 2px;
+         }
+      }
+
+      /* ------------------------------------------------------ 08 "what you get back"
+   Three columns divided by hairlines — no card chrome, so it does not repeat
+   the Features card grid or the Use Cases icon rows. */
+      .peu .gains {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         margin-top: 28px;
+      }
+      .peu .gain {
+         padding: 0 30px;
+         border-left: 1px solid var(--line);
+      }
+      .peu .gain:first-child {
+         border-left: 0;
+         padding-left: 0;
+      }
+      .peu .gain:last-child {
+         padding-right: 0;
+      }
+      .peu .gain img {
+         width: 38px;
+         height: 38px;
+         display: block;
+         margin: 0 0 16px;
+      }
+      .peu .gain h3 {
+         font-size: 16.5px;
+         margin: 0 0 8px;
+      }
+      .peu .gain p {
+         font-size: 13.5px;
+         color: var(--ink-4);
+         margin: 0;
+         line-height: 1.6;
+      }
+      @media (max-width: 820px) {
+         .peu .gains {
+            grid-template-columns: 1fr;
+         }
+         .peu .gain {
+            border-left: 0;
+            border-top: 1px solid var(--line);
+            padding: 22px 0 0;
+         }
+         .peu .gain:first-child {
+            border-top: 0;
+            padding-top: 0;
+         }
+      }
+
+      /* payoff line closing the chain */
+      .peu .payoff {
+         margin-top: 30px;
+         padding: 20px 24px;
+         background: var(--surface-2);
+         border-radius: var(--r-lg);
+         font-size: 16px;
+         font-weight: 700;
+         color: var(--violet);
+         line-height: 1.5;
+      }
+      .peu .payoff .m {
+         color: var(--coral-dk);
+      }
+
+      /* ------------------------------------------------------------- 09 feature GIFs */
+      .peu .fgrid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 28px;
+         margin-top: 28px;
+      }
+      .peu .fcard {
+         background: #fff;
+         border-radius: var(--r-lg);
+         overflow: hidden;
+         box-shadow: var(--sm);
+         display: flex;
+         flex-direction: column;
+      }
+      .peu .fcard .shot {
+         background: var(--surface);
+         border-bottom: 1px solid var(--line);
+      }
+      .peu .fcard .shot img {
+         display: block;
+         width: 100%;
+      }
+      .peu .fbody {
+         padding: 18px 20px 20px;
+      }
+      .peu .fnum {
+         display: inline-block;
+         font-size: 11px;
+         font-weight: 800;
+         color: var(--coral-dk);
+         letter-spacing: 0.08em;
+         margin-bottom: 6px;
+      }
+      .peu .fcard h3 {
+         font-size: 16px;
+         margin: 0 0 6px;
+      }
+      .peu .fcard p {
+         margin: 0;
+         font-size: 13.5px;
+         color: var(--ink-4);
+         line-height: 1.55;
+      }
+      @media (max-width: 820px) {
+         .peu .fgrid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* --------------------------------------------------------- 10 icon-row features */
+      .peu .featgrid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 0 44px;
+         margin-top: 20px;
+      }
+      .peu .feat {
+         position: relative;
+         padding: 15px 0 15px 26px;
+         border-top: 1px solid var(--line);
+      }
+      .peu .feat::before {
+         content: "";
+         position: absolute;
+         left: 2px;
+         top: 22px;
+         width: 9px;
+         height: 9px;
+         background: var(--coral);
+         transform: rotate(45deg);
+         border-radius: 2px;
+      }
+      .peu .feat h4 {
+         font-size: 14.5px;
+         color: var(--ink-2);
+         margin: 0 0 3px;
+         font-weight: 700;
+      }
+      .peu .feat p {
+         margin: 0;
+         font-size: 12.5px;
+         color: var(--ink-4);
+         line-height: 1.55;
+      }
+      @media (max-width: 820px) {
+         .peu .featgrid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* ------------------------------------------------------------- 11 use cases
+   Icon rows on hairlines, two columns — copy carries the section, the PNG icon
+   supports it. Deliberately not a row of rounded cards: the Features section
+   below already uses cards, and repeating them flattens the whole page.
+   Icons are PNGs drawn at 3x display size (see make_icons.py), so they are
+   sized by .uci here and NEVER by their width/height attributes. */
+      .peu .ucgrid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 0 48px;
+         margin-top: 22px;
+      }
+      .peu .ucrow {
+         display: grid;
+         grid-template-columns: auto 1fr;
+         gap: 16px;
+         padding: 24px 0;
+         border-top: 1px solid var(--line);
+         align-items: start;
+      }
+      .peu .ucico {
+         width: 56px;
+         height: 56px;
+         flex: none;
+         border-radius: var(--r-md);
+         background: var(--surface-2);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+      .peu .uci {
+         width: 34px;
+         height: 34px;
+         display: block;
+      }
+      .peu .ucrow h3 {
+         font-size: 16px;
+         margin: 2px 0 6px;
+      }
+      .peu .ucrow p {
+         font-size: 13.5px;
+         color: var(--ink-4);
+         margin: 0 0 8px;
+         line-height: 1.6;
+      }
+      .peu .ucres {
+         display: block;
+         font-size: 13.5px;
+         font-weight: 700;
+         color: var(--violet);
+         margin: 0 0 10px;
+         line-height: 1.5;
+      }
+      .peu .ucres:before {
+         content: "";
+         display: inline-block;
+         width: 7px;
+         height: 7px;
+         background: var(--coral);
+         transform: rotate(45deg);
+         border-radius: 2px;
+         margin-right: 9px;
+         vertical-align: middle;
+      }
+      .peu .mini {
+         font-size: 12.5px;
+         font-weight: 700;
+         color: var(--coral-dk);
+         text-decoration: none;
+      }
+      @media (max-width: 820px) {
+         .peu .ucgrid {
+            grid-template-columns: 1fr;
+            gap: 0;
+         }
+         .peu .ucrow {
+            padding: 20px 0;
+         }
+         .peu .ucico {
+            width: 48px;
+            height: 48px;
+         }
+         .peu .uci {
+            width: 30px;
+            height: 30px;
+         }
+      }
+
+      /* ------------------------------------------------------------- 12 interlude */
+      .peu .interlude {
+         background: var(--violet);
+         border-radius: var(--r-xl);
+         padding: 44px 40px;
+         text-align: center;
+      }
+      .peu .interlude .big {
+         font-size: 32px;
+         font-weight: 800;
+         color: #fff;
+         letter-spacing: -0.02em;
+         line-height: 1.25;
+         margin: 0;
+      }
+      .peu .interlude .big .m {
+         color: var(--coral);
+      }
+      .peu .interlude .sub {
+         color: rgba(255, 255, 255, 0.78);
+         margin: 12px 0 0;
+         font-size: 15px;
+      }
+      @media (max-width: 820px) {
+         .peu .interlude {
+            padding: 32px 22px;
+         }
+         .peu .interlude .big {
+            font-size: 24px;
+         }
+      }
+
+      /* ------------------------------------------------------------- 13 stat row */
+      .peu .statrow {
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         text-align: center;
+         margin-top: 24px;
+      }
+      .peu .statrow .st {
+         padding: 18px 12px;
+         border-left: 1px solid var(--line);
+      }
+      .peu .statrow .st:first-child {
+         border-left: none;
+      }
+      .peu .statrow .n {
+         font-size: 32px;
+         font-weight: 800;
+         color: var(--violet);
+         letter-spacing: -0.02em;
+         line-height: 1.2;
+      }
+      .peu .statrow .l {
+         font-size: 12.5px;
+         color: var(--ink-4);
+         line-height: 1.45;
+      }
+      @media (max-width: 620px) {
+         .peu .statrow {
+            grid-template-columns: 1fr 1fr;
+         }
+         .peu .statrow .st {
+            border-left: none;
+            border-top: 1px solid var(--line);
+         }
+      }
+
+      /* ------------------------------------------------------------- 14 edition card */
+      .peu .edition {
+         display: grid;
+         grid-template-columns: 300px 1fr;
+         border-radius: var(--r-xl);
+         overflow: hidden;
+         box-shadow: var(--md);
+         margin-top: 26px;
+      }
+      .peu .ed-left {
+         background: var(--violet);
+         color: #fff;
+         padding: 34px 28px;
+      }
+      .peu .ed-tag {
+         display: inline-block;
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.09em;
+         text-transform: uppercase;
+         color: var(--coral);
+         border: 1px solid rgba(250, 114, 104, 0.55);
+         border-radius: var(--r-full);
+         padding: 4px 12px;
+      }
+      .peu .ed-amt {
+         font-size: 58px;
+         font-weight: 800;
+         line-height: 1;
+         margin: 18px 0 2px;
+         color: #fff;
+      }
+      .peu .ed-note {
+         font-size: 13px;
+         color: rgba(255, 255, 255, 0.72);
+         margin: 0;
+      }
+      .peu .ed-bul {
+         margin: 18px 0 0;
+      }
+      .peu .ed-bul li {
+         position: relative;
+         padding-left: 20px;
+         font-size: 13.5px;
+         margin: 10px 0;
+         color: rgba(255, 255, 255, 0.9);
+      }
+      .peu .ed-bul li:before {
+         content: "";
+         position: absolute;
+         left: 0;
+         top: 8px;
+         width: 7px;
+         height: 7px;
+         border-radius: 50%;
+         background: var(--coral);
+      }
+      .peu .ed-right {
+         background: #fff;
+         padding: 32px 30px;
+      }
+      .peu .ed-label {
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--ink-4);
+         margin: 0 0 14px;
+      }
+      .peu .edlist {
+         display: grid;
+         gap: 11px;
+      }
+      .peu .edlist > div {
+         display: flex;
+         gap: 11px;
+         font-size: 14.5px;
+         color: var(--ink-2);
+         line-height: 1.5;
+      }
+      @media (max-width: 720px) {
+         .peu .edition {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* -------------------------------------------------------------------- 16 FAQ */
+      .peu .faq {
+         margin-top: 22px;
+      }
+      .peu .faq details {
+         border-top: 1px solid var(--line);
+         padding: 0;
+      }
+      .peu .faq details:last-of-type {
+         border-bottom: 1px solid var(--line);
+      }
+      .peu .faq summary {
+         cursor: pointer;
+         list-style: none;
+         padding: 16px 30px 16px 0;
+         font-size: 15.5px;
+         font-weight: 700;
+         color: var(--violet);
+         position: relative;
+      }
+      .peu .faq summary::-webkit-details-marker {
+         display: none;
+      }
+      .peu .faq summary:after {
+         content: "+";
+         position: absolute;
+         right: 6px;
+         top: 13px;
+         font-size: 20px;
+         font-weight: 700;
+         color: var(--coral-dk);
+      }
+      .peu .faq details[open] summary:after {
+         content: "\2212";
+      }
+      .peu .faq .a {
+         padding: 0 30px 18px 0;
+         font-size: 14px;
+         color: var(--ink-3);
+         line-height: 1.65;
+      }
+      .peu .faq .a p:last-child {
+         margin-bottom: 0;
+      }
+
+      /* ------------------------------------------------------------- 17 cross-sell */
+      /* Cross-sell cards. The heading uses the page's standard .kick (label + rule,
+   no number, since this section sits between the numbered ones) and the
+   attribute chips reuse .chip from the trust bar — the reference screenshot's
+   pill eyebrow and outlined chips were replaced with the page's own. */
+      .peu .xgrid {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 18px;
+         margin-top: 26px;
+         align-items: stretch;
+      }
+      .peu .xcard {
+         background: #fff;
+         border: 1px solid var(--line);
+         border-radius: var(--r-lg);
+         padding: 22px;
+         box-shadow: var(--sm);
+         display: flex;
+         flex-direction: column;
+      }
+      .peu .xtop {
+         display: flex;
+         align-items: flex-start;
+         justify-content: space-between;
+         gap: 12px;
+         margin-bottom: 16px;
+      }
+      .peu .xico {
+         width: 40px;
+         height: 40px;
+         display: block;
+         flex: none;
+         border-radius: 9px;
+      }
+      .peu .xprice {
+         flex: none;
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.07em;
+         text-transform: uppercase;
+         color: var(--violet);
+         background: var(--surface-2);
+         padding: 6px 12px;
+         border-radius: var(--r-full);
+         white-space: nowrap;
+      }
+      .peu .xcard h3 {
+         font-size: 17px;
+         margin: 0 0 8px;
+      }
+      .peu .xcard p {
+         font-size: 13.5px;
+         color: var(--ink-4);
+         margin: 0 0 20px;
+         line-height: 1.6;
+      }
+      .peu .xbtn {
+         margin-top: auto;
+         width: 100%;
+         justify-content: center;
+         font-size: 14px;
+         padding: 12px 16px;
+      }
+
+      /* featured card — the violet one */
+      .peu .xcard-lead {
+         background: var(--violet);
+         border-color: var(--violet);
+         box-shadow: 0 10px 28px rgba(39, 1, 64, 0.22);
+      }
+      .peu .xcard-lead h3 {
+         color: #fff;
+      }
+      .peu .xcard-lead p {
+         color: rgba(255, 255, 255, 0.76);
+      }
+      .peu .xcard-lead .xprice {
+         background: rgba(255, 255, 255, 0.13);
+         color: #fff;
+      }
+
+      @media (max-width: 900px) {
+         .peu .xgrid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      /* -------------------------------------------------------------- 18 changelog */
+      .peu .rel {
+         border-left: 2px solid var(--line);
+         padding-left: 24px;
+         margin-top: 24px;
+      }
+      .peu .relitem {
+         position: relative;
+         padding-bottom: 26px;
+      }
+      .peu .relitem:last-child {
+         padding-bottom: 0;
+      }
+      .peu .relitem:before {
+         content: "";
+         position: absolute;
+         left: -31px;
+         top: 6px;
+         width: 11px;
+         height: 11px;
+         border-radius: 50%;
+         background: var(--coral);
+         box-shadow: 0 0 0 3px #fff;
+      }
+      .peu .relv {
+         font-size: 15.5px;
+         font-weight: 800;
+         color: var(--violet);
+      }
+      .peu .reld {
+         font-size: 12.5px;
+         color: var(--ink-4);
+         margin-left: 10px;
+         font-weight: 600;
+      }
+      .peu .relul {
+         margin-top: 10px;
+      }
+      .peu .relul li {
+         font-size: 13.5px;
+         color: var(--ink-3);
+         margin: 7px 0;
+         line-height: 1.55;
+         display: flex;
+         gap: 10px;
+      }
+      .peu .badge {
+         flex: none;
+         font-size: 10px;
+         font-weight: 800;
+         letter-spacing: 0.06em;
+         padding: 3px 8px;
+         border-radius: var(--r-sm);
+         height: 20px;
+         line-height: 14px;
+      }
+      .peu .b-new {
+         background: #e8f6ec;
+         color: var(--success);
+      }
+      .peu .b-imp {
+         background: var(--surface-2);
+         color: var(--violet);
+      }
+      .peu .b-fix {
+         background: #fdecea;
+         color: var(--danger);
+      }
+
+      /* --------------------------------------------------- 19 requirements + setup
+   Two columns: the spec table on the left, the numbered setup steps on the
+   right. Replaces the single full-width table that used to sit above a
+   screenshot — with the screenshot gone the table alone left the section
+   lopsided and text-heavy. */
+      .peu .reqcols {
+         display: grid;
+         grid-template-columns: 1.05fr 0.95fr;
+         gap: 44px;
+         margin-top: 26px;
+         align-items: start;
+      }
+      .peu .collabel {
+         font-size: 11px;
+         font-weight: 800;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+         color: var(--ink-4);
+         margin: 0 0 4px;
+      }
+      @media (max-width: 900px) {
+         .peu .reqcols {
+            grid-template-columns: 1fr;
+            gap: 36px;
+         }
+      }
+
+      .peu .spec {
+         width: 100%;
+         border-collapse: collapse;
+         margin-top: 12px;
+         font-size: 14px;
+      }
+      .peu .spec td {
+         padding: 11px 14px;
+         border-bottom: 1px solid var(--line);
+      }
+      .peu .spec td:first-child {
+         font-weight: 700;
+         color: var(--violet);
+         width: 42%;
+      }
+      .peu .spec tr:nth-child(even) {
+         background: var(--surface);
+      }
+
+      /* numbered setup steps — counter-driven coral discs, no list markers */
+      .peu ol.steps {
+         counter-reset: st;
+         margin: 14px 0 0;
+         padding: 0;
+         list-style: none;
+      }
+      .peu ol.steps li {
+         position: relative;
+         counter-increment: st;
+         padding: 0 0 22px 46px;
+      }
+      .peu ol.steps li:before {
+         content: counter(st);
+         position: absolute;
+         left: 0;
+         top: 0;
+         width: 30px;
+         height: 30px;
+         border-radius: 50%;
+         background: var(--coral);
+         color: #fff;
+         font-size: 13px;
+         font-weight: 800;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+      /* the vertical rail linking the discs; the last item has no rail below it */
+      .peu ol.steps li:after {
+         content: "";
+         position: absolute;
+         left: 14px;
+         top: 34px;
+         bottom: 6px;
+         width: 2px;
+         background: var(--line);
+      }
+      .peu ol.steps li:last-child {
+         padding-bottom: 0;
+      }
+      .peu ol.steps li:last-child:after {
+         display: none;
+      }
+      .peu ol.steps li.check:before {
+         content: "\2713";
+         background: var(--violet);
+         font-size: 15px;
+      }
+      .peu ol.steps h4 {
+         font-size: 15px;
+         color: var(--violet);
+         margin: 4px 0 5px;
+         font-weight: 700;
+      }
+      .peu ol.steps p {
+         margin: 0;
+         font-size: 13.5px;
+         color: var(--ink-4);
+         line-height: 1.6;
+      }
+
+      /* ----------------------------------------------------------------- 20 notice */
+      .peu .notice {
+         background: var(--surface-2);
+         border-left: 3px solid var(--coral);
+         border-radius: 0 var(--r-md) var(--r-md) 0;
+         padding: 18px 22px;
+         margin-top: 22px;
+      }
+      .peu .notice h4 {
+         font-size: 14.5px;
+         margin: 0 0 6px;
+         font-weight: 700;
+      }
+      .peu .notice p {
+         margin: 0;
+         font-size: 13.5px;
+         color: var(--ink-3);
+         line-height: 1.6;
+      }
+      .peu .notice p + p {
+         margin-top: 8px;
+      }
+   </style>
+
+   <!-- ====================================================================== -->
+   <!-- 01 · HEADER — logo, module title, section nav, one contact action       -->
+   <!--      First thing on the page. Not sticky, on purpose.                   -->
+   <!-- ====================================================================== -->
+   <div class="peuhead">
+      <div class="peuhead-in">
+         <a class="brand" href="#overview">
+            <img
+               src="./assets/peu-logo.png"
+               alt="Personal Email Usage module icon"
+               width="34"
+               height="34"
+            />
+            <span class="brand-n">Personal Email Usage</span>
+         </a>
+         <nav class="jump">
+            <a href="#overview">Overview</a>
+            <a href="#usecases">Use Cases</a>
+            <a href="#features">Features</a>
+            <a href="#why">Why This</a>
+            <a href="#pricing">Price</a>
+            <a href="#faqs">FAQ</a>
+            <a href="#releases">Releases</a>
+         </nav>
+         <div class="head-cta">
+            <a
+               class="btn btn-2"
+               href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+               >Talk to Doodex</a
+            >
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 02 · TRUST BAR — factual chips, nothing unverifiable                    -->
+   <!-- ====================================================================== -->
+   <div class="sec-tight">
+      <div class="wrap">
+         <div class="trust">
+            <span class="chip"><i></i>Odoo Official Partner</span>
+            <span class="chip"><i></i>Odoo 17.0</span>
+            <span class="chip"><i></i>Free &middot; LGPL-3</span>
+            <span class="chip"><i></i>No subscription, no activation key</span>
+            <span class="chip"
+               ><i></i>Depends only on <b>base</b> and <b>mail</b></span
+            >
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 03 · HOOK + HERO — pain in one sentence, promise in one sentence        -->
+   <!-- ====================================================================== -->
+   <div class="wrap">
+      <div class="hero">
+         <p class="eyebrow" style="color: var(--coral)">
+            Incoming mail control for Odoo 17
+         </p>
+         <p class="pain">
+            Every newsletter, every cold pitch and every message your own staff
+            send lands in Odoo &mdash; and each unknown sender quietly becomes a
+            brand-new contact.
+         </p>
+         <h1 class="h1">
+            Only people you already know<br /><span class="hmark"
+               >get into your Odoo.</span
+            >
+         </h1>
+         <p class="sub">
+            Personal Email Usage puts three filters on your incoming IMAP mail
+            server: skip messages from your own users, skip messages from
+            senders who are not in Contacts, and never let an email create a
+            contact record on its own. Everything else keeps working exactly as
+            Odoo built it.
+         </p>
+         <div class="hero-cta">
+            <a
+               class="btn btn-1"
+               href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+               >Ask us anything</a
+            >
+            <a class="btn btn-3" href="#why">See what it prevents</a>
+            <a class="btn btn-3" href="#features">See the 12 behaviours</a>
+         </div>
+         <p class="hero-foot">
+            Free under LGPL-3 &middot; install from Apps, tick one box, done
+            &middot; odoo@doodex.net
+         </p>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 04 · HERO VISUAL — one full-width GIF, the whole journey                -->
+   <!-- ====================================================================== -->
+   <div class="sec">
+      <div class="wrap">
+         <figure>
+            <div class="heroshot">
+               <img
+                  src="./assets/hero-inbox-filter.gif"
+                  alt="Screen recording of Odoo 17: the Incoming Mail Servers list, an IMAP server form, the Mark Emails as Read field on the Advanced tab being ticked, and an email from a saved contact shown in that contact's chatter."
+               />
+            </div>
+            <figcaption>
+               Recorded on a live Odoo 17 database: where the setting lives,
+               what it does, and what a known contact&rsquo;s email looks like
+               once it lands.
+            </figcaption>
+         </figure>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 05 · OVERVIEW — before / after, the archetype's signature block         -->
+   <!-- ====================================================================== -->
+   <div class="sec" id="overview">
+      <div class="wrap">
+         <div class="kick">
+            <span class="kick-n">01</span><span class="kick-l">Overview</span
+            ><span class="kick-r"></span>
+         </div>
+         <h2 class="h2" style="max-width: 760px">
+            Odoo fetches everything. This module decides what deserves to come
+            in.
+         </h2>
+         <p class="lead narrow" style="margin: 14px 0 0 0; max-width: 760px">
+            Odoo's own incoming mail server does one job well: it pulls messages
+            in and routes them. It does not ask who sent them. Personal Email
+            Usage adds that question &mdash; and answers it before the message
+            ever becomes a record.
+         </p>
+
+         <div class="bacard">
+            <div class="ba-col ba-before">
+               <p class="ba-h">Standard Odoo incoming mail</p>
+               <div class="ba-item">
+                  <span class="bx">&#10007;</span
+                  ><span
+                     >An email from an address nobody knows can create a fresh
+                     contact record.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="bx">&#10007;</span
+                  ><span
+                     >Messages your own staff send get processed like customer
+                     mail.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="bx">&#10007;</span
+                  ><span
+                     >Newsletters and cold outreach get routed into your
+                     database.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="bx">&#10007;</span
+                  ><span
+                     >You have no say over whether the message stays unread in
+                     the mailbox.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="bx">&#10007;</span
+                  ><span
+                     >Cleaning up the contact list afterwards is a manual job,
+                     every week.</span
+                  >
+               </div>
+            </div>
+            <div class="ba-col ba-after">
+               <p class="ba-h">With Personal Email Usage</p>
+               <div class="ba-item">
+                  <span class="ck">&#10003;</span
+                  ><span
+                     >An unknown sender is skipped. No contact is created,
+                     ever.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="ck">&#10003;</span
+                  ><span
+                     >Mail from your internal users is recognised and
+                     skipped.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="ck">&#10003;</span
+                  ><span
+                     >Only senders already saved in Contacts get through.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="ck">&#10003;</span
+                  ><span
+                     >One checkbox decides whether fetched mail is marked read
+                     on the server.</span
+                  >
+               </div>
+               <div class="ba-item">
+                  <span class="ck">&#10003;</span
+                  ><span>The contact list stays the size you made it.</span>
+               </div>
+            </div>
+         </div>
+
+         <div class="statrow">
+            <div class="st">
+               <div class="n">3</div>
+               <div class="l">filters on every incoming message</div>
+            </div>
+            <div class="st">
+               <div class="n">1</div>
+               <div class="l">checkbox to configure</div>
+            </div>
+            <div class="st">
+               <div class="n">0</div>
+               <div class="l">contacts created by email</div>
+            </div>
+            <div class="st">
+               <div class="n">2</div>
+               <div class="l">dependencies: base and mail</div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 06 · CTA #1 of 3 — placed high, per the CTA frequency rule              -->
+   <!-- ====================================================================== -->
+   <div class="sec-tight">
+      <div class="wrap">
+         <div class="qrcta">
+            <div class="qr-head">
+               <p class="qr-eyebrow">Before you install</p>
+               <h2 class="qr-title">Ask whether it fits your mail setup</h2>
+               <p class="qr-sub">
+                  Tell us which mailbox you fetch, what it receives and what you
+                  want filtered. We will tell you straight whether this module
+                  covers it &mdash; and if it does not, what would.
+               </p>
+            </div>
+            <div class="qr-grid">
+               <div class="qr-card qr-lead">
+                  <div class="qr-top">
+                     <span class="qr-ico">1</span
+                     ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                  </div>
+                  <h3 class="qr-h">Book a call</h3>
+                  <p class="qr-p">
+                     Screen-share your mail server setup with a Doodex
+                     consultant.
+                  </p>
+                  <span class="qr-code"
+                     ><img
+                        src="./assets/qr-meeting.png"
+                        alt="QR code for https://hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="btn btn-1 qr-btn"
+                     >https://hub.doodex.net<wbr />/r/meeting</span
+                  >
+               </div>
+               <div class="qr-card">
+                  <div class="qr-top">
+                     <span class="qr-ico">2</span
+                     ><span class="qr-tag">Written reply</span>
+                  </div>
+                  <h3 class="qr-h">Email us</h3>
+                  <p class="qr-p">
+                     Send the question in writing and get an answer in writing.
+                  </p>
+                  <a
+                     class="qr-code"
+                     href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+                     ><img
+                        src="./assets/qr-contact.png"
+                        alt="QR code for https://doodex.net/contactus"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a
+                     class="btn btn-2 qr-btn"
+                     href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+                     >odoo@doodex.net</a
+                  >
+               </div>
+               <div class="qr-card">
+                  <div class="qr-top">
+                     <span class="qr-ico">3</span
+                     ><span class="qr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="qr-h">WhatsApp</h3>
+                  <p class="qr-p">
+                     Reach the team directly on +62 821-3120-5030.
+                  </p>
+                  <span class="qr-code"
+                     ><img
+                        src="./assets/qr-whatsapp.png"
+                        alt="QR code for https://hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="btn btn-2 qr-btn"
+                     >https://hub.doodex.net<wbr />/r/whatsapp</span
+                  >
+               </div>
+            </div>
+            <p class="qr-foot">
+               Scan a code with your phone camera. The address under each code
+               is the same one the code contains, written out so you can type it
+               by hand.
+            </p>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 07 · USE CASES — copy-led icon rows, one PNG icon each, each with a link -->
+   <!-- ====================================================================== -->
+   <div class="sec tinted" id="usecases">
+      <div class="wrap">
+         <div class="kick">
+            <span class="kick-n">02</span><span class="kick-l">Use Cases</span
+            ><span class="kick-r"></span>
+         </div>
+         <h2 class="h2">Six mailboxes this was built for</h2>
+         <p class="lead" style="max-width: 760px; margin-top: 12px">
+            If a shared mailbox feeds your Odoo database, one of these is
+            already your problem. Each one is fixed by the same three filters.
+         </p>
+
+         <div class="ucgrid">
+            <div class="ucrow">
+               <span class="ucico"
+                  ><img
+                     class="uci"
+                     src="./assets/ic-uc-01-inbox.png"
+                     alt=""
+                     width="132"
+                     height="132"
+               /></span>
+               <div>
+                  <h3>Shared sales inbox</h3>
+                  <p>
+                     Your sales@ address takes customer replies, supplier
+                     pitches and internal forwards in one stream. Only the
+                     replies belong in Odoo.
+                  </p>
+                  <span class="ucres"
+                     >Your CRM fills with buyers, not noise.</span
+                  >
+                  <a class="mini" href="#features"
+                     >How the sender filter works &rarr;</a
+                  >
+               </div>
+            </div>
+
+            <div class="ucrow">
+               <span class="ucico"
+                  ><img
+                     class="uci"
+                     src="./assets/ic-uc-02-support.png"
+                     alt=""
+                     width="132"
+                     height="132"
+               /></span>
+               <div>
+                  <h3>Support inbox</h3>
+                  <p>
+                     Every mailing list on earth has found your support address.
+                     Stop them at the door instead of closing them one by one.
+                  </p>
+                  <span class="ucres">No ticket you never asked for.</span>
+                  <a class="mini" href="#features"
+                     >See the unknown-sender filter &rarr;</a
+                  >
+               </div>
+            </div>
+
+            <div class="ucrow">
+               <span class="ucico"
+                  ><img
+                     class="uci"
+                     src="./assets/ic-uc-03-contacts.png"
+                     alt=""
+                     width="132"
+                     height="132"
+               /></span>
+               <div>
+                  <h3>A contact list you can trust</h3>
+                  <p>
+                     If Contacts has grown by hundreds of half-empty records
+                     nobody created, incoming email made them. That ends the day
+                     you install this.
+                  </p>
+                  <span class="ucres"
+                     >Your contact count moves only when you move it.</span
+                  >
+                  <a class="mini" href="#why">Why Odoo does that &rarr;</a>
+               </div>
+            </div>
+
+            <div class="ucrow">
+               <span class="ucico"
+                  ><img
+                     class="uci"
+                     src="./assets/ic-uc-04-threads.png"
+                     alt=""
+                     width="132"
+                     height="132"
+               /></span>
+               <div>
+                  <h3>Cleaner customer threads</h3>
+                  <p>
+                     Internal forwards stop landing in the middle of a customer
+                     conversation, so what your team reads is what the customer
+                     wrote.
+                  </p>
+                  <span class="ucres"
+                     >No scrolling past your own colleagues.</span
+                  >
+                  <a class="mini" href="#features"
+                     >See the internal-user filter &rarr;</a
+                  >
+               </div>
+            </div>
+
+            <div class="ucrow">
+               <span class="ucico"
+                  ><img
+                     class="uci"
+                     src="./assets/ic-uc-05-watch.png"
+                     alt=""
+                     width="132"
+                     height="132"
+               /></span>
+               <div>
+                  <h3>A mailbox people still watch</h3>
+                  <p>
+                     Your team keeps the inbox open in Outlook or Gmail. Leave
+                     fetched mail unread there so anyone can see what has not
+                     been handled.
+                  </p>
+                  <span class="ucres"
+                     >Odoo and your inbox tell the same story.</span
+                  >
+                  <a class="mini" href="#features"
+                     >The read-status switch &rarr;</a
+                  >
+               </div>
+            </div>
+
+            <div class="ucrow">
+               <span class="ucico"
+                  ><img
+                     class="uci"
+                     src="./assets/ic-uc-06-company.png"
+                     alt=""
+                     width="132"
+                     height="132"
+               /></span>
+               <div>
+                  <h3>One mailbox per company</h3>
+                  <p>
+                     The setting lives on each incoming mail server, so two
+                     companies sharing one database can behave completely
+                     differently.
+                  </p>
+                  <span class="ucres">One rule per brand, no compromise.</span>
+                  <a class="mini" href="#faqs">Multi-company answers &rarr;</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 08 · FEATURES — 12 behaviours, one visual each                          -->
+   <!-- ====================================================================== -->
+   <div class="sec" id="features">
+      <div class="wrap">
+         <div class="kick">
+            <span class="kick-n">03</span><span class="kick-l">Features</span
+            ><span class="kick-r"></span>
+         </div>
+         <h2 class="h2">Twelve things it does, stated plainly</h2>
+         <p class="lead" style="max-width: 760px; margin-top: 12px">
+            No hidden behaviour. Everything on this list is visible either on
+            the mail server form or in the Odoo server log.
+         </p>
+
+         <div class="fgrid">
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-01-mark-read-toggle.png"
+                     alt="The Mark Emails as Read checkbox ticked on the Advanced tab of an Odoo 17 incoming mail server, directly under Keep Attachments."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">01</span>
+                  <h3>A read-status switch you control</h3>
+                  <p>
+                     A new <b>Mark Emails as Read</b> checkbox appears on the
+                     incoming mail server form, right under Keep Attachments.
+                     Tick it and fetched mail is marked read on your mail
+                     server.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-02-keep-unread.png"
+                     alt="The Mark Emails as Read checkbox left unticked on the Advanced tab of an Odoo 17 incoming mail server, so fetched messages stay unread on the server."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">02</span>
+                  <h3>Or leave it unread for your team</h3>
+                  <p>
+                     Leave the box unticked and messages stay unread in the
+                     mailbox after Odoo reads them &mdash; so anyone watching
+                     the inbox in Outlook or Gmail still sees what has come in.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-03-skip-internal-user.png"
+                     alt="An Odoo 17 internal user record showing the Email Address used as the login. Incoming senders are matched against these before anything is routed."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">03</span>
+                  <h3>Mail from your own staff is skipped</h3>
+                  <p>
+                     Every sender is checked against your internal users first.
+                     If the address belongs to one of them, the message is
+                     skipped and never routed. Portal and public users are not
+                     treated as staff.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-04-skip-unknown-sender.png"
+                     alt="The Odoo 17 Contacts list with the Email column highlighted. Only addresses saved here get through the filter."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">04</span>
+                  <h3>Mail from strangers is skipped</h3>
+                  <p>
+                     Your Contacts list is the allowlist. If the sender is not
+                     saved there, the message is skipped &mdash; newsletters,
+                     cold outreach and one-off senders stop at the door instead
+                     of becoming records.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-05-contact-chatter.png"
+                     alt="An email from a saved contact appearing in that contact's chatter in Odoo."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">05</span>
+                  <h3>Known contacts land in their own chatter</h3>
+                  <p>
+                     Mail from a saved contact goes through Odoo's normal
+                     routing, so it appears in that contact's chatter and builds
+                     the full history in one place.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-06-no-ghost-contacts.png"
+                     alt="The Odoo 17 Contacts list showing a record count of 1-43 / 43. Incoming email never adds to this number."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">06</span>
+                  <h3>No contact is ever created by email</h3>
+                  <p>
+                     When a mail alias points at Contacts, an existing contact
+                     is matched and reused. An unrecognised address creates
+                     nothing at all. Your contact count only changes when a
+                     person changes it.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-07-message-id-dedup.png"
+                     alt="The Processed Message IDs field definition in Odoo 17: a stored text field on the Incoming Mail Server model, described as Store processed message IDs to prevent duplicates."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">07</span>
+                  <h3>Each message is processed once</h3>
+                  <p>
+                     Every message that gets through is recorded by its
+                     Message-ID, so a later fetch will not thread the same email
+                     twice &mdash; even when it is still marked unread on the
+                     server.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-08-imap-only.png"
+                     alt="The Server Type options on an Odoo 17 incoming mail server: IMAP Server, POP Server, Local Server and Gmail OAuth. Only IMAP is affected by this module."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">08</span>
+                  <h3>IMAP only &mdash; POP3 is untouched</h3>
+                  <p>
+                     The filters apply to IMAP servers. Any POP3 or other server
+                     type on the same database keeps Odoo's original behaviour,
+                     exactly as shipped.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-09-fetch-log.png"
+                     alt="The standard Mail: Fetchmail Service scheduled action in Odoo 17, set to run every 5 minutes on the Incoming Mail Server model."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">09</span>
+                  <h3>It runs on Odoo&rsquo;s own schedule</h3>
+                  <p>
+                     The filters hook into the standard
+                     <b>Mail: Fetchmail Service</b> action, so fetching keeps
+                     whatever interval you already set. Each cycle writes a
+                     summary to the Odoo log: fetched, failed, skipped.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-10-manual-fetch.png"
+                     alt="The Run Manually button on the Mail: Fetchmail Service scheduled action in Odoo 17, which triggers a fetch on demand."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">10</span>
+                  <h3>Test it without waiting</h3>
+                  <p>
+                     Open <b>Mail: Fetchmail Service</b> and press
+                     <b>Run Manually</b> to trigger a fetch on the spot, then
+                     read the summary in the log. You know in seconds whether
+                     the filter behaves as you expected.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-11-alias-partner.png"
+                     alt="An Odoo 17 mail alias whose Aliased Model is Journal Entry. Aliases pointed at models other than Contacts are untouched by this module."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">11</span>
+                  <h3>Aliases stop inventing partners</h3>
+                  <p>
+                     Aliases that target any other model &mdash; leads, tasks,
+                     tickets &mdash; behave exactly as Odoo intends. Only the
+                     Contacts model is protected from automatic creation.
+                  </p>
+               </div>
+            </div>
+
+            <div class="fcard">
+               <div class="shot">
+                  <img
+                     src="./assets/feat-12-install-clean.png"
+                     alt="The Personal Email Usage module installed on Odoo 17: version 17.0.1.0.0, LGPL Version 3, by Doodex, with only Upgrade and Uninstall as actions."
+                  />
+               </div>
+               <div class="fbody">
+                  <span class="fnum">12</span>
+                  <h3>Install it and it is already working</h3>
+                  <p>
+                     No wizard, no setup screen, no key. Install from Apps and
+                     the filters are live on your IMAP servers from the next
+                     fetch. Uninstall and Odoo returns to standard behaviour.
+                  </p>
+               </div>
+            </div>
+         </div>
+
+         <h2 class="h2" style="margin-top: 56px">
+            What you will not find in it
+         </h2>
+         <p class="lead" style="max-width: 760px; margin-top: 12px">
+            Being clear about the edges is part of being accurate.
+         </p>
+         <div class="featgrid">
+            <div class="feat">
+               <h4>It does not touch outgoing email</h4>
+               <p>
+                  Nothing about the composer, mail templates or your outgoing
+                  mail server changes. This module is incoming only.
+               </p>
+            </div>
+            <div class="feat">
+               <h4>It is not an anti-spam engine</h4>
+               <p>
+                  There is no scoring, no blocklist and no content analysis. The
+                  rule is simply: are you in Contacts or not.
+               </p>
+            </div>
+            <div class="feat">
+               <h4>It does not read or store message bodies</h4>
+               <p>
+                  Skipped messages are never processed into Odoo. Nothing is
+                  sent anywhere outside your own database and your own mail
+                  server.
+               </p>
+            </div>
+            <div class="feat">
+               <h4>It adds no menu and no new screen</h4>
+               <p>
+                  One checkbox on a form you already use. There is nothing new
+                  to learn and nothing new to train your team on.
+               </p>
+            </div>
+            <div class="feat">
+               <h4>It does not change POP3 servers</h4>
+               <p>
+                  If your server type is not IMAP, this module leaves it
+                  entirely alone.
+               </p>
+            </div>
+            <div class="feat">
+               <h4>It has no external service</h4>
+               <p>
+                  No API call leaves your server. No account to create, no key
+                  to renew, no vendor to depend on.
+               </p>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 09 · INTERLUDE — violet proof band                                      -->
+   <!-- ====================================================================== -->
+   <div class="sec-tight">
+      <div class="wrap">
+         <div class="interlude">
+            <p class="big">
+               Your contact list should grow because<br />
+               <span class="m">you decided it should.</span>
+            </p>
+            <p class="sub">
+               Not because a mailing list found your support address on a
+               Tuesday.
+            </p>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 10 · WHY — the two objections answered in the headline                  -->
+   <!-- ====================================================================== -->
+   <div class="sec" id="why">
+      <div class="wrap">
+         <div class="kick">
+            <span class="kick-n">04</span><span class="kick-l">Why This</span
+            ><span class="kick-r"></span>
+         </div>
+
+         <h2 class="h2" style="max-width: 800px">
+            One unfiltered email is never just one email.
+         </h2>
+         <p class="lead" style="max-width: 800px; margin-top: 12px">
+            It is the first link in a chain that ends with somebody on your team
+            cleaning up by hand. Here is how a single message from a stranger
+            turns into work.
+         </p>
+
+         <div class="chain">
+            <div class="cstep stop">
+               <div class="cico">
+                  <img
+                     src="./assets/ic-why-1-stranger.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+               </div>
+               <div class="ctxt">
+                  <span class="cnum">STEP 1</span>
+                  <h3>A stranger writes in</h3>
+                  <p>
+                     A newsletter, a bot, a cold pitch. It reaches your shared
+                     mailbox like any other message.
+                  </p>
+                  <span class="cflag">Blocked here</span>
+               </div>
+            </div>
+            <div class="cstep">
+               <div class="cico">
+                  <img
+                     src="./assets/ic-why-2-ghost.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+               </div>
+               <div class="ctxt">
+                  <span class="cnum">STEP 2</span>
+                  <h3>Odoo saves them</h3>
+                  <p>
+                     With an alias on Contacts, Odoo creates a record so it has
+                     somewhere to file the message.
+                  </p>
+               </div>
+            </div>
+            <div class="cstep">
+               <div class="cico">
+                  <img
+                     src="./assets/ic-why-3-spread.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+               </div>
+               <div class="ctxt">
+                  <span class="cnum">STEP 3</span>
+                  <h3>It spreads</h3>
+                  <p>
+                     That record now turns up in searches, filters, mailing
+                     lists and your team's autocomplete.
+                  </p>
+               </div>
+            </div>
+            <div class="cstep">
+               <div class="cico">
+                  <img
+                     src="./assets/ic-why-4-numbers.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+               </div>
+               <div class="ctxt">
+                  <span class="cnum">STEP 4</span>
+                  <h3>Your numbers drift</h3>
+                  <p>
+                     Contact totals, segment sizes and campaign lists all count
+                     somebody who was never a customer.
+                  </p>
+               </div>
+            </div>
+            <div class="cstep">
+               <div class="cico">
+                  <img
+                     src="./assets/ic-why-5-cleanup.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+               </div>
+               <div class="ctxt">
+                  <span class="cnum">STEP 5</span>
+                  <h3>Someone deletes it</h3>
+                  <p>
+                     By hand, month after month &mdash; and only after it has
+                     already skewed a list or a report.
+                  </p>
+               </div>
+            </div>
+         </div>
+
+         <p class="payoff">
+            Personal Email Usage ends the chain at step&nbsp;1. The record is
+            never created, so
+            <span class="m">there is nothing downstream to fix</span>.
+         </p>
+
+         <h2 class="h2" style="margin-top: 60px; max-width: 800px">
+            What you get back
+         </h2>
+         <p class="lead" style="max-width: 800px; margin-top: 12px">
+            Three things change the first time the cron runs after you install
+            it.
+         </p>
+
+         <div class="gains">
+            <div class="gain">
+               <img
+                  src="./assets/ic-why-g1-clean.png"
+                  alt=""
+                  width="132"
+                  height="132"
+               />
+               <h3>A database that stays clean by itself</h3>
+               <p>
+                  No rule list to maintain, no monthly clean-up, no import to
+                  undo. The filter reads your live contacts at every fetch, so
+                  it is right the day you add a customer and still right a year
+                  later.
+               </p>
+            </div>
+            <div class="gain">
+               <img
+                  src="./assets/ic-why-g2-focus.png"
+                  alt=""
+                  width="132"
+                  height="132"
+               />
+               <h3>A team that only reads real messages</h3>
+               <p>
+                  Internal forwards and cold outreach never reach a thread. What
+                  your people open in Odoo is what a customer actually wrote
+                  &mdash; so nobody learns to skim past the noise.
+               </p>
+            </div>
+            <div class="gain">
+               <img
+                  src="./assets/ic-why-g3-fast.png"
+                  alt=""
+                  width="132"
+                  height="132"
+               />
+               <h3>Two minutes, then nothing</h3>
+               <p>
+                  Install, tick one box, done. No activation key, no account, no
+                  subscription and no outside service that could break your
+                  incoming mail later on.
+               </p>
+            </div>
+         </div>
+
+         <div class="notice">
+            <h4>One honest note on settings</h4>
+            <p>
+               Messages that are <b>skipped</b> are deliberately left untouched
+               in your mailbox. If you leave
+               <b>Mark Emails as Read</b> unticked, those skipped messages stay
+               unread and will therefore be looked at again on the next fetch,
+               and skipped again. That is harmless, and it is what keeps them
+               visible to a human watching the inbox.
+            </p>
+            <p>
+               On a busy mailbox that receives a lot of unknown senders, tick
+               <b>Mark Emails as Read</b>. Fetched messages are then marked read
+               on the server and each one is only examined once. We would rather
+               tell you this here than let you discover it in a log file.
+            </p>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 11 · CTA #2 of 3 — mid page                                             -->
+   <!-- ====================================================================== -->
+   <div class="sec-tight">
+      <div class="wrap">
+         <div class="qrcta">
+            <div class="qr-head">
+               <p class="qr-eyebrow">Seen the chain?</p>
+               <h2 class="qr-title">
+                  Tell us what your mailbox actually receives
+               </h2>
+               <p class="qr-sub">
+                  Describe the mailbox &mdash; a shared sales address, a support
+                  desk, an alias feeding CRM &mdash; and we will tell you which
+                  of the three filters you need and which you do not.
+               </p>
+            </div>
+            <div class="qr-grid">
+               <div class="qr-card qr-lead">
+                  <div class="qr-top">
+                     <span class="qr-ico">1</span
+                     ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                  </div>
+                  <h3 class="qr-h">Book a call</h3>
+                  <p class="qr-p">
+                     Walk through your incoming mail setup with a consultant.
+                  </p>
+                  <span class="qr-code"
+                     ><img
+                        src="./assets/qr-meeting.png"
+                        alt="QR code for https://hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="btn btn-1 qr-btn"
+                     >https://hub.doodex.net<wbr />/r/meeting</span
+                  >
+               </div>
+               <div class="qr-card">
+                  <div class="qr-top">
+                     <span class="qr-ico">2</span
+                     ><span class="qr-tag">Written reply</span>
+                  </div>
+                  <h3 class="qr-h">Email us</h3>
+                  <p class="qr-p">A real person reads it and answers.</p>
+                  <a
+                     class="qr-code"
+                     href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+                     ><img
+                        src="./assets/qr-contact.png"
+                        alt="QR code for https://doodex.net/contactus"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a
+                     class="btn btn-2 qr-btn"
+                     href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+                     >odoo@doodex.net</a
+                  >
+               </div>
+               <div class="qr-card">
+                  <div class="qr-top">
+                     <span class="qr-ico">3</span
+                     ><span class="qr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="qr-h">WhatsApp</h3>
+                  <p class="qr-p">Message the team on +62 821-3120-5030.</p>
+                  <span class="qr-code"
+                     ><img
+                        src="./assets/qr-whatsapp.png"
+                        alt="QR code for https://hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="btn btn-2 qr-btn"
+                     >https://hub.doodex.net<wbr />/r/whatsapp</span
+                  >
+               </div>
+            </div>
+            <p class="qr-foot">
+               Scan a code with your phone camera, or type the address printed
+               under it.
+            </p>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 12 · EDITION & PRICE — free, stated transparently                       -->
+   <!-- ====================================================================== -->
+   <div class="sec tinted" id="pricing">
+      <div class="wrap">
+         <div class="kick">
+            <span class="kick-n">05</span><span class="kick-l">Price</span
+            ><span class="kick-r"></span>
+         </div>
+         <h2 class="h2">Free. Not free-for-now.</h2>
+         <p class="lead" style="max-width: 760px; margin-top: 12px">
+            Published under LGPL-3. There is no paid tier of this module, no
+            activation key, no subscription and no usage limit. What you
+            download is the whole thing.
+         </p>
+
+         <div class="edition">
+            <div class="ed-left">
+               <span class="ed-tag">One edition</span>
+               <div class="ed-amt">Free</div>
+               <p class="ed-note">
+                  LGPL-3 &middot; Odoo 17.0 &middot; Community and Enterprise
+               </p>
+               <ul class="ed-bul">
+                  <li>All three filters included</li>
+                  <li>Read-status control included</li>
+                  <li>Source code readable and modifiable</li>
+                  <li>No key, no account, no phone-home</li>
+                  <li>Uninstall returns Odoo to standard behaviour</li>
+               </ul>
+            </div>
+            <div class="ed-right">
+               <p class="ed-label">What you get the moment you install it</p>
+               <div class="edlist">
+                  <div>
+                     <span class="ck">&#10003;</span
+                     ><span
+                        >The <b>Mark Emails as Read</b> field on every incoming
+                        mail server</span
+                     >
+                  </div>
+                  <div>
+                     <span class="ck">&#10003;</span
+                     ><span>Internal-user filtering on all IMAP servers</span>
+                  </div>
+                  <div>
+                     <span class="ck">&#10003;</span
+                     ><span>Known-contact filtering on all IMAP servers</span>
+                  </div>
+                  <div>
+                     <span class="ck">&#10003;</span
+                     ><span
+                        >Protection against contacts being created from
+                        email</span
+                     >
+                  </div>
+                  <div>
+                     <span class="ck">&#10003;</span
+                     ><span>Message-ID de-duplication per server</span>
+                  </div>
+                  <div>
+                     <span class="ck">&#10003;</span
+                     ><span
+                        >A readable summary in the Odoo server log after every
+                        fetch</span
+                     >
+                  </div>
+                  <div>
+                     <span class="ck">&#10003;</span
+                     ><span
+                        >POP3 servers left exactly as Odoo shipped them</span
+                     >
+                  </div>
+               </div>
+               <p
+                  class="small muted"
+                  style="margin-top: 18px; margin-bottom: 0"
+               >
+                  Paid work is optional and separate: if you want the filter
+                  extended &mdash; a per-server allowlist, a different rule for
+                  one alias, a report of what was skipped &mdash; Doodex can
+                  build it. Ask us for a quote before you commit to anything.
+               </p>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 13 · REQUIREMENTS & INSTALL                                             -->
+   <!-- ====================================================================== -->
+   <div class="sec">
+      <div class="wrap">
+         <h2 class="h2">Requirements, and how to turn it on</h2>
+         <p class="lead" style="max-width: 760px; margin-top: 12px">
+            Everything it needs is already in your Odoo. Nothing to buy, nothing
+            to install alongside it.
+         </p>
+
+         <div class="reqcols">
+            <div>
+               <p class="collabel">What it runs on</p>
+               <div class="tscroll">
+                  <table class="spec">
+                     <tr>
+                        <td>Odoo version</td>
+                        <td>17.0 &mdash; Community and Enterprise</td>
+                     </tr>
+                     <tr>
+                        <td>Module version</td>
+                        <td>17.0.1.0.0</td>
+                     </tr>
+                     <tr>
+                        <td>Technical name</td>
+                        <td>personal_email_usage</td>
+                     </tr>
+                     <tr>
+                        <td>Depends on</td>
+                        <td>base, mail &mdash; both part of standard Odoo</td>
+                     </tr>
+                     <tr>
+                        <td>License</td>
+                        <td>LGPL-3</td>
+                     </tr>
+                     <tr>
+                        <td>Publisher</td>
+                        <td>Doodex</td>
+                     </tr>
+                     <tr>
+                        <td>Mail server type</td>
+                        <td>IMAP (POP3 servers keep Odoo's own behaviour)</td>
+                     </tr>
+                     <tr>
+                        <td>Python packages</td>
+                        <td>None beyond what Odoo already installs</td>
+                     </tr>
+                     <tr>
+                        <td>External services</td>
+                        <td>None. Nothing leaves your server.</td>
+                     </tr>
+                     <tr>
+                        <td>Hosting</td>
+                        <td>
+                           Odoo.sh, on-premise or any self-managed hosting that
+                           accepts custom addons
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+
+            <div>
+               <p class="collabel">Setup &mdash; about two minutes</p>
+               <ol class="steps">
+                  <li>
+                     <h4>Install it</h4>
+                     <p>
+                        Drop the module in your addons folder, update the Apps
+                        list and install <b>Personal Email Usage</b>. The
+                        filters are live from the next fetch.
+                     </p>
+                  </li>
+                  <li>
+                     <h4>Turn on developer mode</h4>
+                     <p>
+                        Settings &rarr; General Settings &rarr; Developer Tools
+                        &rarr; Activate the developer mode. The read-status
+                        field is a technical setting, so it only appears there.
+                     </p>
+                  </li>
+                  <li>
+                     <h4>Set the read status</h4>
+                     <p>
+                        Settings &rarr; Technical &rarr; Email &rarr; Incoming
+                        Mail Servers. Open your IMAP server and tick or untick
+                        <b>Mark Emails as Read</b>.
+                     </p>
+                  </li>
+                  <li class="check">
+                     <h4>Check it worked</h4>
+                     <p>
+                        Press <b>Fetch Now</b> and read the Odoo server log. The
+                        summary line tells you how many messages were fetched
+                        and how many were skipped.
+                     </p>
+                  </li>
+               </ol>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 14 · FAQ — 12 real questions                                            -->
+   <!-- ====================================================================== -->
+   <div class="sec tinted" id="faqs">
+      <div class="wrap narrow">
+         <div class="kick">
+            <span class="kick-n">06</span><span class="kick-l">FAQ</span
+            ><span class="kick-r"></span>
+         </div>
+         <h2 class="h2">Twelve questions people actually ask</h2>
+
+         <div class="faq">
+            <details open>
+               <summary>Does this replace Odoo's incoming mail server?</summary>
+               <div class="a">
+                  <p>
+                     No. It extends it. Your existing incoming mail server
+                     records, credentials, aliases and scheduled action stay
+                     exactly as they are. The module only adds checks that run
+                     before a message is routed.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  What happens to an email from someone who is not a contact?
+               </summary>
+               <div class="a">
+                  <p>
+                     Nothing is created. The message is skipped, a line is
+                     written to the Odoo server log saying so, and the email
+                     itself stays in your mailbox where a person can still read
+                     it. It is not deleted and it is not moved.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Will it stop Odoo creating duplicate contacts?</summary>
+               <div class="a">
+                  <p>
+                     It stops Odoo creating contacts from incoming email
+                     altogether. When an alias points at Contacts and the sender
+                     is already saved, that existing record is used. When the
+                     sender is unknown, no record is made. Contacts created by
+                     people, imports or other modules are unaffected.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  Does it work on Odoo Community, or only Enterprise?
+               </summary>
+               <div class="a">
+                  <p>
+                     Both. It depends only on <b>base</b> and <b>mail</b>, which
+                     ship with Community.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Which Odoo versions are supported?</summary>
+               <div class="a">
+                  <p>
+                     This listing is for Odoo 17.0, module version 17.0.1.0.0.
+                     If you need it on another version, email odoo@doodex.net
+                     and tell us which one &mdash; we will tell you honestly
+                     what porting it involves.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Does it work with POP3?</summary>
+               <div class="a">
+                  <p>
+                     The filters apply to IMAP servers. A POP3 server on the
+                     same database keeps Odoo's standard behaviour and is not
+                     touched by this module in any way.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  Where exactly is the Mark Emails as Read setting?
+               </summary>
+               <div class="a">
+                  <p>
+                     Turn on developer mode, then go to Settings &rarr;
+                     Technical &rarr; Email &rarr; Incoming Mail Servers and
+                     open your server. The checkbox sits just after Keep
+                     Attachments. It is a technical setting, so it is
+                     intentionally hidden without developer mode.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  Should I tick Mark Emails as Read or leave it off?
+               </summary>
+               <div class="a">
+                  <p>
+                     Leave it off if your team still watches the mailbox in
+                     Outlook or Gmail and you want messages to stay bold and
+                     unread there. Tick it if the mailbox receives a lot of mail
+                     from unknown senders &mdash; that way each message is
+                     examined once and marked read, rather than being looked at
+                     and skipped on every fetch.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>
+                  Does it filter emails my team sends to each other?
+               </summary>
+               <div class="a">
+                  <p>
+                     Yes. If the sender address matches the login of an internal
+                     Odoo user, the message is skipped. Portal users and public
+                     users are not treated as internal staff, so their mail
+                     follows the normal contact rule instead.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Does it send my data anywhere?</summary>
+               <div class="a">
+                  <p>
+                     No. There is no external API call, no telemetry and no
+                     account. The module reads your mail server and your own
+                     Odoo database and writes to nothing else. That matters for
+                     GDPR, and it is why the answer is this short.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>What happens if I uninstall it?</summary>
+               <div class="a">
+                  <p>
+                     Odoo returns to its standard incoming mail behaviour
+                     immediately. The added field disappears with the module.
+                     Messages that were already threaded stay where they are
+                     &mdash; nothing is removed.
+                  </p>
+               </div>
+            </details>
+
+            <details>
+               <summary>Can you customise the rules for us?</summary>
+               <div class="a">
+                  <p>
+                     Yes, and it is a separate paid engagement, quoted before
+                     any work starts. Common requests are a per-server
+                     allowlist, a different rule for one alias, or a report of
+                     what was skipped. Email odoo@doodex.net and describe what
+                     you need.
+                  </p>
+               </div>
+            </details>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 15 · CROSS-SELL — other Doodex modules                                  -->
+   <!-- ====================================================================== -->
+   <div class="sec">
+      <div class="wrap">
+         <div class="kick">
+            <span class="kick-l">Works great with</span
+            ><span class="kick-r"></span>
+         </div>
+         <h2 class="h2">Other Doodex modules, built the same way</h2>
+         <p class="lead" style="max-width: 720px; margin-top: 12px">
+            Different problems, same approach: narrow scope, a one-time price,
+            and the limits stated up front.
+         </p>
+
+         <div
+            class="trust"
+            style="justify-content: flex-start; margin-top: 20px"
+         >
+            <span class="chip"><i></i>Narrow scope</span>
+            <span class="chip"><i></i>One-time price</span>
+            <span class="chip"><i></i>Limits stated up front</span>
+         </div>
+
+         <div class="xgrid">
+            <div class="xcard xcard-lead">
+               <div class="xtop">
+                  <img
+                     class="xico"
+                     src="./assets/growth-suite-logo.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+                  <span class="xprice">$349 once</span>
+               </div>
+               <h3>Doodex Growth Suite</h3>
+               <p>
+                  Five CRM and marketing modules that share one another's data:
+                  BizScan AI, Campaign Manager, Smart Dashboards, User Roles and
+                  Email Sync+. Sold as one suite.
+               </p>
+               <a
+                  class="btn btn-1 xbtn"
+                  href="https://apps.odoo.com/apps/modules/17.0/marketing_crm_automation_dashboard_campaign_doodex"
+                  >Open on the Apps Store &rarr;</a
+               >
+            </div>
+
+            <div class="xcard">
+               <div class="xtop">
+                  <img
+                     class="xico"
+                     src="./assets/flow-survey-reader-logo.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+                  <span class="xprice">Free</span>
+               </div>
+               <h3>Flow Survey Reader</h3>
+               <p>
+                  Publish conditional surveys and forms straight from Odoo and
+                  keep every answer in your own database.
+               </p>
+               <a
+                  class="btn btn-2 xbtn"
+                  href="https://apps.odoo.com/apps/modules/17.0/flow_survey_reader"
+                  >Open on the Apps Store &rarr;</a
+               >
+            </div>
+
+            <div class="xcard">
+               <div class="xtop">
+                  <img
+                     class="xico"
+                     src="./assets/flow-survey-builder-logo.png"
+                     alt=""
+                     width="132"
+                     height="132"
+                  />
+                  <span class="xprice">$199 once</span>
+               </div>
+               <h3>Flow Survey Builder</h3>
+               <p>
+                  The drag-and-drop editor for those surveys: 25 question types,
+                  slide branching and full theming. Installing it brings the
+                  free Reader with it.
+               </p>
+               <a
+                  class="btn btn-2 xbtn"
+                  href="https://apps.odoo.com/apps/modules/17.0/flow_survey"
+                  >Open on the Apps Store &rarr;</a
+               >
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 16 · RELEASES — public changelog                                        -->
+   <!-- ====================================================================== -->
+   <div class="sec tinted" id="releases">
+      <div class="wrap narrow">
+         <div class="kick">
+            <span class="kick-n">07</span><span class="kick-l">Releases</span
+            ><span class="kick-r"></span>
+         </div>
+         <h2 class="h2">Public release history</h2>
+         <p class="lead" style="margin-top: 12px">
+            Every version published on this page is listed here, newest first,
+            with what changed.
+         </p>
+
+         <div class="rel">
+            <div class="relitem">
+               <span class="relv">17.0.1.0.0</span
+               ><span class="reld">First public release</span>
+               <ul class="relul">
+                  <li>
+                     <span class="badge b-new">NEW</span
+                     ><span
+                        >Mark Emails as Read setting on the incoming mail
+                        server, shown in developer mode.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="badge b-new">NEW</span
+                     ><span
+                        >Emails sent from internal Odoo users are skipped and
+                        logged.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="badge b-new">NEW</span
+                     ><span
+                        >Emails from senders who are not saved in Contacts are
+                        skipped and logged.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="badge b-new">NEW</span
+                     ><span
+                        >Incoming email can no longer create a contact record;
+                        an existing contact is matched and reused instead.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="badge b-new">NEW</span
+                     ><span
+                        >Message-ID de-duplication per incoming mail
+                        server.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="badge b-new">NEW</span
+                     ><span
+                        >Summary log line after every fetch: fetched, failed and
+                        skipped counts.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="badge b-imp">IMP</span
+                     ><span
+                        >POP3 and other non-IMAP server types are explicitly
+                        passed through to standard Odoo behaviour.</span
+                     >
+                  </li>
+                  <li>
+                     <span class="badge b-imp">IMP</span
+                     ><span
+                        >Automated tests covering the filters, the read-status
+                        behaviour and the no-auto-contact rule.</span
+                     >
+                  </li>
+               </ul>
+            </div>
+         </div>
+
+         <p class="small muted" style="margin-top: 24px">
+            Found something that does not behave as described on this page?
+            Email odoo@doodex.net with your Odoo version and the relevant server
+            log line. Fixes are published here as a new version.
+         </p>
+      </div>
+   </div>
+
+   <!-- ====================================================================== -->
+   <!-- 17 · CTA #3 of 3 — page close                                           -->
+   <!-- ====================================================================== -->
+   <div class="sec-tight">
+      <div class="wrap">
+         <div class="qrcta qrcta-end">
+            <div class="qr-head">
+               <p class="qr-eyebrow">Free to install, free to keep</p>
+               <h2 class="qr-title">
+                  Install it, or ask us first &mdash; both are fine
+               </h2>
+               <p class="qr-sub">
+                  If you already know your mailbox needs this, install it and
+                  tick the box. If you would rather have someone check your
+                  setup first, that is what the three routes below are for.
+               </p>
+            </div>
+            <div class="qr-grid">
+               <div class="qr-card qr-lead">
+                  <div class="qr-top">
+                     <span class="qr-ico">1</span
+                     ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                  </div>
+                  <h3 class="qr-h">Book a call</h3>
+                  <p class="qr-p">
+                     A consultant looks at your incoming mail setup with you.
+                  </p>
+                  <span class="qr-code"
+                     ><img
+                        src="./assets/qr-meeting.png"
+                        alt="QR code for https://hub.doodex.net/r/meeting"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="btn btn-1 qr-btn"
+                     >https://hub.doodex.net<wbr />/r/meeting</span
+                  >
+               </div>
+               <div class="qr-card">
+                  <div class="qr-top">
+                     <span class="qr-ico">2</span
+                     ><span class="qr-tag">Written reply</span>
+                  </div>
+                  <h3 class="qr-h">Email us</h3>
+                  <p class="qr-p">
+                     Questions, bug reports and quote requests all go here.
+                  </p>
+                  <a
+                     class="qr-code"
+                     href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+                     ><img
+                        src="./assets/qr-contact.png"
+                        alt="QR code for https://doodex.net/contactus"
+                        width="98"
+                        height="98"
+                  /></a>
+                  <a
+                     class="btn btn-2 qr-btn"
+                     href="mailto:odoo@doodex.net?subject=Personal%20Email%20Usage"
+                     >odoo@doodex.net</a
+                  >
+               </div>
+               <div class="qr-card">
+                  <div class="qr-top">
+                     <span class="qr-ico">3</span
+                     ><span class="qr-tag">Fastest reply</span>
+                  </div>
+                  <h3 class="qr-h">WhatsApp</h3>
+                  <p class="qr-p">Message the team on +62 821-3120-5030.</p>
+                  <span class="qr-code"
+                     ><img
+                        src="./assets/qr-whatsapp.png"
+                        alt="QR code for https://hub.doodex.net/r/whatsapp"
+                        width="98"
+                        height="98"
+                  /></span>
+                  <span class="btn btn-2 qr-btn"
+                     >https://hub.doodex.net<wbr />/r/whatsapp</span
+                  >
+               </div>
+            </div>
+            <p class="qr-foot">
+               Scan a code with your phone camera, or type the address printed
+               under it. Both go to the same place.
+            </p>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- ===================== end Personal Email Usage listing ================= -->

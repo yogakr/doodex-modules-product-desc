@@ -1,0 +1,3044 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>
+         CRM Probability From Stage - Odoo 17 CRM stage probability and weighted
+         pipeline forecast
+      </title>
+      <meta
+         name="description"
+         content="Free Odoo 17 module by Doodex: set a win probability on every CRM stage, apply it automatically to each opportunity, and read a weighted Probability Revenue total in the pipeline list view. LGPL-3."
+      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+         rel="stylesheet"
+      />
+   </head>
+   <body>
+      <div class="cps">
+         <style>
+            /* ==========================================================================
+   CRM Probability From Stage - Odoo Apps Store listing
+   Doodex 2026 design system - archetype C (product-led / screenshot-first)
+   Every rule is scoped under .cps so this fragment cannot leak into the store
+   page around it, and the store's own stylesheet cannot reach in either.
+   ========================================================================== */
+            .cps {
+               --violet: #270140;
+               --violet-2: #3a1a5a;
+               --coral: #fa7268;
+               --coral-dk: #e85c52;
+               --ink: #0a0a0a;
+               --ink-2: #171717;
+               --ink-3: #525252;
+               --ink-4: #737373;
+               --bg: #ffffff;
+               --surface: #faf7fc;
+               --surface-2: #f4eef8;
+               --line: #ece4f3;
+               --success: #16a34a;
+               --danger: #dc2626;
+               --r-sm: 6px;
+               --r-md: 10px;
+               --r-lg: 14px;
+               --r-xl: 20px;
+               --r-full: 9999px;
+               --xs: 0 0 0 1px rgba(39, 1, 64, 0.06);
+               --sm:
+                  0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 1, 64, 0.08);
+               --md:
+                  0 4px 14px rgba(39, 1, 64, 0.08),
+                  0 0 0 1px rgba(39, 1, 64, 0.06);
+               --cta: 0 8px 22px rgba(250, 114, 104, 0.32);
+            }
+            .cps * {
+               box-sizing: border-box;
+            }
+            .cps {
+               background: var(--bg);
+               color: var(--ink-3);
+               font-family:
+                  "Inter",
+                  -apple-system,
+                  BlinkMacSystemFont,
+                  "Segoe UI",
+                  Roboto,
+                  sans-serif;
+               font-size: 16px;
+               line-height: 1.65;
+               font-feature-settings: "cv11", "ss01";
+               -webkit-font-smoothing: antialiased;
+            }
+            .cps h1,
+            .cps h2,
+            .cps h3,
+            .cps h4 {
+               color: var(--violet);
+               letter-spacing: -0.015em;
+               margin: 0;
+            }
+            .cps p {
+               margin: 0 0 14px;
+            }
+            .cps a {
+               color: var(--coral-dk);
+               overflow-wrap: anywhere;
+            }
+            /* Naked URLs are printed as visible text throughout, as a sanitiser fallback.
+   Long paths must be allowed to break rather than push the page wide. */
+            .cps,
+            .cps p,
+            .cps td,
+            .cps li {
+               overflow-wrap: break-word;
+            }
+            .cps img {
+               max-width: 100%;
+            }
+            .cps .cpmuted {
+               color: var(--ink-4);
+            }
+            .cps .cpcenter {
+               text-align: center;
+            }
+            .cps .wrap {
+               max-width: 1080px;
+               margin: 0 auto;
+               padding: 0 24px;
+            }
+            .cps .narrow {
+               max-width: 820px;
+               margin: 0 auto;
+            }
+            .cps .sec {
+               padding: 60px 0;
+            }
+            .cps .sec-tight {
+               padding: 34px 0;
+            }
+            .cps .cphr {
+               height: 1px;
+               background: var(--line);
+               border: 0;
+               margin: 0;
+            }
+
+            /* -------------------------------------------------------------- typography */
+            .cps .eyebrow {
+               display: inline-block;
+               font-size: 12px;
+               font-weight: 700;
+               letter-spacing: 0.08em;
+               text-transform: uppercase;
+               color: var(--coral-dk);
+               margin: 0 0 14px;
+            }
+            .cps .cph1 {
+               font-size: 46px;
+               font-weight: 800;
+               line-height: 1.07;
+            }
+            .cps .cph2 {
+               font-size: 28px;
+               font-weight: 800;
+               line-height: 1.2;
+            }
+            .cps .cph3 {
+               font-size: 19px;
+               font-weight: 700;
+            }
+            .cps .cplead {
+               font-size: 18px;
+               line-height: 1.62;
+               color: var(--ink-3);
+            }
+            .cps .cpsm {
+               font-size: 13.5px;
+            }
+            .cps .cpxs {
+               font-size: 12.5px;
+            }
+            .cps .mark {
+               color: var(--coral-dk);
+            }
+            @media (max-width: 720px) {
+               .cps .cph1 {
+                  font-size: 33px;
+               }
+               .cps .cph2 {
+                  font-size: 23px;
+               }
+               .cps .cplead {
+                  font-size: 16.5px;
+               }
+               .cps .sec {
+                  padding: 44px 0;
+               }
+            }
+
+            /* ------------------------------------------------------------------ buttons */
+            .cps .cpbtn {
+               display: inline-flex;
+               align-items: center;
+               gap: 8px;
+               font-weight: 700;
+               font-size: 15px;
+               text-decoration: none;
+               padding: 13px 24px;
+               border-radius: var(--r-md);
+               line-height: 1.2;
+            }
+            .cps .cpbtn-1 {
+               background: var(--coral);
+               color: #fff !important;
+               box-shadow: var(--cta);
+            }
+            .cps .cpbtn-2 {
+               background: #fff;
+               color: var(--violet) !important;
+               box-shadow: 0 0 0 1.5px var(--violet);
+            }
+            .cps .cpbtn-row {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 12px;
+            }
+
+            /* -------------------------------------------- section header (page signature)
+   Deliberately NOT the numbered band used on the Flow Survey Builder listing:
+   a hairline rule with a small label riding on it, so the two pages do not
+   read as the same template. */
+            .cps .shead {
+               display: flex;
+               align-items: center;
+               gap: 16px;
+               margin: 0 0 26px;
+            }
+            .cps .shead .lbl {
+               flex: none;
+               font-size: 11.5px;
+               font-weight: 800;
+               letter-spacing: 0.16em;
+               text-transform: uppercase;
+               color: var(--violet);
+               background: var(--surface-2);
+               border-radius: var(--r-full);
+               padding: 6px 15px;
+            }
+            .cps .shead .ln {
+               flex: 1;
+               height: 1px;
+               background: var(--line);
+            }
+
+            /* ---------------------------------------------------------------- nav + trust
+   The bar is intentionally not sticky: a pinned bar would float over the
+   store's own header, which this fragment does not own. */
+            .cps .cpnav {
+               border-bottom: 1px solid var(--line);
+               background: #fff;
+            }
+            .cps .cpnav-in {
+               max-width: 1080px;
+               margin: 0 auto;
+               padding: 12px 24px;
+               display: flex;
+               align-items: center;
+               gap: 18px;
+               flex-wrap: wrap;
+               justify-content: space-between;
+            }
+            .cps .cpnav-brand {
+               display: inline-flex;
+               align-items: center;
+               gap: 9px;
+               font-weight: 800;
+               font-size: 15px;
+               color: var(--violet) !important;
+               text-decoration: none;
+               letter-spacing: -0.01em;
+            }
+            /* The brand mark is a PNG drawn at three times its display size, so it stays
+   sharp on retina screens. Because its intrinsic size is therefore wrong on
+   purpose, it is sized by this rule and never by its width/height attributes -
+   those are presentational hints and lose to any stylesheet, the store's own
+   included. */
+            .cps .cpnav-logo {
+               width: 26px;
+               height: 26px;
+               flex: none;
+               display: block;
+            }
+            .cps .cpnav-brand span {
+               color: var(--ink-4);
+               font-weight: 600;
+            }
+            .cps .tabgroup {
+               display: inline-flex;
+               flex-wrap: wrap;
+               gap: 2px;
+               background: var(--surface);
+               border: 1px solid var(--line);
+               border-radius: var(--r-full);
+               padding: 4px;
+            }
+            .cps .tabgroup a {
+               text-decoration: none;
+               color: var(--ink-2) !important;
+               font-size: 13.5px;
+               font-weight: 600;
+               padding: 7px 14px;
+               border-radius: var(--r-full);
+               white-space: nowrap;
+            }
+            .cps .tabgroup a:hover {
+               background: #fff;
+               color: var(--violet) !important;
+               box-shadow: var(--xs);
+            }
+            .cps .trust {
+               background: var(--surface);
+               border-bottom: 1px solid var(--line);
+            }
+            .cps .trust-in {
+               max-width: 1080px;
+               margin: 0 auto;
+               padding: 13px 24px;
+               display: flex;
+               flex-wrap: wrap;
+               gap: 9px;
+               justify-content: center;
+            }
+            .cps .tchip {
+               display: inline-flex;
+               align-items: center;
+               gap: 7px;
+               font-size: 12.5px;
+               font-weight: 600;
+               color: var(--violet);
+               background: #fff;
+               padding: 6px 13px;
+               border-radius: var(--r-full);
+               box-shadow: var(--xs);
+            }
+            .cps .tchip::before {
+               content: "";
+               width: 7px;
+               height: 7px;
+               border-radius: 50%;
+               background: var(--success);
+               flex: none;
+            }
+
+            /* -------------------------------------------------------------- media frames */
+            .cps .shot {
+               border-radius: var(--r-lg);
+               box-shadow: var(--md);
+               overflow: hidden;
+               background: var(--surface);
+            }
+            .cps .shot img {
+               display: block;
+               width: 100%;
+               height: auto;
+            }
+
+            /* ------------------------------------------- screenshot showcase (archetype C)
+   PURE CSS. No JavaScript of any kind, and no dependency on the store's own
+   Bootstrap - the earlier data-bs-toggle="pill" version did not switch on the
+   live store, so it was replaced. Switching is done with :target alone.
+
+   Every pane sits in the SAME grid cell, which buys three things at once:
+     - the block cannot collapse, because the cell is as tall as the panes;
+     - a targeted pane covers the default one instead of pushing it around;
+     - all panes share one scroll position, so only the first tab click moves
+       the page and every click after it is visually still.
+   The tab links come AFTER the panes in the DOM so the active tab can be
+   selected with `#pane:target ~ .scnav .sctN`; the grid puts them back on the
+   left visually. If :target is ever unsupported, or the sanitiser strips the
+   ids, pane 1 stays visible and tab 1 stays lit - the block degrades to a
+   single screenshot rather than to nothing. */
+            .cps .scase {
+               display: grid;
+               grid-template-columns: 290px 1fr;
+               gap: 20px;
+               align-items: start;
+            }
+            .cps .scnav {
+               grid-area: 1/1;
+               display: flex;
+               flex-direction: column;
+               gap: 8px;
+            }
+            .cps .sctab {
+               display: block;
+               text-decoration: none;
+               background: #fff;
+               border-radius: var(--r-md);
+               padding: 14px 16px;
+               box-shadow: 0 0 0 1px rgba(39, 1, 64, 0.1);
+               color: var(--ink-3) !important;
+               transition:
+                  box-shadow 0.18s ease,
+                  background 0.18s ease;
+            }
+            .cps .sctab .n {
+               display: block;
+               font-size: 11px;
+               font-weight: 800;
+               letter-spacing: 0.1em;
+               text-transform: uppercase;
+               color: var(--coral-dk);
+               margin-bottom: 3px;
+            }
+            .cps .sctab .t {
+               display: block;
+               font-size: 14.5px;
+               font-weight: 700;
+               color: var(--violet);
+               line-height: 1.35;
+            }
+            .cps .sctab .d {
+               display: block;
+               font-size: 12.5px;
+               color: var(--ink-4);
+               line-height: 1.5;
+               margin-top: 3px;
+            }
+            .cps .sctab:hover {
+               box-shadow: 0 0 0 1.5px rgba(250, 114, 104, 0.55);
+            }
+            /* tab 1 is lit by default; an explicit rule below unlights it when another
+   pane is targeted, so no :has() is needed for the active state */
+            .cps .sctab-1,
+            .cps #cps-sc-1:target ~ .scnav .sctab-1,
+            .cps #cps-sc-2:target ~ .scnav .sctab-2,
+            .cps #cps-sc-3:target ~ .scnav .sctab-3,
+            .cps #cps-sc-4:target ~ .scnav .sctab-4 {
+               background: var(--surface-2);
+               box-shadow: 0 0 0 1.5px var(--coral);
+            }
+            .cps #cps-sc-2:target ~ .scnav .sctab-1,
+            .cps #cps-sc-3:target ~ .scnav .sctab-1,
+            .cps #cps-sc-4:target ~ .scnav .sctab-1 {
+               background: #fff;
+               box-shadow: 0 0 0 1px rgba(39, 1, 64, 0.1);
+            }
+            .cps .scpane {
+               grid-area: 1/2;
+               visibility: hidden;
+               background: #fff;
+               border-radius: var(--r-lg);
+               scroll-margin-top: 110px;
+            }
+            .cps .scpane:first-child {
+               visibility: visible;
+            }
+            .cps .scpane:target {
+               visibility: visible;
+               z-index: 2;
+            }
+            .cps .scpane img {
+               display: block;
+               width: 100%;
+               height: auto;
+               border-radius: var(--r-lg);
+               box-shadow: var(--md);
+            }
+            /* where :has() is available the default pane is genuinely hidden rather than
+   merely covered, which keeps it out of the accessibility tree too */
+            .cps .scase:has(.scpane:target) .scpane:first-child:not(:target) {
+               visibility: hidden;
+            }
+            @media (max-width: 900px) {
+               .cps .scase {
+                  grid-template-columns: 1fr;
+               }
+               .cps .scnav {
+                  grid-area: 1/1;
+               }
+               .cps .scpane {
+                  grid-area: 2/1;
+               }
+            }
+
+            /* --------------------------------------------------- feature rows (icon rows) */
+            .cps .featgrid {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 0 44px;
+            }
+            .cps .feat {
+               position: relative;
+               padding: 15px 0 15px 26px;
+               border-top: 1px solid var(--line);
+            }
+            .cps .feat::before {
+               content: "";
+               position: absolute;
+               left: 2px;
+               top: 22px;
+               width: 9px;
+               height: 9px;
+               background: var(--coral);
+               transform: rotate(45deg);
+               border-radius: 2px;
+            }
+            .cps .feat h4 {
+               font-size: 14.5px;
+               color: var(--ink-2);
+               margin: 0 0 3px;
+            }
+            .cps .feat p {
+               margin: 0;
+               font-size: 12.5px;
+               color: var(--ink-4);
+               line-height: 1.55;
+            }
+            @media (max-width: 820px) {
+               .cps .featgrid {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* ------------------------------------------------- big feature cards (1=1 GIF) */
+            .cps .fgrid {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 26px;
+            }
+            .cps .fcard {
+               background: #fff;
+               border-radius: var(--r-lg);
+               box-shadow: var(--sm);
+               overflow: hidden;
+               display: flex;
+               flex-direction: column;
+            }
+            .cps .fcard .fimg {
+               background: var(--surface);
+            }
+            .cps .fcard .fimg img {
+               display: block;
+               width: 100%;
+               height: auto;
+            }
+            .cps .fcard .fbody {
+               padding: 20px 22px 22px;
+               flex: 1;
+            }
+            .cps .fcard .fno {
+               font-size: 11px;
+               font-weight: 800;
+               letter-spacing: 0.1em;
+               text-transform: uppercase;
+               color: var(--coral-dk);
+               margin: 0 0 6px;
+            }
+            .cps .fcard h3 {
+               font-size: 17.5px;
+               font-weight: 700;
+               margin: 0 0 8px;
+               line-height: 1.3;
+            }
+            .cps .fcard p {
+               font-size: 14px;
+               line-height: 1.6;
+               color: var(--ink-3);
+               margin: 0 0 10px;
+            }
+            .cps .fcard .tech {
+               font-size: 12px;
+               color: var(--ink-4);
+               margin: 0;
+               padding-top: 10px;
+               border-top: 1px solid var(--line);
+            }
+            .cps .fcard .tech b {
+               color: var(--violet);
+            }
+            /* the last card runs the full width and turns horizontal: 9 features leave an
+   odd one out in a 2-column grid, and a wide closing card is a better answer
+   than a gap or a cramped 3-column row that would shrink the GIFs. */
+            .cps .fcard-wide {
+               grid-column: 1/-1;
+               flex-direction: row;
+               align-items: stretch;
+            }
+            .cps .fcard-wide .fimg {
+               flex: 0 0 54%;
+               display: flex;
+               align-items: center;
+            }
+            .cps .fcard-wide .fimg img {
+               width: 100%;
+            }
+            .cps .fcard-wide .fbody {
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+               padding: 28px 32px;
+            }
+            @media (max-width: 820px) {
+               .cps .fgrid {
+                  grid-template-columns: 1fr;
+               }
+               .cps .fcard-wide {
+                  flex-direction: column;
+               }
+               .cps .fcard-wide .fimg {
+                  flex: none;
+               }
+            }
+
+            /* ------------------------------------------------------------------ use cases
+   No screenshots here on purpose: this section argues, it does not demonstrate,
+   so the copy carries it and an icon gives each card a handle. The outcome strip
+   at the foot is the sales line - one claim per card, in the reader's words. */
+            .cps .ucgrid {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 22px;
+            }
+            .cps .uc {
+               background: #fff;
+               border-radius: var(--r-lg);
+               box-shadow: var(--sm);
+               overflow: hidden;
+               display: flex;
+               flex-direction: column;
+            }
+            .cps .uc-top {
+               padding: 24px 24px 18px;
+               flex: 1;
+            }
+            .cps .uc-ico {
+               width: 44px;
+               height: 44px;
+               border-radius: 13px;
+               background: var(--violet);
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               margin-bottom: 16px;
+            }
+            .cps .uc-ico img {
+               width: 24px;
+               height: 24px;
+               display: block;
+            }
+            .cps .uc h3 {
+               font-size: 18px;
+               font-weight: 700;
+               margin: 0 0 9px;
+               line-height: 1.32;
+            }
+            .cps .uc p {
+               font-size: 14px;
+               line-height: 1.62;
+               margin: 0;
+               color: var(--ink-3);
+            }
+            /* stacked rather than one row: the outcome lines are long enough that a
+   single row wraps on some card widths and not others, which pushed the strips
+   out of alignment across the grid. Two fixed lines keeps all four level. */
+            .cps .uc-foot {
+               background: var(--surface);
+               border-top: 1px solid var(--line);
+               padding: 15px 24px 17px;
+               display: flex;
+               flex-direction: column;
+               align-items: flex-start;
+               gap: 9px;
+            }
+            .cps .uc-win {
+               font-size: 13.5px;
+               font-weight: 700;
+               color: var(--violet);
+               margin: 0;
+            }
+            .cps .uc-win::before {
+               content: "";
+               display: inline-block;
+               width: 8px;
+               height: 8px;
+               background: var(--coral);
+               transform: rotate(45deg);
+               border-radius: 2px;
+               margin-right: 9px;
+               vertical-align: middle;
+            }
+            .cps .uc .mini {
+               font-size: 12.5px;
+               font-weight: 700;
+               text-decoration: none;
+               white-space: nowrap;
+            }
+            @media (max-width: 820px) {
+               .cps .ucgrid {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* ----------------------------------------------------- calculation chain
+   Replaces the old native-vs-module rebuttal table. The section now explains
+   the mechanism and shows the arithmetic instead of arguing against anything. */
+            .cps .chain {
+               display: grid;
+               grid-template-columns: repeat(4, 1fr);
+               gap: 14px;
+            }
+            .cps .chstep {
+               background: #fff;
+               border-radius: var(--r-lg);
+               padding: 20px;
+               box-shadow: var(--sm);
+               position: relative;
+               display: flex;
+               flex-direction: column;
+            }
+            .cps .chstep .cn {
+               display: inline-flex;
+               width: 26px;
+               height: 26px;
+               border-radius: 50%;
+               background: var(--coral);
+               color: #fff;
+               font-size: 12.5px;
+               font-weight: 800;
+               align-items: center;
+               justify-content: center;
+               margin-bottom: 13px;
+            }
+            .cps .chstep h4 {
+               font-size: 15px;
+               font-weight: 700;
+               margin: 0 0 6px;
+               line-height: 1.35;
+            }
+            .cps .chstep p {
+               font-size: 13px;
+               line-height: 1.55;
+               color: var(--ink-4);
+               margin: 0 0 12px;
+            }
+            .cps .chstep .eq {
+               margin-top: auto;
+               font-size: 12.5px;
+               font-weight: 700;
+               color: var(--violet);
+               background: var(--surface-2);
+               border-radius: var(--r-sm);
+               padding: 8px 11px;
+               text-align: center;
+            }
+            /* a chevron between the cards, so the four read as one sequence */
+            .cps .chstep:not(:last-child)::after {
+               content: "";
+               position: absolute;
+               right: -11px;
+               top: 34px;
+               width: 8px;
+               height: 8px;
+               border-top: 2px solid var(--line);
+               border-right: 2px solid var(--line);
+               transform: rotate(45deg);
+            }
+            @media (max-width: 900px) {
+               .cps .chain {
+                  grid-template-columns: 1fr 1fr;
+               }
+               .cps .chstep:not(:last-child)::after {
+                  display: none;
+               }
+            }
+            @media (max-width: 520px) {
+               .cps .chain {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* worked-example table: the total row is the argument */
+            .cps .calc tfoot td {
+               background: var(--surface-2);
+               font-weight: 800;
+               color: var(--violet);
+               border-bottom: none;
+            }
+            .cps .calc td.num,
+            .cps .calc th.num {
+               text-align: right;
+               white-space: nowrap;
+            }
+            .cps .calc .hi {
+               color: var(--coral-dk);
+            }
+
+            /* fit check - replaces the comparison. Green ticks on one side, neutral dashes
+   on the other: this qualifies the buyer, it does not run anyone else down. */
+            .cps .fit {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 22px;
+            }
+            .cps .fitcol {
+               background: #fff;
+               border-radius: var(--r-lg);
+               padding: 24px 26px;
+               box-shadow: var(--sm);
+            }
+            .cps .fitcol.yes {
+               box-shadow:
+                  0 0 0 1.5px rgba(22, 163, 74, 0.35),
+                  var(--sm);
+            }
+            .cps .fitcol h3 {
+               font-size: 16.5px;
+               font-weight: 700;
+               margin: 0 0 14px;
+            }
+            .cps .fitcol ul {
+               list-style: none;
+               margin: 0;
+               padding: 0;
+            }
+            .cps .fitcol li {
+               display: flex;
+               gap: 11px;
+               font-size: 14px;
+               line-height: 1.55;
+               margin: 0 0 11px;
+            }
+            .cps .fitcol li:last-child {
+               margin-bottom: 0;
+            }
+            .cps .fitcol .mk {
+               flex: none;
+               font-weight: 800;
+            }
+            .cps .fitcol.yes .mk {
+               color: var(--success);
+            }
+            .cps .fitcol.no .mk {
+               color: var(--ink-5);
+            }
+            .cps .fitcol.no li {
+               color: var(--ink-4);
+            }
+            @media (max-width: 820px) {
+               .cps .fit {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* ----------------------------------------------------------------- stat row */
+            .cps .statrow {
+               display: grid;
+               grid-template-columns: repeat(4, 1fr);
+               text-align: center;
+               background: #fff;
+               border-radius: var(--r-lg);
+               box-shadow: var(--sm);
+               overflow: hidden;
+            }
+            .cps .statrow .st {
+               padding: 24px 14px;
+               border-left: 1px solid var(--line);
+            }
+            .cps .statrow .st:first-child {
+               border-left: none;
+            }
+            .cps .statrow .n {
+               font-size: 36px;
+               font-weight: 800;
+               color: var(--violet);
+               letter-spacing: -0.025em;
+               line-height: 1.1;
+            }
+            .cps .statrow .l {
+               font-size: 12.5px;
+               color: var(--ink-4);
+               line-height: 1.45;
+               margin-top: 4px;
+            }
+            @media (max-width: 620px) {
+               .cps .statrow {
+                  grid-template-columns: 1fr 1fr;
+               }
+               .cps .statrow .st {
+                  border-left: none;
+                  border-top: 1px solid var(--line);
+               }
+               .cps .statrow .st:first-child,
+               .cps .statrow .st:nth-child(2) {
+                  border-top: none;
+               }
+            }
+
+            /* ------------------------------------------------------------- price / offer */
+            .cps .pricecard {
+               display: grid;
+               grid-template-columns: 320px 1fr;
+               border-radius: var(--r-xl);
+               overflow: hidden;
+               box-shadow: var(--md);
+            }
+            .cps .priceleft {
+               background: var(--violet);
+               color: #fff;
+               padding: 34px 30px;
+            }
+            .cps .pl-tag {
+               display: inline-block;
+               font-size: 11px;
+               font-weight: 700;
+               letter-spacing: 0.09em;
+               text-transform: uppercase;
+               color: var(--coral);
+               border: 1px solid rgba(250, 114, 104, 0.55);
+               border-radius: var(--r-full);
+               padding: 4px 12px;
+            }
+            .cps .pl-amt {
+               font-size: 60px;
+               font-weight: 800;
+               line-height: 1;
+               margin: 18px 0 2px;
+               color: #fff;
+            }
+            .cps .pl-note {
+               font-size: 13.5px;
+               color: rgba(255, 255, 255, 0.8);
+               margin: 0;
+            }
+            .cps .pl-anchor {
+               margin-top: 20px;
+               padding-top: 18px;
+               border-top: 1px solid rgba(255, 255, 255, 0.15);
+               font-size: 13px;
+               color: rgba(255, 255, 255, 0.82);
+            }
+            .cps .pl-anchor strong {
+               color: var(--coral);
+            }
+            .cps .priceright {
+               background: #fff;
+               padding: 34px 32px;
+            }
+            .cps .pr-label {
+               font-size: 11px;
+               font-weight: 700;
+               letter-spacing: 0.08em;
+               text-transform: uppercase;
+               color: var(--ink-4);
+               margin: 0 0 16px;
+            }
+            .cps .prlist {
+               display: grid;
+               gap: 12px;
+            }
+            .cps .prlist > div {
+               display: flex;
+               gap: 11px;
+               font-size: 14.5px;
+               color: var(--ink-2);
+               line-height: 1.55;
+            }
+            .cps .prlist .ck {
+               color: var(--success);
+               font-weight: 800;
+               flex: none;
+            }
+            @media (max-width: 820px) {
+               .cps .pricecard {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* ------------------------------------------------------------ requirement rows */
+            .cps .reqgrid {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 0 44px;
+            }
+            .cps .reqrow {
+               padding: 15px 0;
+               border-top: 1px solid var(--line);
+            }
+            .cps .reqrow b {
+               display: block;
+               font-size: 11px;
+               font-weight: 800;
+               letter-spacing: 0.08em;
+               text-transform: uppercase;
+               color: var(--coral-dk);
+               margin-bottom: 4px;
+            }
+            .cps .reqrow p {
+               margin: 0;
+               font-size: 13.5px;
+               line-height: 1.55;
+               color: var(--ink-3);
+            }
+            @media (max-width: 820px) {
+               .cps .reqgrid {
+                  grid-template-columns: 1fr;
+               }
+            }
+
+            /* ------------------------------------------------------------------- tables */
+            .cps .tblwrap {
+               overflow-x: auto;
+            }
+            .cps .tbl {
+               width: 100%;
+               border-collapse: collapse;
+               font-size: 14px;
+               min-width: 520px;
+            }
+            .cps .tbl th,
+            .cps .tbl td {
+               padding: 13px 16px;
+               text-align: left;
+               border-bottom: 1px solid var(--line);
+            }
+            .cps .tbl thead th {
+               background: var(--violet);
+               color: #fff;
+               font-weight: 700;
+               font-size: 13px;
+            }
+            .cps .tbl tbody tr:nth-child(even) {
+               background: var(--surface);
+            }
+            .cps .tbl .ours {
+               color: var(--violet);
+            }
+            .cps .tbl td b {
+               color: var(--violet);
+            }
+
+            /* ---------------------------------------------------------------------- FAQ */
+            .cps .faqlist {
+               display: grid;
+            }
+            .cps .faq {
+               margin-bottom: 10px;
+               background: #fff;
+               border-radius: var(--r-md);
+               box-shadow: 0 0 0 1px rgba(39, 1, 64, 0.1);
+               transition:
+                  box-shadow 0.18s ease,
+                  background 0.18s ease;
+            }
+            .cps .faq:last-child {
+               margin-bottom: 0;
+            }
+            .cps .faq > summary {
+               list-style: none;
+               cursor: pointer;
+               display: flex;
+               align-items: flex-start;
+               gap: 16px;
+               padding: 16px 22px;
+            }
+            .cps .faq > summary::-webkit-details-marker {
+               display: none;
+            }
+            .cps .faq > summary::marker {
+               content: "";
+            }
+            .cps .faq:hover {
+               box-shadow: 0 0 0 1px rgba(250, 114, 104, 0.5);
+            }
+            .cps .faq[open] {
+               background: var(--surface);
+               box-shadow: 0 0 0 1px rgba(250, 114, 104, 0.5);
+            }
+            .cps .faq-q {
+               flex: 1;
+               font-size: 15.5px;
+               font-weight: 700;
+               line-height: 1.45;
+               color: var(--violet);
+            }
+            .cps .faq-plus {
+               flex: none;
+               font-size: 18px;
+               font-weight: 800;
+               color: var(--coral-dk);
+               line-height: 1.3;
+            }
+            .cps .faq[open] .faq-plus {
+               color: var(--ink-4);
+            }
+            .cps .faq-a {
+               padding: 0 22px 16px;
+            }
+            .cps .faq-a p {
+               margin: 0 0 10px;
+               font-size: 14.5px;
+               line-height: 1.62;
+               color: var(--ink-3);
+            }
+            .cps .faq-a p:last-child {
+               margin-bottom: 0;
+            }
+
+            /* ------------------------------------------------------------------ releases */
+            .cps .rel {
+               border-left: 2px solid var(--line);
+               padding-left: 24px;
+            }
+            .cps .relitem {
+               position: relative;
+               padding-bottom: 24px;
+            }
+            .cps .relitem:last-child {
+               padding-bottom: 0;
+            }
+            .cps .relitem::before {
+               content: "";
+               position: absolute;
+               left: -31px;
+               top: 6px;
+               width: 11px;
+               height: 11px;
+               border-radius: 50%;
+               background: var(--coral);
+               box-shadow: 0 0 0 3px #fff;
+            }
+            .cps .relhead {
+               display: flex;
+               align-items: center;
+               gap: 10px;
+               flex-wrap: wrap;
+               margin-bottom: 8px;
+            }
+            .cps .relver {
+               font-size: 16px;
+               font-weight: 800;
+               color: var(--violet);
+            }
+            .cps .reldate {
+               font-size: 12.5px;
+               color: var(--ink-4);
+            }
+            .cps .relbadge {
+               font-size: 10px;
+               font-weight: 800;
+               letter-spacing: 0.07em;
+               text-transform: uppercase;
+               padding: 3px 9px;
+               border-radius: var(--r-sm);
+               background: var(--surface-2);
+               color: var(--violet);
+            }
+            .cps .relbadge.new {
+               background: var(--coral);
+               color: #fff;
+            }
+            .cps .rel ul {
+               margin: 0;
+               padding-left: 18px;
+            }
+            .cps .rel li {
+               font-size: 14px;
+               margin: 5px 0;
+            }
+
+            /* ----------------------------------------------------------- QR contact block
+   The store's sanitiser invalidates arbitrary http(s) hrefs, so all three cards
+   carry NO href at all: the destination is printed as visible text and encoded
+   in the QR image, both of which survive untouched. The printed text and the
+   QR payload must match byte for byte - a phone shows the decoded string before
+   it opens anything, and a mismatch reads as phishing. Do not paste a
+   doodex.net URL back into an href on this page; mailto:odoo@doodex.net is the
+   one contact route the guidelines allow as a real link, and it is used in the
+   body copy instead. */
+            .cps .qrcta {
+               background: var(--violet);
+               border-radius: var(--r-xl);
+               padding: 30px 30px 24px;
+            }
+            .cps .qr-head {
+               max-width: 660px;
+            }
+            .cps .qrcta .qr-eyebrow {
+               font-size: 11px;
+               font-weight: 700;
+               letter-spacing: 0.08em;
+               text-transform: uppercase;
+               color: var(--coral);
+               margin: 0 0 10px;
+            }
+            .cps .qrcta h2.qr-title {
+               color: #fff;
+               font-size: 25px;
+               font-weight: 800;
+               letter-spacing: -0.015em;
+               margin: 0 0 8px;
+               line-height: 1.2;
+            }
+            .cps .qrcta .qr-sub {
+               color: rgba(255, 255, 255, 0.74);
+               font-size: 14.5px;
+               line-height: 1.55;
+               margin: 0;
+            }
+            .cps .qr-grid {
+               display: grid;
+               grid-template-columns: repeat(3, 1fr);
+               gap: 14px;
+               margin: 24px 0 0;
+            }
+            .cps .qr-grid > * {
+               min-width: 0;
+            }
+            .cps .qr-card {
+               background: #fff;
+               border-radius: var(--r-lg);
+               padding: 16px;
+               display: flex;
+               flex-direction: column;
+               gap: 8px;
+            }
+            .cps .qr-lead {
+               box-shadow: 0 0 0 2px var(--coral);
+            }
+            .cps .qr-top {
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               gap: 10px;
+            }
+            .cps .qr-ico {
+               width: 30px;
+               height: 30px;
+               border-radius: 9px;
+               background: var(--violet);
+               color: #fff;
+               flex: none;
+               display: inline-flex;
+               align-items: center;
+               justify-content: center;
+               font-size: 14px;
+               font-weight: 800;
+            }
+            .cps .qr-tag {
+               font-size: 10px;
+               font-weight: 800;
+               letter-spacing: 0.07em;
+               text-transform: uppercase;
+               background: var(--surface-2);
+               color: var(--violet);
+               padding: 3px 9px;
+               border-radius: var(--r-sm);
+            }
+            .cps .qr-tag-hot {
+               background: var(--coral);
+               color: #fff;
+            }
+            .cps .qrcta .qr-h {
+               font-size: 15.5px;
+               color: var(--violet);
+               margin: 1px 0 0;
+            }
+            .cps .qrcta .qr-p {
+               font-size: 12.5px;
+               line-height: 1.5;
+               color: var(--ink-4);
+               margin: 0;
+            }
+            .cps .qr-code {
+               display: block;
+               background: var(--surface);
+               border-radius: var(--r-md);
+               padding: 10px;
+               margin-top: auto;
+            }
+            .cps .qr-code img {
+               display: block;
+               width: 98px;
+               max-width: 100%;
+               height: auto;
+               margin: 0 auto;
+            }
+            .cps .qr-btn {
+               width: 100%;
+               justify-content: center;
+               padding: 9px 10px;
+               font-size: 12.5px;
+               word-break: break-all;
+               text-align: center;
+            }
+            .cps .qrcta .qr-foot {
+               color: rgba(255, 255, 255, 0.5);
+               font-size: 12px;
+               margin: 16px 0 0;
+            }
+            .cps .qrcta-end .qr-head {
+               margin-left: auto;
+               margin-right: auto;
+               text-align: center;
+            }
+            .cps .qrcta-end h2.qr-title {
+               font-size: 28px;
+            }
+            .cps .qrcta-end .qr-foot {
+               text-align: center;
+            }
+            @media (max-width: 820px) {
+               .cps .qr-grid {
+                  grid-template-columns: 1fr;
+               }
+               .cps .qrcta {
+                  padding: 26px 20px 22px;
+               }
+            }
+
+            /* ------------------------------------------------------------------ callouts */
+            .cps .note {
+               background: var(--surface);
+               border-radius: var(--r-lg);
+               padding: 20px 22px;
+               box-shadow: var(--xs);
+            }
+            .cps .note p:last-child {
+               margin-bottom: 0;
+            }
+            .cps .grid2 {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 26px;
+            }
+            @media (max-width: 820px) {
+               .cps .grid2 {
+                  grid-template-columns: 1fr;
+               }
+            }
+            /* ------------------------------------------------------------ cross-sell
+   Centred header, three qualifier chips, then three product cards of equal
+   height with the CTA pinned to the foot. The first card is the violet one -
+   it is the paid suite, and the inversion is what makes it read first. */
+            .cps .xs-chips {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 10px;
+               margin: 0 0 28px;
+            }
+            .cps .xs-chip {
+               font-size: 13px;
+               font-weight: 600;
+               color: var(--violet);
+               background: #fff;
+               padding: 8px 18px;
+               border-radius: var(--r-full);
+               box-shadow: 0 0 0 1px var(--line);
+            }
+            .cps .xsell {
+               display: grid;
+               grid-template-columns: repeat(3, 1fr);
+               gap: 20px;
+               align-items: stretch;
+            }
+            .cps .xitem {
+               background: #fff;
+               border-radius: var(--r-lg);
+               padding: 24px 24px 22px;
+               box-shadow: var(--sm);
+               display: flex;
+               flex-direction: column;
+            }
+            .cps .xitem .xt {
+               display: flex;
+               align-items: flex-start;
+               justify-content: space-between;
+               gap: 12px;
+               margin-bottom: 18px;
+            }
+            .cps .xitem .xico {
+               width: 36px;
+               height: 36px;
+               display: block;
+               flex: none;
+            }
+            .cps .xitem .xp {
+               font-size: 10.5px;
+               font-weight: 800;
+               letter-spacing: 0.07em;
+               text-transform: uppercase;
+               color: var(--violet);
+               background: var(--surface-2);
+               padding: 5px 11px;
+               border-radius: var(--r-full);
+               white-space: nowrap;
+            }
+            .cps .xitem h3 {
+               font-size: 17.5px;
+               font-weight: 700;
+               margin: 0 0 9px;
+            }
+            .cps .xitem p {
+               margin: 0 0 20px;
+               font-size: 14px;
+               line-height: 1.6;
+               color: var(--ink-3);
+            }
+            .cps .xitem .xcta {
+               margin-top: auto;
+               display: block;
+               text-align: center;
+               font-weight: 700;
+               font-size: 14px;
+               padding: 11px 16px;
+               border-radius: var(--r-md);
+               text-decoration: none;
+               color: var(--violet) !important;
+               box-shadow: 0 0 0 1.5px var(--violet);
+            }
+            /* the featured card inverts: violet ground, coral call to action */
+            .cps .xitem-lead {
+               background: var(--violet);
+            }
+            .cps .xitem-lead h3 {
+               color: #fff;
+            }
+            .cps .xitem-lead p {
+               color: rgba(255, 255, 255, 0.78);
+            }
+            .cps .xitem-lead .xp {
+               background: rgba(255, 255, 255, 0.13);
+               color: #fff;
+            }
+            .cps .xitem-lead .xcta {
+               background: var(--coral);
+               color: #fff !important;
+               box-shadow: var(--cta);
+            }
+            .cps .xs-foot {
+               font-size: 12.5px;
+               color: var(--ink-4);
+               margin: 20px 0 0;
+            }
+            @media (max-width: 900px) {
+               .cps .xsell {
+                  grid-template-columns: 1fr;
+               }
+            }
+         </style>
+
+         <!-- ====================================================== nav (not sticky) -->
+         <div class="cpnav">
+            <div class="cpnav-in">
+               <a class="cpnav-brand" href="#overview"
+                  ><img
+                     class="cpnav-logo"
+                     src="./assets/icons/brand-logo.png"
+                     alt=""
+                     width="26"
+                     height="26"
+                  />CRM Probability <span>From Stage</span></a
+               >
+               <nav class="tabgroup">
+                  <a href="#showcase">See it</a><a href="#features">Features</a
+                  ><a href="#usecases">Use cases</a
+                  ><a href="#how">How it works</a><a href="#faqs">FAQ</a
+                  ><a href="#releases">Releases</a>
+               </nav>
+               <a class="cpbtn cpbtn-1" href="mailto:odoo@doodex.net"
+                  >Talk to Doodex</a
+               >
+            </div>
+         </div>
+
+         <!-- ======================================================== trust bar (6) -->
+         <div class="trust">
+            <div class="trust-in">
+               <span class="tchip">Odoo Official Partner</span>
+               <span class="tchip"
+                  >Odoo 17.0 &middot; Community &amp; Enterprise</span
+               >
+               <span class="tchip"
+                  >Free &middot; LGPL-3 &middot; no subscription</span
+               >
+               <span class="tchip">Needs only the CRM app</span>
+               <span class="tchip">5 languages included</span>
+               <span class="tchip">Works on your existing pipeline</span>
+            </div>
+         </div>
+
+         <!-- ============================================================ hero (H-4) -->
+         <section class="sec" id="overview">
+            <div class="wrap">
+               <div class="narrow cpcenter">
+                  <p class="eyebrow">
+                     CRM Probability From Stage &middot; Odoo 17.0 &middot; Free
+                  </p>
+                  <h1 class="cph1" style="margin-bottom: 18px">
+                     Set a win probability on every Odoo CRM stage &mdash; and
+                     get a forecast you can defend.
+                  </h1>
+                  <p class="cplead">
+                     Odoo 17 gives a CRM stage no probability of its own, so
+                     your sales forecast rests on a prediction nobody can
+                     explain. This free module puts the win probability back on
+                     the stage: set <b>20%</b> on New, <b>60%</b> on
+                     Proposition, <b>90%</b> on Negotiation, every opportunity
+                     follows automatically, and a
+                     <b>Probability Revenue</b> column totals your weighted
+                     expected revenue. One checkbox, no code, no subscription.
+                  </p>
+                  <div
+                     class="cpbtn-row"
+                     style="justify-content: center; margin-top: 26px"
+                  >
+                     <a class="cpbtn cpbtn-1" href="#showcase"
+                        >See it in four screens</a
+                     >
+                     <a class="cpbtn cpbtn-2" href="#how"
+                        >See how the maths works</a
+                     >
+                     <a class="cpbtn cpbtn-2" href="mailto:odoo@doodex.net"
+                        >Ask us a question</a
+                     >
+                  </div>
+               </div>
+               <div class="shot" style="margin-top: 40px">
+                  <img
+                     src="./assets/gifs/hero-full-journey.gif"
+                     alt="The complete flow: ticking Probability from stage in CRM settings, typing a percentage on each stage, dragging an opportunity to the next stage and watching its probability and weighted revenue update."
+                  />
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ========================================== showcase (archetype C signature) -->
+         <section class="sec" id="showcase">
+            <div class="wrap">
+               <div class="shead">
+                  <span class="lbl">See it</span><span class="ln"></span>
+               </div>
+               <h2 class="cph2" style="margin-bottom: 10px">
+                  Four screens, from installed to forecasting
+               </h2>
+               <p class="cplead" style="max-width: 740px; margin-bottom: 30px">
+                  There is no hidden setup step and no developer involved. Click
+                  through the four screens below and you have seen the entire
+                  module.
+               </p>
+
+               <div class="scase">
+                  <div class="scpane" id="cps-sc-1">
+                     <img
+                        src="./assets/screenshots/sc-1-setting.png"
+                        alt="Odoo CRM configuration settings with the Probability from stage checkbox ticked."
+                     />
+                  </div>
+                  <div class="scpane" id="cps-sc-2">
+                     <img
+                        src="./assets/screenshots/sc-2-stages.png"
+                        alt="A CRM stage form showing the new Probability percentage field added by the module."
+                     />
+                  </div>
+                  <div class="scpane" id="cps-sc-3">
+                     <img
+                        src="./assets/screenshots/sc-3-pipeline.png"
+                        alt="The CRM kanban pipeline with an opportunity card being dragged into the next stage."
+                     />
+                  </div>
+                  <div class="scpane" id="cps-sc-4">
+                     <img
+                        src="./assets/screenshots/sc-4-forecast.png"
+                        alt="The opportunity list view showing the Probability Revenue column and its column total."
+                     />
+                  </div>
+                  <div class="scnav">
+                     <a class="sctab sctab-1" href="#cps-sc-1"
+                        ><span class="n">Step 1</span
+                        ><span class="t">Turn it on</span
+                        ><span class="d"
+                           >CRM &rsaquo; Configuration &rsaquo; Settings
+                           &rsaquo; tick <b>Probability from stage</b>.</span
+                        ></a
+                     >
+                     <a class="sctab sctab-2" href="#cps-sc-2"
+                        ><span class="n">Step 2</span
+                        ><span class="t">Put a % on each stage</span
+                        ><span class="d"
+                           >A Probability field appears on the stage form. Type
+                           your number.</span
+                        ></a
+                     >
+                     <a class="sctab sctab-3" href="#cps-sc-3"
+                        ><span class="n">Step 3</span
+                        ><span class="t">Move a card</span
+                        ><span class="d"
+                           >The opportunity takes the probability of the stage
+                           it lands in.</span
+                        ></a
+                     >
+                     <a class="sctab sctab-4" href="#cps-sc-4"
+                        ><span class="n">Step 4</span
+                        ><span class="t">Read the weighted pipeline</span
+                        ><span class="d"
+                           >A Probability Revenue column, with a total at the
+                           foot of the list.</span
+                        ></a
+                     >
+                  </div>
+               </div>
+
+               <div style="margin-top: 44px">
+                  <h3 class="cph3" style="margin-bottom: 14px">
+                     What the module adds to your Odoo
+                  </h3>
+                  <div class="featgrid">
+                     <div class="feat">
+                        <h4>A Probability field on every CRM stage</h4>
+                        <p>
+                           New percentage field on the stage form, default 0%.
+                        </p>
+                     </div>
+                     <div class="feat">
+                        <h4>One setting, in CRM Configuration</h4>
+                        <p>
+                           &ldquo;Probability from stage&rdquo; &mdash; a single
+                           checkbox, off until you tick it.
+                        </p>
+                     </div>
+                     <div class="feat">
+                        <h4>Probability follows the stage</h4>
+                        <p>
+                           Move an opportunity and its probability takes the
+                           stage's value.
+                        </p>
+                     </div>
+                     <div class="feat">
+                        <h4>A Probability Revenue field</h4>
+                        <p>
+                           Expected revenue multiplied by the probability, kept
+                           up to date for you.
+                        </p>
+                     </div>
+                     <div class="feat">
+                        <h4>A weighted total in the list view</h4>
+                        <p>
+                           Probability Revenue is a sortable column with a sum
+                           at the bottom.
+                        </p>
+                     </div>
+                     <div class="feat">
+                        <h4>Your stage percentages hold</h4>
+                        <p>
+                           With the setting on, Odoo's own prediction stops
+                           overwriting them.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ============================================================== CTA (mid) -->
+         <section class="sec-tight">
+            <div class="wrap">
+               <div class="qrcta">
+                  <div class="qr-head">
+                     <p class="qr-eyebrow">
+                        It is free &mdash; the question is whether it fits
+                     </p>
+                     <h2 class="qr-title">
+                        Ask whether this suits your pipeline
+                     </h2>
+                     <p class="qr-sub">
+                        Tell us how your stages are set up and we will say
+                        plainly whether this module helps, whether Odoo's own
+                        prediction is the better answer for you, or whether you
+                        need something else. A real person replies.
+                     </p>
+                  </div>
+                  <div class="qr-grid">
+                     <div class="qr-card qr-lead">
+                        <div class="qr-top">
+                           <span class="qr-ico">1</span
+                           ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                        </div>
+                        <h3 class="qr-h">Book a call</h3>
+                        <p class="qr-p">
+                           See it running on a pipeline that looks like yours.
+                        </p>
+                        <span class="qr-code"
+                           ><img
+                              src="./assets/icons/qr-meeting.png"
+                              alt="QR code for https://hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <span class="cpbtn cpbtn-1 qr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</span
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico">2</span
+                           ><span class="qr-tag">Written reply</span>
+                        </div>
+                        <h3 class="qr-h">Send us a question</h3>
+                        <p class="qr-p">
+                           Write it on the form, we answer by e-mail.
+                        </p>
+                        <span class="qr-code"
+                           ><img
+                              src="./assets/icons/qr-contact.png"
+                              alt="QR code for https://doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <span class="cpbtn cpbtn-2 qr-btn"
+                           >doodex.net<wbr />/contactus</span
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico">3</span
+                           ><span class="qr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="qr-h">Message us on WhatsApp</h3>
+                        <p class="qr-p">
+                           Reach the team directly on +62 821-3120-5030.
+                        </p>
+                        <span class="qr-code"
+                           ><img
+                              src="./assets/icons/qr-whatsapp.png"
+                              alt="QR code for https://hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <span class="cpbtn cpbtn-2 qr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</span
+                        >
+                     </div>
+                  </div>
+                  <p class="qr-foot">
+                     Scan a code with your phone camera to open the same page.
+                     The addresses are printed above so they work even if you
+                     are reading this on paper.
+                  </p>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ================================================= features (1 = 1 visual) -->
+         <section class="sec" id="features">
+            <div class="wrap">
+               <div class="shead">
+                  <span class="lbl">Features</span><span class="ln"></span>
+               </div>
+               <h2 class="cph2" style="margin-bottom: 10px">
+                  Nine things it does, each one shown
+               </h2>
+               <p class="cplead" style="max-width: 740px; margin-bottom: 32px">
+                  Every feature below is a real behaviour of the installed
+                  module, with the field or setting it comes from named
+                  underneath. Nothing here is a plan or a roadmap item.
+               </p>
+
+               <div class="fgrid">
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-01-enable.gif"
+                           alt="Ticking the Probability from stage checkbox in Odoo CRM settings."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 01</p>
+                        <h3>One checkbox turns it on</h3>
+                        <p>
+                           Go to CRM &rsaquo; Configuration &rsaquo; Settings
+                           and tick <b>Probability from stage</b>. Until you do,
+                           your Odoo behaves exactly as it did before installing
+                           &mdash; nothing is changed behind your back.
+                        </p>
+                        <p class="tech">
+                           <b>Setting:</b> <em>Probability from stage</em>,
+                           stored as the system parameter
+                           <em>crm.manual.compute.probability</em>.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-02-stage-field.gif"
+                           alt="Typing sixty percent into the Probability field on a CRM stage."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 02</p>
+                        <h3>A percentage on every stage</h3>
+                        <p>
+                           Open any stage in your pipeline and you get a
+                           Probability field, expressed in percent. Set New to
+                           20, Qualified to 40, Proposition to 60, Negotiation
+                           to 90 &mdash; whatever matches how your team actually
+                           sells.
+                        </p>
+                        <p class="tech">
+                           <b>Field:</b> <em>probability</em> on
+                           <em>crm.stage</em>, a percentage, 0% by default.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-03-auto-apply.gif"
+                           alt="Dragging an opportunity card to the next stage while its probability updates."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 03</p>
+                        <h3>Move a card, the probability follows</h3>
+                        <p>
+                           Drag an opportunity into another stage and its
+                           probability becomes that stage's percentage. No
+                           second click, no rule to write, no automation to
+                           configure. Your reps carry on working the way they
+                           already do.
+                        </p>
+                        <p class="tech">
+                           <b>How:</b> the opportunity's <em>probability</em> is
+                           linked to its stage's probability and stored on the
+                           record.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-04-weighted-revenue.gif"
+                           alt="The Probability Revenue value recalculating on an opportunity record."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 04</p>
+                        <h3>Weighted revenue, worked out for you</h3>
+                        <p>
+                           Each opportunity gains a
+                           <b>Probability Revenue</b> value: its expected
+                           revenue multiplied by its probability. A 10,000 deal
+                           sitting at 60% shows 6,000. No spreadsheet, no
+                           formula to maintain.
+                        </p>
+                        <p class="tech">
+                           <b>Field:</b> <em>revenue_probability</em> on
+                           <em>crm.lead</em> = probability &divide; 100 &times;
+                           expected revenue.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-05-list-total.gif"
+                           alt="The Probability Revenue column total shown at the bottom of the opportunity list."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 05</p>
+                        <h3>A weighted pipeline total in one glance</h3>
+                        <p>
+                           Switch the pipeline to list view and Probability
+                           Revenue is there as a column, next to Expected
+                           Revenue, with a total at the foot. That total is your
+                           weighted pipeline &mdash; and it re-totals whenever
+                           you filter or group.
+                        </p>
+                        <p class="tech">
+                           <b>View:</b> column added to the opportunity list
+                           with a column sum, shown by default and removable per
+                           user.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-06-stage-drives-all.gif"
+                           alt="A stage set to 60%, then the opportunity list where every deal in that stage reads 60%."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 06</p>
+                        <h3>One number per stage, for everyone</h3>
+                        <p>
+                           The percentage belongs to the stage, not to the
+                           individual deal, so a whole pipeline stays consistent
+                           by design and there is no per-deal number for anyone
+                           to argue with. Change the stage and every opportunity
+                           in it moves together, in one edit.
+                        </p>
+                        <p class="tech">
+                           <b>Worth knowing:</b> typing a probability on a
+                           single opportunity does not stay local to that deal
+                           &mdash; it rewrites the stage percentage, and every
+                           other opportunity in that stage follows. Change the
+                           number on the stage, not on the deal.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-07-no-ai-overwrite.gif"
+                           alt="Odoo CRM settings with Probability from stage ticked alongside the Predictive Lead Scoring block."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 07</p>
+                        <h3>Your numbers stop being overwritten</h3>
+                        <p>
+                           Odoo normally recalculates probabilities in the
+                           background from its own prediction. With this setting
+                           on, that recalculation no longer takes over your
+                           figures &mdash; what you or your stages decided is
+                           what stays on the record.
+                        </p>
+                        <p class="tech">
+                           <b>How:</b> while the setting is on, opportunities
+                           are no longer flagged as automatically scored.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-08-toggle-off.gif"
+                           alt="The stage form with the Probability field, then the same form without it once the setting is off."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 08</p>
+                        <h3>Untick the box to stop configuring it</h3>
+                        <p>
+                           Turn the setting off and the Probability field
+                           disappears from the stage form, and Odoo goes back to
+                           deciding for itself which opportunities count as
+                           automatically scored.
+                        </p>
+                        <p class="tech">
+                           <b>Worth knowing:</b> unticking is not a full undo.
+                           While the module is installed, an opportunity's
+                           probability still follows its stage's percentage. To
+                           return your CRM to stock Odoo behaviour, uninstall
+                           the module &mdash; that is the clean revert.
+                        </p>
+                     </div>
+                  </div>
+
+                  <div class="fcard fcard-wide">
+                     <div class="fimg">
+                        <img
+                           src="./assets/gifs/feat-10-clean-install.gif"
+                           alt="The module in the Odoo Apps list: published by Doodex, version 17.0.1.0, status Installed."
+                        />
+                     </div>
+                     <div class="fbody">
+                        <p class="fno">Feature 09</p>
+                        <h3>Installs like any other Odoo app</h3>
+                        <p>
+                           It needs the CRM app and nothing else. No server
+                           work, no command line, no extra library, no new user
+                           permissions to hand out. Install it, tick the box,
+                           set your percentages.
+                        </p>
+                        <p class="tech">
+                           <b>Depends on:</b> <em>base</em> and <em>crm</em>. No
+                           new access-rights records.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ============================================================== use cases -->
+         <section class="sec" id="usecases">
+            <div class="wrap">
+               <div class="shead">
+                  <span class="lbl">Use cases</span><span class="ln"></span>
+               </div>
+               <h2 class="cph2" style="margin-bottom: 10px">
+                  Four situations this was built for
+               </h2>
+               <p class="cplead" style="max-width: 740px; margin-bottom: 30px">
+                  Four moments where a percentage you set yourself does the most
+                  work &mdash; and each one takes about ten minutes to set up.
+               </p>
+               <div class="ucgrid">
+                  <div class="uc">
+                     <div class="uc-top">
+                        <span class="uc-ico"
+                           ><img
+                              src="./assets/icons/uc-ico-new.png"
+                              alt=""
+                              width="24"
+                              height="24"
+                        /></span>
+                        <h3>Your Odoo is new and the pipeline is empty</h3>
+                        <p>
+                           A two-week-old database has no closed deals behind
+                           it, so any forecast has to start from a rule someone
+                           decides. Put a win probability on each CRM stage and
+                           your pipeline is worth a measurable number from the
+                           very first week &mdash; while the sales history
+                           quietly builds up underneath.
+                        </p>
+                     </div>
+                     <div class="uc-foot">
+                        <p class="uc-win">
+                           A forecast in your first week, not your first year
+                        </p>
+                        <a class="mini" href="#showcase"
+                           >See the four screens &rarr;</a
+                        >
+                     </div>
+                  </div>
+
+                  <div class="uc">
+                     <div class="uc-top">
+                        <span class="uc-ico"
+                           ><img
+                              src="./assets/icons/uc-ico-review.png"
+                              alt=""
+                              width="24"
+                              height="24"
+                        /></span>
+                        <h3>
+                           Your pipeline review stalls on &ldquo;why 43%?&rdquo;
+                        </h3>
+                        <p>
+                           Nobody defends a number they did not set, so the
+                           weekly meeting turns into an argument about
+                           arithmetic. Give each stage a probability and the
+                           answer is one sentence &mdash; it is 60% because it
+                           is in Proposition &mdash; a rule your team agrees
+                           once and can repeat from memory.
+                        </p>
+                     </div>
+                     <div class="uc-foot">
+                        <p class="uc-win">
+                           Reviews about deals, not about decimals
+                        </p>
+                        <a class="mini" href="#how"
+                           >See the calculation &rarr;</a
+                        >
+                     </div>
+                  </div>
+
+                  <div class="uc">
+                     <div class="uc-top">
+                        <span class="uc-ico"
+                           ><img
+                              src="./assets/icons/uc-ico-teams.png"
+                              alt=""
+                              width="24"
+                              height="24"
+                        /></span>
+                        <h3>Two sales teams that close at different rates</h3>
+                        <p>
+                           New business and renewals rarely convert alike, and
+                           one blended percentage flatters the first while
+                           punishing the second. The probability lives on the
+                           stage, so any team running its own pipeline stages
+                           gets its own numbers. That is ordinary Odoo
+                           configuration &mdash; no custom code, no consultant.
+                        </p>
+                     </div>
+                     <div class="uc-foot">
+                        <p class="uc-win">
+                           One free module, a forecast per team
+                        </p>
+                        <a class="mini" href="#faqs"
+                           >How stages are shared &rarr;</a
+                        >
+                     </div>
+                  </div>
+
+                  <div class="uc">
+                     <div class="uc-top">
+                        <span class="uc-ico"
+                           ><img
+                              src="./assets/icons/uc-ico-report.png"
+                              alt=""
+                              width="24"
+                              height="24"
+                        /></span>
+                        <h3>Someone needs a pipeline number this afternoon</h3>
+                        <p>
+                           Group your opportunities by stage and read the
+                           Probability Revenue total: expected revenue weighted
+                           by probability, re-totalled as you filter. It is a
+                           figure you can put in front of a board and explain in
+                           a single line, because the rule behind it is written
+                           on your stages where anyone can open it and check.
+                        </p>
+                     </div>
+                     <div class="uc-foot">
+                        <p class="uc-win">
+                           A defensible number in under a minute
+                        </p>
+                        <a class="mini" href="#features"
+                           >See the weighted total &rarr;</a
+                        >
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ========================================================= why / objection -->
+         <section class="sec" id="how">
+            <div class="wrap">
+               <div class="shead">
+                  <span class="lbl">How it works</span><span class="ln"></span>
+               </div>
+               <h2 class="cph2" style="margin-bottom: 12px">
+                  How your weighted sales forecast is calculated
+               </h2>
+               <p class="cplead" style="max-width: 760px; margin-bottom: 30px">
+                  Four steps, then a worked example with the actual arithmetic.
+                  If you can read the table below, you understand the entire
+                  module &mdash; there is nothing else hidden behind it.
+               </p>
+
+               <div class="chain">
+                  <div class="chstep">
+                     <span class="cn">1</span>
+                     <h4>You set the rule, once</h4>
+                     <p>
+                        Type a win probability on each stage of your CRM
+                        pipeline. This is the only decision you make.
+                     </p>
+                     <span class="eq">Proposition = 60%</span>
+                  </div>
+                  <div class="chstep">
+                     <span class="cn">2</span>
+                     <h4>Every deal inherits it</h4>
+                     <p>
+                        Any opportunity sitting in that stage takes that
+                        probability, and keeps it up to date as it moves.
+                     </p>
+                     <span class="eq">This deal = 60%</span>
+                  </div>
+                  <div class="chstep">
+                     <span class="cn">3</span>
+                     <h4>Odoo weights the revenue</h4>
+                     <p>
+                        Expected revenue is multiplied by the probability, on
+                        every opportunity, automatically.
+                     </p>
+                     <span class="eq">10,000 &times; 60% = 6,000</span>
+                  </div>
+                  <div class="chstep">
+                     <span class="cn">4</span>
+                     <h4>The list adds it up</h4>
+                     <p>
+                        Probability Revenue is a column in your pipeline list,
+                        with a total at the foot that follows your filters.
+                     </p>
+                     <span class="eq">Weighted pipeline</span>
+                  </div>
+               </div>
+
+               <h3 class="cph3" style="margin: 44px 0 8px">
+                  A worked example, with four deals
+               </h3>
+               <p
+                  class="cpsm cpmuted"
+                  style="max-width: 700px; margin-bottom: 18px"
+               >
+                  Illustrative figures, in whatever currency your company uses.
+                  The stage percentages are the ones you chose in step 1.
+               </p>
+               <div class="tblwrap">
+                  <table class="tbl calc">
+                     <thead>
+                        <tr>
+                           <th>Opportunity</th>
+                           <th>Stage</th>
+                           <th class="num">Stage %</th>
+                           <th class="num">Expected revenue</th>
+                           <th class="num">Probability Revenue</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>Website redesign</td>
+                           <td>New</td>
+                           <td class="num">20%</td>
+                           <td class="num">12,000</td>
+                           <td class="num">2,400</td>
+                        </tr>
+                        <tr>
+                           <td>ERP migration</td>
+                           <td>Qualified</td>
+                           <td class="num">40%</td>
+                           <td class="num">30,000</td>
+                           <td class="num">12,000</td>
+                        </tr>
+                        <tr>
+                           <td>Support contract</td>
+                           <td>Proposition</td>
+                           <td class="num">60%</td>
+                           <td class="num">8,000</td>
+                           <td class="num">4,800</td>
+                        </tr>
+                        <tr>
+                           <td>Warehouse fit-out</td>
+                           <td>Negotiation</td>
+                           <td class="num">90%</td>
+                           <td class="num">25,000</td>
+                           <td class="num">22,500</td>
+                        </tr>
+                     </tbody>
+                     <tfoot>
+                        <tr>
+                           <td colspan="3">Total at the foot of the list</td>
+                           <td class="num">75,000</td>
+                           <td class="num hi">41,700</td>
+                        </tr>
+                     </tfoot>
+                  </table>
+               </div>
+               <p class="cpsm" style="max-width: 760px; margin-top: 16px">
+                  Your pipeline holds <b>75,000</b>. Your forecast is
+                  <b>41,700</b>. That second number is the one you can take into
+                  a meeting, because every step that produced it is written on a
+                  stage anyone can open and read.
+               </p>
+
+               <div class="statrow" style="margin-top: 44px">
+                  <div class="st">
+                     <div class="n">1</div>
+                     <div class="l">checkbox to switch it on</div>
+                  </div>
+                  <div class="st">
+                     <div class="n">2</div>
+                     <div class="l">new fields on your opportunities</div>
+                  </div>
+                  <div class="st">
+                     <div class="n">5</div>
+                     <div class="l">translations included</div>
+                  </div>
+                  <div class="st">
+                     <div class="n">$0</div>
+                     <div class="l">now and every year after</div>
+                  </div>
+               </div>
+
+               <h3 class="cph3" style="margin: 48px 0 18px">
+                  Is this the right fit for you?
+               </h3>
+               <div class="fit">
+                  <div class="fitcol yes">
+                     <h3>Yes, if&hellip;</h3>
+                     <ul>
+                        <li>
+                           <span class="mk">&check;</span
+                           ><span
+                              >You want one forecasting rule your whole sales
+                              team can recite from memory.</span
+                           >
+                        </li>
+                        <li>
+                           <span class="mk">&check;</span
+                           ><span
+                              >Your Odoo is new, or your pipeline stages were
+                              recently redesigned.</span
+                           >
+                        </li>
+                        <li>
+                           <span class="mk">&check;</span
+                           ><span
+                              >Different teams close at different rates and need
+                              their own percentages.</span
+                           >
+                        </li>
+                        <li>
+                           <span class="mk">&check;</span
+                           ><span
+                              >You report a weighted pipeline figure to a
+                              manager, a board or an investor.</span
+                           >
+                        </li>
+                        <li>
+                           <span class="mk">&check;</span
+                           ><span
+                              >You are happy that the percentage lives on the
+                              stage, the same for every deal in it.</span
+                           >
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="fitcol no">
+                     <h3>Probably not, if&hellip;</h3>
+                     <ul>
+                        <li>
+                           <span class="mk">&ndash;</span
+                           ><span
+                              >You are already happy with the probabilities your
+                              pipeline produces today.</span
+                           >
+                        </li>
+                        <li>
+                           <span class="mk">&ndash;</span
+                           ><span
+                              >You need each deal scored on its own merits
+                              &mdash; editing one opportunity's probability here
+                              changes the whole stage.</span
+                           >
+                        </li>
+                        <li>
+                           <span class="mk">&ndash;</span
+                           ><span
+                              >Your team does not fill in expected revenue, so
+                              there is nothing to weight.</span
+                           >
+                        </li>
+                        <li>
+                           <span class="mk">&ndash;</span
+                           ><span
+                              >Your stages are still changing every week &mdash;
+                              settle them first, then come back.</span
+                           >
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <p class="cpsm cpmuted" style="margin-top: 18px">
+                  Not sure which column you are in? Describe your pipeline to
+                  <a href="mailto:odoo@doodex.net">odoo@doodex.net</a> and we
+                  will tell you straight, including when the answer is that you
+                  do not need this.
+               </p>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ========================================================= what you get -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="shead">
+                  <span class="lbl">What you get</span><span class="ln"></span>
+               </div>
+               <h2 class="cph2" style="margin-bottom: 26px">
+                  Free, open source, and yours to keep
+               </h2>
+               <div class="pricecard">
+                  <div class="priceleft">
+                     <span class="pl-tag">Module price</span>
+                     <div class="pl-amt">Free</div>
+                     <p class="pl-note">
+                        LGPL-3 &middot; no subscription &middot; no per-user fee
+                     </p>
+                     <div class="pl-anchor">
+                        There is no paid edition of this module and no feature
+                        held back for one.
+                        <strong
+                           >Everything on this page is in the free
+                           download.</strong
+                        >
+                     </div>
+                  </div>
+                  <div class="priceright">
+                     <p class="pr-label">In the download</p>
+                     <div class="prlist">
+                        <div>
+                           <span class="ck">&check;</span
+                           ><span
+                              >The Probability field on CRM stages, and the
+                              setting that switches it on</span
+                           >
+                        </div>
+                        <div>
+                           <span class="ck">&check;</span
+                           ><span
+                              >Automatic probability on every opportunity, from
+                              the stage it sits in</span
+                           >
+                        </div>
+                        <div>
+                           <span class="ck">&check;</span
+                           ><span
+                              >The Probability Revenue field, and its column and
+                              total in the list view</span
+                           >
+                        </div>
+                        <div>
+                           <span class="ck">&check;</span
+                           ><span
+                              >Translations in Spanish, French, Indonesian,
+                              Dutch and Portuguese</span
+                           >
+                        </div>
+                        <div>
+                           <span class="ck">&check;</span
+                           ><span
+                              >The full source, under LGPL-3 &mdash; read it,
+                              change it, keep it</span
+                           >
+                        </div>
+                        <div>
+                           <span class="ck">&check;</span
+                           ><span
+                              >A clean uninstall that leaves your CRM as it
+                              was</span
+                           >
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="grid2" style="margin-top: 30px">
+                  <div class="note">
+                     <h3 class="cph3" style="margin-bottom: 8px">
+                        Support, stated plainly
+                     </h3>
+                     <p class="cpsm" style="margin-bottom: 8px">
+                        It is free, so here is what that buys you: send a bug to
+                        <a href="mailto:odoo@doodex.net">odoo@doodex.net</a> and
+                        we will look at it &mdash; we maintain this module
+                        because we run it for our own clients. What free does
+                        not buy is a guaranteed response time.
+                     </p>
+                     <p class="cpsm" style="margin: 0">
+                        Need one, a version shaped to your Odoo, or the
+                        percentages behaving differently? That is quoted work.
+                        Ask us for a price.
+                     </p>
+                  </div>
+                  <div class="note">
+                     <h3 class="cph3" style="margin-bottom: 8px">
+                        Before you install it anywhere real
+                     </h3>
+                     <p class="cpsm" style="margin-bottom: 8px">
+                        Ten minutes on a copy of your database: tick the
+                        setting, put a percentage on two stages, move a deal,
+                        read the total. That is the whole trial.
+                     </p>
+                     <p class="cpsm" style="margin: 0">
+                        Not what you expected? Uninstall &mdash; that is the
+                        clean revert. Unticking alone hides the stage field but
+                        leaves probabilities still following their stage.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ========================================================== requirements -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="shead">
+                  <span class="lbl">Requirements</span><span class="ln"></span>
+               </div>
+               <h2 class="cph2" style="margin-bottom: 26px">
+                  What it needs, and what it does not
+               </h2>
+               <div class="reqgrid">
+                  <div class="reqrow">
+                     <b>Odoo version</b>
+                     <p>
+                        Odoo 17.0, Community or Enterprise. This page is the
+                        Odoo 17 edition; other versions are separate builds.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>Apps needed</b>
+                     <p>
+                        The CRM app. That is the whole list &mdash; the module
+                        depends on <em>base</em> and <em>crm</em> and nothing
+                        else.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>Work on the server</b>
+                     <p>
+                        None. No extra software, no command line, no Python
+                        library to add.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>User permissions</b>
+                     <p>
+                        Nothing new to hand out. The module adds no
+                        access-rights records of its own.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>Setup after installing</b>
+                     <p>
+                        Tick one setting, then type a percentage on each stage
+                        you use. Minutes, not hours.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>Your existing data</b>
+                     <p>
+                        Existing opportunities keep their expected revenue and
+                        their stage. Probabilities start following the stages
+                        once you switch the setting on.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>Where your data goes</b>
+                     <p>
+                        Nowhere. Everything is computed inside your own Odoo.
+                        The module sends nothing out and calls no external
+                        service.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>If you remove it</b>
+                     <p>
+                        Uninstalling is the clean revert: the two fields go, and
+                        probability goes back to Odoo's own scoring. Unticking
+                        the setting alone does not do this.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>Languages</b>
+                     <p>
+                        English, plus Spanish, French, Indonesian, Dutch and
+                        Portuguese translations in the box.
+                     </p>
+                  </div>
+                  <div class="reqrow">
+                     <b>Licence</b>
+                     <p>
+                        LGPL-3. Free to use, free to modify, and the source is
+                        in the download.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- =================================================================== FAQ -->
+         <section class="sec" id="faqs">
+            <div class="wrap">
+               <div class="narrow">
+                  <div class="shead">
+                     <span class="lbl">FAQ</span><span class="ln"></span>
+                  </div>
+                  <h2 class="cph2" style="margin-bottom: 24px">
+                     Twelve questions people actually ask
+                  </h2>
+                  <div class="faqlist">
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Does this replace Odoo's predictive lead
+                              scoring?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              While the setting is on, yes &mdash; probabilities
+                              come from your stages rather than from Odoo's
+                              prediction, and the background recalculation no
+                              longer overwrites them.
+                           </p>
+                           <p>
+                              Unticking the setting is not a full undo, and we
+                              would rather you heard that here than found it out
+                              afterwards: while the module is installed, an
+                              opportunity's probability keeps following its
+                              stage's percentage. To hand the numbers back to
+                              Odoo's own scoring, uninstall the module.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Is it really free, or is there a paid version?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              Really free, and there is no paid edition. The
+                              module is published under LGPL-3, which means the
+                              source code comes with it and you may modify it.
+                              What is paid is our time: implementation, a custom
+                              variant, or support with a guaranteed response.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Does it work on Odoo Community, or only
+                              Enterprise?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              Both. It only uses parts of the CRM app that every
+                              Odoo 17 install has, so no Enterprise licence is
+                              required.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Which Odoo versions are supported?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              This build is for Odoo 17.0. If you are on a
+                              different version, write to us before installing
+                              &mdash; do not force it onto another release and
+                              hope.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Can a rep still set their own probability on a
+                              deal?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              Not as a per-deal override, no, and this is the
+                              most important thing to understand about the
+                              module. The field is editable, but typing a
+                              probability on one opportunity writes that value
+                              onto its <em>stage</em>, so every other
+                              opportunity in that stage changes to match. Treat
+                              the percentage as a property of the stage and set
+                              it there. If you need genuinely per-deal
+                              probabilities, this module is the wrong tool and
+                              Odoo's own predictive scoring is the right one.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >What happens to my existing opportunities?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              Nothing is deleted and nothing is moved. Their
+                              stage and expected revenue are untouched. Once the
+                              setting is on and your stages have percentages,
+                              their probability follows the stage they are
+                              already in.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Can two sales teams use different percentages?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              The percentage lives on the stage, so any two
+                              teams that use separate stages get separate
+                              percentages. If your teams share the same stages,
+                              they share the same numbers &mdash; splitting them
+                              means giving each team its own stages, which is
+                              standard Odoo configuration, not a change to this
+                              module.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >How is Probability Revenue calculated?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              Expected revenue multiplied by the probability. A
+                              10,000 opportunity at 60% shows 6,000. It is
+                              stored on the opportunity, so you can sort by it,
+                              group by it and total it like any other Odoo
+                              figure.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Where does the weighted total appear?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              In the opportunity list view, as a Probability
+                              Revenue column placed after Expected Revenue, with
+                              a sum at the foot of the column. Apply a filter or
+                              a grouping and the total follows what you are
+                              looking at. Any user can hide the column from
+                              their own view.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Does it send my CRM data anywhere?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              No. There is no external service, no integration
+                              and no telemetry. Every calculation happens inside
+                              your own database, and the module has no reason to
+                              reach the internet at all.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q">What happens if I uninstall it?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              Your CRM returns to standard Odoo behaviour and
+                              the two fields the module added are removed with
+                              it. Your opportunities, stages, expected revenue
+                              and history are untouched. As with any module,
+                              take a backup first.
+                           </p>
+                        </div>
+                     </details>
+
+                     <details class="faq">
+                        <summary>
+                           <b class="faq-q"
+                              >Can you change how it works for us?</b
+                           ><span class="faq-plus">+</span>
+                        </summary>
+                        <div class="faq-a">
+                           <p>
+                              Yes &mdash; a different formula, probabilities per
+                              team, an extra field on the forecast, whatever the
+                              case needs. It is an LGPL-3 module, so your own
+                              developer can also do it without asking us. If you
+                              would rather we did, describe it to
+                              <a href="mailto:odoo@doodex.net"
+                                 >odoo@doodex.net</a
+                              >
+                              and we will quote before starting.
+                           </p>
+                        </div>
+                     </details>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ============================================================ cross-sell -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="shead">
+                  <span class="lbl">Works great with</span
+                  ><span class="ln"></span>
+               </div>
+               <h2 class="cph2" style="margin-bottom: 10px">
+                  Other Doodex modules, built the same way
+               </h2>
+               <p class="cplead" style="max-width: 740px; margin-bottom: 22px">
+                  Different problems, same approach: narrow scope, a one-time
+                  price, and the limits stated up front.
+               </p>
+               <div class="xs-chips">
+                  <span class="xs-chip">Narrow scope</span>
+                  <span class="xs-chip">One-time price</span>
+                  <span class="xs-chip">Limits stated up front</span>
+               </div>
+               <div class="xsell">
+                  <div class="xitem xitem-lead">
+                     <div class="xt">
+                        <img
+                           class="xico"
+                           src="./assets/icons/xs-growth-suite.png"
+                           alt=""
+                           width="36"
+                           height="36"
+                        /><span class="xp">$349 once</span>
+                     </div>
+                     <h3>Doodex Growth Suite</h3>
+                     <p>
+                        Five CRM and marketing modules that share one another's
+                        data: BizScan AI, Campaign Manager, Smart Dashboards,
+                        User Roles and Email Sync+. Sold as one suite.
+                     </p>
+                     <a
+                        class="xcta"
+                        href="https://apps.odoo.com/apps/modules/17.0/marketing_crm_automation_dashboard_campaign_doodex"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+
+                  <div class="xitem">
+                     <div class="xt">
+                        <img
+                           class="xico"
+                           src="./assets/icons/xs-flow-reader.png"
+                           alt=""
+                           width="36"
+                           height="36"
+                        /><span class="xp">Free</span>
+                     </div>
+                     <h3>Flow Survey Reader</h3>
+                     <p>
+                        Publish conditional surveys and forms straight from Odoo
+                        and keep every answer in your own database.
+                     </p>
+                     <a
+                        class="xcta"
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey_reader"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+
+                  <div class="xitem">
+                     <div class="xt">
+                        <img
+                           class="xico"
+                           src="./assets/icons/xs-flow-builder.png"
+                           alt=""
+                           width="36"
+                           height="36"
+                        /><span class="xp">$199 once</span>
+                     </div>
+                     <h3>Flow Survey Builder</h3>
+                     <p>
+                        The drag-and-drop editor for those surveys: 25 question
+                        types, slide branching and full theming. Installing it
+                        brings the free Reader with it.
+                     </p>
+                     <a
+                        class="xcta"
+                        href="https://apps.odoo.com/apps/modules/17.0/flow_survey"
+                        >Open on the Apps Store &rarr;</a
+                     >
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ============================================================== releases -->
+         <section class="sec" id="releases">
+            <div class="wrap">
+               <div class="narrow">
+                  <div class="shead">
+                     <span class="lbl">Releases</span><span class="ln"></span>
+                  </div>
+                  <h2 class="cph2" style="margin-bottom: 8px">
+                     Public release history
+                  </h2>
+                  <p class="cplead" style="margin-bottom: 26px">
+                     Every release is listed here with what changed in it. If a
+                     version is not on this list, it does not exist.
+                  </p>
+                  <div class="rel">
+                     <div class="relitem">
+                        <div class="relhead">
+                           <span class="relver">17.0.1.0</span
+                           ><span class="relbadge new">New</span
+                           ><span class="reldate"
+                              >Current release &mdash; Odoo 17.0</span
+                           >
+                        </div>
+                        <ul>
+                           <li>
+                              Probability field added to CRM stages, with the
+                              percentage shown on the stage form only while the
+                              feature is switched on.
+                           </li>
+                           <li>
+                              &ldquo;Probability from stage&rdquo; setting added
+                              to CRM Configuration.
+                           </li>
+                           <li>
+                              Opportunity probability driven by the stage, and
+                              still editable by hand.
+                           </li>
+                           <li>
+                              Probability Revenue field on opportunities:
+                              expected revenue weighted by probability.
+                           </li>
+                           <li>
+                              Probability Revenue column with a column total
+                              added to the opportunity list view.
+                           </li>
+                           <li>
+                              Odoo's automatic probability scoring no longer
+                              overwrites values while the setting is on.
+                           </li>
+                           <li>
+                              Spanish, French, Indonesian, Dutch and Portuguese
+                              translations included.
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <p class="cpsm cpmuted" style="margin-top: 22px">
+                     Found something that behaves differently from this page?
+                     Tell us at
+                     <a href="mailto:odoo@doodex.net">odoo@doodex.net</a>
+                     &mdash; a wrong description is a bug too.
+                  </p>
+               </div>
+            </div>
+         </section>
+
+         <hr class="cphr" />
+
+         <!-- ============================================================= final CTA -->
+         <section class="sec">
+            <div class="wrap">
+               <div class="qrcta qrcta-end">
+                  <div class="qr-head">
+                     <p class="qr-eyebrow">
+                        Free download &middot; LGPL-3 &middot; Odoo 17.0
+                     </p>
+                     <h2 class="qr-title">
+                        Install it, or ask us first &mdash; both are free
+                     </h2>
+                     <p class="qr-sub">
+                        Use the Download or Deploy button at the top of this
+                        store page to get the module. If you would rather have
+                        someone look at your pipeline before you touch it, pick
+                        a channel below.
+                     </p>
+                  </div>
+                  <div class="qr-grid">
+                     <div class="qr-card qr-lead">
+                        <div class="qr-top">
+                           <span class="qr-ico">1</span
+                           ><span class="qr-tag qr-tag-hot">30 minutes</span>
+                        </div>
+                        <h3 class="qr-h">Book a call</h3>
+                        <p class="qr-p">
+                           Walk through your stages with an Odoo consultant.
+                        </p>
+                        <span class="qr-code"
+                           ><img
+                              src="./assets/icons/qr-meeting.png"
+                              alt="QR code for https://hub.doodex.net/r/meeting"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <span class="cpbtn cpbtn-1 qr-btn"
+                           >hub.doodex.net<wbr />/r/meeting</span
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico">2</span
+                           ><span class="qr-tag">Written reply</span>
+                        </div>
+                        <h3 class="qr-h">Use the contact form</h3>
+                        <p class="qr-p">
+                           Questions, bugs, or a quote for a custom variant.
+                        </p>
+                        <span class="qr-code"
+                           ><img
+                              src="./assets/icons/qr-contact.png"
+                              alt="QR code for https://doodex.net/contactus"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <span class="cpbtn cpbtn-2 qr-btn"
+                           >doodex.net<wbr />/contactus</span
+                        >
+                     </div>
+                     <div class="qr-card">
+                        <div class="qr-top">
+                           <span class="qr-ico">3</span
+                           ><span class="qr-tag">Fastest reply</span>
+                        </div>
+                        <h3 class="qr-h">WhatsApp</h3>
+                        <p class="qr-p">
+                           +62 821-3120-5030, straight to the team.
+                        </p>
+                        <span class="qr-code"
+                           ><img
+                              src="./assets/icons/qr-whatsapp.png"
+                              alt="QR code for https://hub.doodex.net/r/whatsapp"
+                              width="98"
+                              height="98"
+                        /></span>
+                        <span class="cpbtn cpbtn-2 qr-btn"
+                           >hub.doodex.net<wbr />/r/whatsapp</span
+                        >
+                     </div>
+                  </div>
+                  <p class="qr-foot">
+                     CRM Probability From Stage &middot; version 17.0.1.0
+                     &middot; LGPL-3 &middot; published by Doodex
+                  </p>
+               </div>
+            </div>
+         </section>
+      </div>
+   </body>
+</html>
